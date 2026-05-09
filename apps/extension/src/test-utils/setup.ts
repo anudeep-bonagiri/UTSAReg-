@@ -21,16 +21,22 @@ const chromeStub = {
     },
     storage: {
         local: {
-            get: vi.fn(async (keys?: string | string[] | StorageRecord): Promise<StorageRecord> => {
-                if (keys === undefined) return { ...memoryStore };
-                if (typeof keys === 'string') return { [keys]: memoryStore[keys] };
-                if (Array.isArray(keys)) {
-                    return Object.fromEntries(keys.map((k) => [k, memoryStore[k]]));
+            get: vi.fn(
+                async (
+                    keys?: string | string[] | StorageRecord | null
+                ): Promise<StorageRecord> => {
+                    // Chrome behavior: undefined OR null means "all keys".
+                    if (keys === undefined || keys === null) return { ...memoryStore };
+                    if (typeof keys === 'string')
+                        return { [keys]: memoryStore[keys] };
+                    if (Array.isArray(keys)) {
+                        return Object.fromEntries(keys.map((k) => [k, memoryStore[k]]));
+                    }
+                    return Object.fromEntries(
+                        Object.keys(keys).map((k) => [k, memoryStore[k] ?? keys[k]])
+                    );
                 }
-                return Object.fromEntries(
-                    Object.keys(keys).map((k) => [k, memoryStore[k] ?? keys[k]])
-                );
-            }),
+            ),
             set: vi.fn(async (items: StorageRecord): Promise<void> => {
                 Object.assign(memoryStore, items);
             }),

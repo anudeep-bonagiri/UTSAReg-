@@ -108,7 +108,6 @@ export default tseslint.config(
             'apps/extension/src/popup/App.tsx',
             'apps/extension/src/dashboard/App.tsx',
             'apps/extension/src/content/index.tsx',
-            'apps/extension/src/background/index.ts',
             'apps/extension/src/components/CourseDetailsPopup.tsx',
             'apps/extension/src/components/PremiumCourseCard.tsx',
             'apps/extension/src/components/SearchHeader.tsx',
