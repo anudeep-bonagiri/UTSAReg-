@@ -1,4 +1,5 @@
 export { Button, type ButtonProps } from './Button.js';
+export { FreshnessChip, type FreshnessChipProps } from './FreshnessChip.js';
 export {
     Card,
     CardHeader,

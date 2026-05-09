@@ -9,20 +9,11 @@ describe('Input', () => {
         expect(screen.getByPlaceholderText('CRN, class, dept...')).toBeInTheDocument();
     });
 
-    it('reflects controlled value updates', async () => {
-        const TestHarness = () => {
-            const [v, setV] = (
-                window as unknown as { React: typeof import('react') }
-            ).React.useState('');
-            return <Input value={v} onChange={(e) => setV(e.target.value)} placeholder="search" />;
-        };
-        // Simpler: typing into an uncontrolled input.
+    it('reflects user typing on an uncontrolled input', async () => {
         render(<Input placeholder="search" />);
         const input = screen.getByPlaceholderText('search');
         await userEvent.type(input, 'CS 3343');
         expect(input).toHaveValue('CS 3343');
-        // Avoid lint warning about unused harness.
-        void TestHarness;
     });
 
     it('renders leading and trailing adornments', () => {

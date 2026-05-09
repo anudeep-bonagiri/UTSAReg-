@@ -1,9 +1,5 @@
 {
+    "extends": "./tsconfig.base.json",
     "files": [],
-    "references": [
-        { "path": "./packages/core" },
-        { "path": "./packages/ui" },
-        { "path": "./packages/adapter-utsa" },
-        { "path": "./apps/extension" }
-    ]
+    "include": []
 }

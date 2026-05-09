@@ -58,7 +58,8 @@ export const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEleme
 CardHeader.displayName = 'CardHeader';
 
 export const CardTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(
-    ({ className, ...props }, ref) => (
+    ({ className, children, ...props }, ref) => (
+        // eslint-disable-next-line jsx-a11y/heading-has-content -- content is forwarded via children
         <h3
             ref={ref}
             className={cn(
@@ -66,7 +67,9 @@ export const CardTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadi
                 className
             )}
             {...props}
-        />
+        >
+            {children}
+        </h3>
     )
 );
 CardTitle.displayName = 'CardTitle';
