@@ -1,4 +1,13 @@
-import { Star, FileText, ExternalLink, MapPin, Clock, Users, Calendar } from 'lucide-react';
+import {
+    Star,
+    FileText,
+    ExternalLink,
+    MapPin,
+    Clock,
+    Users,
+    Calendar,
+    Building2
+} from 'lucide-react';
 import {
     Badge,
     Button,
@@ -13,6 +22,7 @@ import {
 } from '@utsaregplus/ui';
 import { formatDays, formatTimeRange, type Course, type Section } from '@utsaregplus/core';
 import { useRmpRating } from '../hooks/useRmpRating.js';
+import { useSyllabusContext } from '../hooks/useSyllabusContext.js';
 
 interface CourseDetailDialogProps {
     open: boolean;
@@ -34,6 +44,7 @@ export const CourseDetailDialog = ({
     saved
 }: CourseDetailDialogProps) => {
     const rmp = useRmpRating(section?.instructorName);
+    const syllabus = useSyllabusContext(section?.courseId);
 
     if (!section) return null;
 
@@ -234,19 +245,77 @@ export const CourseDetailDialog = ({
                         </section>
                     )}
 
+                    {/* Syllabus library — live data from Simple Syllabus */}
+                    <section className="rounded-xl border border-[--border-default] bg-[--surface-default] p-4">
+                        <div className="flex items-center justify-between gap-2 mb-3">
+                            <div className="flex items-center gap-2">
+                                <FileText className="w-4 h-4 text-[--accent-default]" />
+                                <h4 className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-bold">
+                                    Syllabus Library
+                                </h4>
+                            </div>
+                            {syllabus.data && (
+                                <FreshnessChip
+                                    freshness={{
+                                        source: 'live',
+                                        fetchedAt: syllabus.data.fetchedAt,
+                                        maxAgeMs: 6 * 60 * 60 * 1000
+                                    }}
+                                    timeOnly
+                                />
+                            )}
+                        </div>
+                        {syllabus.loading ? (
+                            <div className="h-12 bg-[--surface-muted] rounded-lg animate-pulse" />
+                        ) : syllabus.data ? (
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-2 text-[12px] text-[--ink-default]">
+                                    <Building2 className="w-3.5 h-3.5 text-[--ink-muted]" />
+                                    <span className="font-semibold">
+                                        {syllabus.data.departmentName}
+                                    </span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div className="rounded-lg bg-[--surface-muted] p-2.5">
+                                        <div className="text-[9px] uppercase tracking-wider text-[--ink-subtle] font-bold">
+                                            Tracked courses
+                                        </div>
+                                        <div className="text-[18px] font-black text-[--ink-strong] utsa-tabular leading-tight mt-0.5">
+                                            {syllabus.data.courseCount}
+                                        </div>
+                                    </div>
+                                    <div className="rounded-lg bg-[--surface-muted] p-2.5">
+                                        <div className="text-[9px] uppercase tracking-wider text-[--ink-subtle] font-bold">
+                                            Sections published
+                                        </div>
+                                        <div className="text-[18px] font-black text-[--ink-strong] utsa-tabular leading-tight mt-0.5">
+                                            {syllabus.data.sectionCount}
+                                        </div>
+                                    </div>
+                                </div>
+                                <a
+                                    href={syllabus.data.libraryUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex items-center gap-2 rounded-lg border border-[--border-default] bg-[--surface-default] hover:bg-[--surface-muted] p-2.5 text-[12px] font-semibold text-[--ink-strong] transition-colors"
+                                >
+                                    <FileText className="w-3.5 h-3.5 text-[--accent-default]" />
+                                    <span>Open syllabi for {section.courseId}</span>
+                                    <ExternalLink className="w-3 h-3 ml-auto text-[--ink-muted]" />
+                                </a>
+                            </div>
+                        ) : (
+                            <p className="text-[12px] text-[--ink-muted]">
+                                {syllabus.error
+                                    ? `Could not reach Simple Syllabus: ${syllabus.error}`
+                                    : 'No syllabus data published for this department yet.'}
+                            </p>
+                        )}
+                    </section>
+
                     {/* External links */}
-                    <section className="grid grid-cols-2 gap-3">
-                        <a
-                            href={`https://utsa.simplesyllabus.com/en-US/syllabus-library?query=${encodeURIComponent(section.courseId.replace(/(\d)/, ' $1'))}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex items-center gap-2 rounded-xl border border-[--border-default] bg-[--surface-default] hover:bg-[--surface-muted] p-3 text-[12px] font-semibold text-[--ink-strong] transition-colors"
-                        >
-                            <FileText className="w-4 h-4 text-[--accent-default]" />
-                            <span>View past syllabi</span>
-                            <ExternalLink className="w-3 h-3 ml-auto text-[--ink-muted]" />
-                        </a>
-                        {r && (
+                    {r && (
+                        <section>
                             <a
                                 href={`https://www.ratemyprofessors.com/professor/${r.legacyId}`}
                                 target="_blank"
@@ -254,11 +323,11 @@ export const CourseDetailDialog = ({
                                 className="flex items-center gap-2 rounded-xl border border-[--border-default] bg-[--surface-default] hover:bg-[--surface-muted] p-3 text-[12px] font-semibold text-[--ink-strong] transition-colors"
                             >
                                 <Star className="w-4 h-4 text-[--accent-default]" />
-                                <span>Open on RMP</span>
+                                <span>Open {section.instructorName} on RateMyProfessors</span>
                                 <ExternalLink className="w-3 h-3 ml-auto text-[--ink-muted]" />
                             </a>
-                        )}
-                    </section>
+                        </section>
+                    )}
                 </DialogBody>
 
                 <DialogFooter>

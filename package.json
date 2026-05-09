@@ -18,6 +18,7 @@
         "format:check": "prettier --check .",
         "smoke:rmp": "tsx scripts/smoke-rmp.ts",
         "smoke:asap": "tsx scripts/smoke-asap.ts",
+        "smoke:syllabus": "tsx scripts/smoke-syllabus.ts",
         "data:catalog": "tsx scripts/scrape-catalog.ts",
         "data:sections": "tsx scripts/scrape-sections.ts"
     },

@@ -1,16 +1,23 @@
 /**
  * Typography scale.
  *
- * Inter (variable) for everything — body, headings, UI. Tabular nums forced
- * on numeric badges (CRN, ratings) so columns line up.
+ * UTSA's official type system uses Beausite Fit (display) and Beausite
+ * Classic (body) — both paid Type Trust faces we don't ship with the
+ * extension. We approximate with Manrope (variable, geometric, similar
+ * weight contrast in display weights) for headings and Inter (universal
+ * neo-grotesque body face) for everything else. Both are free, hosted by
+ * Google Fonts, and pre-loaded in styles/index.css.
+ *
+ * Tabular nums forced on numeric badges (CRN, ratings) so columns align.
  */
 export const typography = {
     fontFamily: {
-        sans: '"Inter", "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        display:
+            '"Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        sans: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         mono: '"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace'
     },
 
-    // Font sizes pinned to a perfect-fourth-ish scale, sized for 14px body.
     fontSize: {
         '2xs': ['10px', { lineHeight: '14px', letterSpacing: '0.04em' }],
         xs: ['11px', { lineHeight: '16px', letterSpacing: '0.02em' }],
@@ -18,10 +25,10 @@ export const typography = {
         base: ['14px', { lineHeight: '20px', letterSpacing: '0' }],
         md: ['15px', { lineHeight: '22px', letterSpacing: '0' }],
         lg: ['17px', { lineHeight: '24px', letterSpacing: '-0.005em' }],
-        xl: ['20px', { lineHeight: '28px', letterSpacing: '-0.01em' }],
-        '2xl': ['24px', { lineHeight: '32px', letterSpacing: '-0.015em' }],
-        '3xl': ['30px', { lineHeight: '38px', letterSpacing: '-0.02em' }],
-        '4xl': ['36px', { lineHeight: '44px', letterSpacing: '-0.025em' }]
+        xl: ['20px', { lineHeight: '28px', letterSpacing: '-0.012em' }],
+        '2xl': ['24px', { lineHeight: '32px', letterSpacing: '-0.018em' }],
+        '3xl': ['30px', { lineHeight: '38px', letterSpacing: '-0.022em' }],
+        '4xl': ['36px', { lineHeight: '44px', letterSpacing: '-0.026em' }]
     },
 
     fontWeight: {

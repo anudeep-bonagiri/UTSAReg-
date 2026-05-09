@@ -16,10 +16,34 @@ export type GetRmpRatingResponse =
     | { ok: true; result: Fresh<RmpRating> | null }
     | { ok: false; error: string };
 
-export type WorkerRequest = GetRmpRatingRequest;
+export interface SyllabusContext {
+    /** Department / college name as Simple Syllabus publishes it. */
+    departmentName: string;
+    /** Total courses Simple Syllabus tracks for this department. */
+    courseCount: number;
+    /** Total sections currently published. */
+    sectionCount: number;
+    /** Public Simple Syllabus library deep-link for the requested course. */
+    libraryUrl: string;
+    /** ISO timestamp this snapshot was fetched. */
+    fetchedAt: string;
+}
+
+export interface GetSyllabusContextRequest {
+    type: 'getSyllabusContext';
+    courseId: string;
+}
+
+export type GetSyllabusContextResponse =
+    | { ok: true; result: SyllabusContext | null }
+    | { ok: false; error: string };
+
+export type WorkerRequest = GetRmpRatingRequest | GetSyllabusContextRequest;
 export type WorkerResponse<R extends WorkerRequest> = R extends GetRmpRatingRequest
     ? GetRmpRatingResponse
-    : never;
+    : R extends GetSyllabusContextRequest
+      ? GetSyllabusContextResponse
+      : never;
 
 /**
  * Typed sendMessage wrapper. Returns the structured response or throws on

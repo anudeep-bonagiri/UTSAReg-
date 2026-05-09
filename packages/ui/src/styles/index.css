@@ -1,59 +1,83 @@
 /* =====================================================================
  * UTSA Reg+ design system — global tokens + base reset.
  *
+ * Built from the official UT San Antonio Brand Guidelines V1.2 (July 2025).
+ * Colors mirror UTSA's published palette; we never use UTSA's logos or
+ * wordmarks. Typography uses Manrope (display) + Inter (body) as legible
+ * Beausite-spirit alternatives that are free and self-host-friendly.
+ *
  * Light mode is the default. data-theme="dark" on <html> flips colors.
  * All component CSS references var(--token) names, never hex codes.
  * ===================================================================== */
 
+/* Self-hosted font would be ideal; for the demo we Google-Fonts-CDN them.
+ * Beausite is the official UTSA typeface but is paid; Manrope (variable,
+ * geometric, with weight contrast) is the closest free analog for display.
+ * Inter is the same family used by countless university-grade products. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap');
+
 :root,
 html[data-theme='light'] {
     /* surfaces */
-    --surface-canvas: #fbf9f7;
+    --surface-canvas: #f8f4f1; /* UTSA Limestone */
     --surface-default: #ffffff;
     --surface-raised: #ffffff;
-    --surface-muted: #f8f4f1;
-    --surface-sunken: #ebe6e2;
+    --surface-muted: #f8f4f1; /* Limestone */
+    --surface-sunken: #ebe6e2; /* Concrete */
 
     /* ink */
-    --ink-strong: #032044;
-    --ink-default: #1a2238;
+    --ink-strong: #032044; /* Midnight */
+    --ink-default: #332f21; /* UTSA warm Black */
     --ink-muted: #5a6480;
     --ink-subtle: #8a93ab;
     --ink-on-accent: #ffffff;
     --ink-on-brand: #ffffff;
 
-    /* borders */
-    --border-default: #e5ded5;
-    --border-strong: #d4ccbf;
-    --border-focus: #f15a22;
+    /* borders — warm grays derived from Smoke */
+    --border-default: #e8e1d8;
+    --border-strong: #d5cfc8; /* Smoke */
+    --border-focus: #f15a22; /* UTSA Orange */
 
-    /* accent */
+    /* accent — UTSA Orange */
     --accent-default: #f15a22;
-    --accent-hover: #d74a15;
+    --accent-hover: #d3430d; /* Accessible Orange */
     --accent-active: #b83e10;
     --accent-soft: #fce5da;
 
-    /* brand */
+    /* brand — Midnight */
     --brand-default: #032044;
     --brand-hover: #06346e;
-    --brand-soft: #e5eaf2;
+    --brand-soft: #c8dcff; /* River Mist */
 
     /* status */
     --status-open: #0e7c3a;
     --status-open-soft: #dcf1e2;
-    --status-warn: #b45309;
-    --status-warn-soft: #fcedd3;
+    --status-warn: #a06620; /* Brass */
+    --status-warn-soft: #f4e8d6;
     --status-danger: #b91c1c;
     --status-danger-soft: #fbe3e3;
-    --status-info: #1f5bc4;
-    --status-info-soft: #dce6f8;
+    --status-info: #265bf7; /* Talavera Blue */
+    --status-info-soft: #c8dcff; /* River Mist */
 
-    /* shadows */
+    /* warm accent — Mission Clay for decorative highlights */
+    --warm-accent-default: #dbb485;
+    --warm-accent-soft: #f2e1cb;
+
+    /* shadows — tinted with Midnight so they read intentional */
     --shadow-sm: 0 1px 2px 0 rgba(3, 32, 68, 0.04);
-    --shadow-md: 0 2px 8px -1px rgba(3, 32, 68, 0.06), 0 1px 3px -1px rgba(3, 32, 68, 0.04);
-    --shadow-lg: 0 8px 24px -4px rgba(3, 32, 68, 0.1), 0 4px 8px -2px rgba(3, 32, 68, 0.05);
-    --shadow-xl: 0 20px 40px -8px rgba(3, 32, 68, 0.18), 0 8px 16px -4px rgba(3, 32, 68, 0.08);
+    --shadow-md:
+        0 2px 8px -1px rgba(3, 32, 68, 0.06), 0 1px 3px -1px rgba(3, 32, 68, 0.04);
+    --shadow-lg:
+        0 8px 24px -4px rgba(3, 32, 68, 0.1), 0 4px 8px -2px rgba(3, 32, 68, 0.05);
+    --shadow-xl:
+        0 20px 40px -8px rgba(3, 32, 68, 0.18), 0 8px 16px -4px rgba(3, 32, 68, 0.08);
     --shadow-focus: 0 0 0 3px rgba(241, 90, 34, 0.35);
+
+    /* type scale */
+    --font-display: 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        sans-serif;
 }
 
 html[data-theme='dark'] {
@@ -76,7 +100,7 @@ html[data-theme='dark'] {
 
     --accent-default: #ff6e36;
     --accent-hover: #f15a22;
-    --accent-active: #d74a15;
+    --accent-active: #d3430d;
     --accent-soft: #3a1e14;
 
     --brand-default: #7ba0e0;
@@ -92,14 +116,17 @@ html[data-theme='dark'] {
     --status-info: #7aa4f0;
     --status-info-soft: #15233f;
 
+    --warm-accent-default: #e5c39a;
+    --warm-accent-soft: #3a2f1e;
+
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 2px 8px -1px rgba(0, 0, 0, 0.45), 0 1px 3px -1px rgba(0, 0, 0, 0.35);
+    --shadow-md:
+        0 2px 8px -1px rgba(0, 0, 0, 0.45), 0 1px 3px -1px rgba(0, 0, 0, 0.35);
     --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.4);
     --shadow-xl: 0 20px 40px -8px rgba(0, 0, 0, 0.7), 0 8px 16px -4px rgba(0, 0, 0, 0.5);
     --shadow-focus: 0 0 0 3px rgba(255, 110, 54, 0.5);
 }
 
-/* Auto dark for users who haven't picked. Toggle overrides this. */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) {
         color-scheme: dark;
@@ -120,15 +147,9 @@ body {
     padding: 0;
     background: var(--surface-canvas);
     color: var(--ink-default);
-    font-family:
-        'Inter',
-        'Inter Variable',
-        -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        Roboto,
-        sans-serif;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-family: var(--font-body);
+    font-feature-settings:
+        'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -141,6 +162,24 @@ textarea {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
+}
+
+/* Headings use the display family by default. Letter-spacing pulled in for
+ * Manrope's wider tracking at large sizes; matches Beausite Fit's character. */
+h1,
+h2,
+h3,
+.utsa-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.018em;
+    font-weight: 700;
+}
+
+/* Wordmarks & numeric stat tiles get the heaviest display weight. */
+.utsa-display-black {
+    font-family: var(--font-display);
+    letter-spacing: -0.024em;
+    font-weight: 800;
 }
 
 /* Focus ring — accessible, brand-toned, always visible on keyboard nav. */
