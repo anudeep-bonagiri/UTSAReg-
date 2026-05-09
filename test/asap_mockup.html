@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTSA ASAP Portal - Class Search Mockup</title>
+    <style>
+        :root {
+            --utsa-blue: #032044;
+            --utsa-orange: #F15A22;
+            --utsa-limestone: #F8F4F1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--utsa-limestone);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: var(--utsa-blue);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--utsa-blue);
+            border-left: 4px solid var(--utsa-orange);
+            padding-left: 1rem;
+            margin-top: 0;
+        }
+
+        .datadisplaytable {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .datadisplaytable th {
+            background-color: #f8f9fa;
+            color: var(--utsa-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1rem;
+            border-bottom: 2px solid #eee;
+            text-align: left;
+        }
+
+        .datadisplaytable td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .datadisplaytable tr:hover {
+            background-color: #fdfdfd;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+
+        .status-open {
+            background: #e6ffed;
+            color: #22863a;
+        }
+
+        .status-waitlist {
+            background: #fffdef;
+            color: #735c0f;
+        }
+
+        .btn-sync {
+            background: var(--utsa-orange);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-sync:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        /* Mockup footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Highlight box for testing */
+        .test-banner {
+            background: #e7f3ff;
+            border: 1px solid #2196F3;
+            color: #0d47a1;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>UTSA ASAP PORTAL</h1>
+        <p>Class Schedule Search - Fall 2024</p>
+    </header>
+
+    <div class="container">
+        <div class="test-banner">
+            🚀 <b>UTSA Registration Plus Activated</b>: Load the extension and refresh this page. The "R+ Details"
+            buttons will be injected into the <b>Instructor</b> column for supported courses.
+        </div>
+
+        <div class="card">
+            <h2>Search Results: Computer Science</h2>
+            <p>Showing sections for Subject: <b>Computer Science (CS)</b></p>
+
+            <table class="datadisplaytable" summary="This layout table is used to present the Class Schedule.">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>CRN</th>
+                        <th>Subj</th>
+                        <th>Crse</th>
+                        <th>Sec</th>
+                        <th>Cmp</th>
+                        <th>Cred</th>
+                        <th>Title</th>
+                        <th>Days</th>
+                        <th>Time</th>
+                        <th>Cap</th>
+                        <th>WL</th>
+                        <th>Room</th>
+                        <th>Date</th>
+                        <th>Loc</th>
+                        <th>Attr</th>
+                        <th>Instructor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>14753</td>
+                        <td>CS</td>
+                        <td>1083</td>
+                        <td>001</td>
+                        <td>MAIN</td>
+                        <td>3.000</td>
+                        <td>Prog I for Computer Scientists</td>
+                        <td>MWF</td>
+                        <td>09:00 am-09:50 am</td>
+                        <td>100</td>
+                        <td>0</td>
+                        <td>NPB 1.202</td>
+                        <td>08/26-12/10</td>
+                        <td>MAIN</td>
+                        <td>CS</td>
+                        <td>Gomez Morales, Maria (P)</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>26011</td>
+                        <td>CS</td>
+                        <td>2123</td>
+                        <td>002</td>
+                        <td>MAIN</td>
+                        <td>3.000</td>
+                        <td>Data Structures</td>
+                        <td>MWF</td>
+                        <td>12:00 pm-12:50 pm</td>
+                        <td>80</td>
+                        <td>5</td>
+                        <td>FLN 2.02.02</td>
+                        <td>08/26-12/10</td>
+                        <td>MAIN</td>
+                        <td>CS</td>
+                        <td>Sherette, John (P)</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>10184</td>
+                        <td>CS</td>
+                        <td>3343</td>
+                        <td>001</td>
+                        <td>MAIN</td>
+                        <td>3.000</td>
+                        <td>Design Analysis of Algorithms</td>
+                        <td>MWF</td>
+                        <td>01:00 pm-01:50 pm</td>
+                        <td>60</td>
+                        <td>0</td>
+                        <td>MH 3.02.38</td>
+                        <td>08/26-12/10</td>
+                        <td>MAIN</td>
+                        <td>CS</td>
+                        <td>Najem, Zein (P)</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>13402</td>
+                        <td>CS</td>
+                        <td>3443</td>
+                        <td>001</td>
+                        <td>MAIN</td>
+                        <td>3.000</td>
+                        <td>Application Programming</td>
+                        <td>TR</td>
+                        <td>10:00 am-11:15 am</td>
+                        <td>120</td>
+                        <td>0</td>
+                        <td>NPB 1.250</td>
+                        <td>08/26-12/10</td>
+                        <td>MAIN</td>
+                        <td>CS</td>
+                        <td>Alkittawi, Haidar (P)</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>12345</td>
+                        <td>MAT</td>
+                        <td>1214</td>
+                        <td>003</td>
+                        <td>MAIN</td>
+                        <td>4.000</td>
+                        <td>Calculus I</td>
+                        <td>MWF</td>
+                        <td>11:00 am-11:50 am</td>
+                        <td>40</td>
+                        <td>0</td>
+                        <td>MS 3.02.02</td>
+                        <td>08/26-12/10</td>
+                        <td>MAIN</td>
+                        <td>MATH</td>
+                        <td>Rodriguez, Alex (P)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align: right;">
+            <button class="btn-sync">Add Selected Classes</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 University of Texas at San Antonio | ASAP Portal Mockup for Development
+    </footer>
+
+</body>
+
+</html>

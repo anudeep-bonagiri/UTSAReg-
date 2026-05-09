@@ -1,0 +1,17 @@
+
+> utsaregplus@1.0.0 build
+> vite build
+
+failed to load config from /Users/vjz667/Desktop/UTSARegPlus/vite.config.ts
+error during build:
+Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.
+    at so (file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/tailwindcss/dist/chunk-L5IEUH3R.mjs:38:1643)
+    at file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/.vite-temp/vite.config.ts.timestamp-1772751217836-79e8ab1d42112.mjs:13:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:655:26)
+    at async loadConfigFromBundledFile (file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/vite/dist/node/chunks/config.js:35909:12)
+    at async bundleAndLoadConfigFile (file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/vite/dist/node/chunks/config.js:35797:17)
+    at async loadConfigFromFile (file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/vite/dist/node/chunks/config.js:35764:42)
+    at async resolveConfig (file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/vite/dist/node/chunks/config.js:35413:22)
+    at async createBuilder (file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/vite/dist/node/chunks/config.js:33875:19)
+    at async CAC.<anonymous> (file:///Users/vjz667/Desktop/UTSARegPlus/node_modules/vite/dist/node/cli.js:629:10)

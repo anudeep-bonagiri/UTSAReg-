@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Tests
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Storybook
+storybook-static/
+
+# Chrome extension build artifacts
+*.zip
+*.crx
+*.pem
+
+# Raw scraped HTML (per-user, not committed)
+data/raw/
+
+# OS
+Thumbs.db
