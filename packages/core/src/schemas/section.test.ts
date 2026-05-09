@@ -39,16 +39,12 @@ describe('MeetingSchema', () => {
     });
 
     it('rejects end-before-start blocks', () => {
-        expect(() =>
-            MeetingSchema.parse({ days: ['M'], startMin: 600, endMin: 540 })
-        ).toThrow();
+        expect(() => MeetingSchema.parse({ days: ['M'], startMin: 600, endMin: 540 })).toThrow();
     });
 
     it('rejects out-of-range minutes', () => {
         expect(() => MeetingSchema.parse({ days: ['M'], startMin: -10, endMin: 60 })).toThrow();
-        expect(() =>
-            MeetingSchema.parse({ days: ['M'], startMin: 100, endMin: 1500 })
-        ).toThrow();
+        expect(() => MeetingSchema.parse({ days: ['M'], startMin: 100, endMin: 1500 })).toThrow();
     });
 });
 

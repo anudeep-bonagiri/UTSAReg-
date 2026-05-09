@@ -1,0 +1,169 @@
+/* =====================================================================
+ * UTSA Reg+ design system — global tokens + base reset.
+ *
+ * Light mode is the default. data-theme="dark" on <html> flips colors.
+ * All component CSS references var(--token) names, never hex codes.
+ * ===================================================================== */
+
+:root,
+html[data-theme='light'] {
+    /* surfaces */
+    --surface-canvas: #fbf9f7;
+    --surface-default: #ffffff;
+    --surface-raised: #ffffff;
+    --surface-muted: #f8f4f1;
+    --surface-sunken: #ebe6e2;
+
+    /* ink */
+    --ink-strong: #032044;
+    --ink-default: #1a2238;
+    --ink-muted: #5a6480;
+    --ink-subtle: #8a93ab;
+    --ink-on-accent: #ffffff;
+    --ink-on-brand: #ffffff;
+
+    /* borders */
+    --border-default: #e5ded5;
+    --border-strong: #d4ccbf;
+    --border-focus: #f15a22;
+
+    /* accent */
+    --accent-default: #f15a22;
+    --accent-hover: #d74a15;
+    --accent-active: #b83e10;
+    --accent-soft: #fce5da;
+
+    /* brand */
+    --brand-default: #032044;
+    --brand-hover: #06346e;
+    --brand-soft: #e5eaf2;
+
+    /* status */
+    --status-open: #0e7c3a;
+    --status-open-soft: #dcf1e2;
+    --status-warn: #b45309;
+    --status-warn-soft: #fcedd3;
+    --status-danger: #b91c1c;
+    --status-danger-soft: #fbe3e3;
+    --status-info: #1f5bc4;
+    --status-info-soft: #dce6f8;
+
+    /* shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(3, 32, 68, 0.04);
+    --shadow-md: 0 2px 8px -1px rgba(3, 32, 68, 0.06), 0 1px 3px -1px rgba(3, 32, 68, 0.04);
+    --shadow-lg: 0 8px 24px -4px rgba(3, 32, 68, 0.1), 0 4px 8px -2px rgba(3, 32, 68, 0.05);
+    --shadow-xl: 0 20px 40px -8px rgba(3, 32, 68, 0.18), 0 8px 16px -4px rgba(3, 32, 68, 0.08);
+    --shadow-focus: 0 0 0 3px rgba(241, 90, 34, 0.35);
+}
+
+html[data-theme='dark'] {
+    --surface-canvas: #0a0f1f;
+    --surface-default: #0f1729;
+    --surface-raised: #15203a;
+    --surface-muted: #1a2540;
+    --surface-sunken: #06122a;
+
+    --ink-strong: #f5f7fb;
+    --ink-default: #d8deec;
+    --ink-muted: #9aa4bd;
+    --ink-subtle: #6b7390;
+    --ink-on-accent: #ffffff;
+    --ink-on-brand: #ffffff;
+
+    --border-default: #1f2a47;
+    --border-strong: #33405e;
+    --border-focus: #f15a22;
+
+    --accent-default: #ff6e36;
+    --accent-hover: #f15a22;
+    --accent-active: #d74a15;
+    --accent-soft: #3a1e14;
+
+    --brand-default: #7ba0e0;
+    --brand-hover: #a1beeb;
+    --brand-soft: #1b2848;
+
+    --status-open: #34c77a;
+    --status-open-soft: #0f2a1b;
+    --status-warn: #e1a24f;
+    --status-warn-soft: #332417;
+    --status-danger: #f25f5c;
+    --status-danger-soft: #36161a;
+    --status-info: #7aa4f0;
+    --status-info-soft: #15233f;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 2px 8px -1px rgba(0, 0, 0, 0.45), 0 1px 3px -1px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 40px -8px rgba(0, 0, 0, 0.7), 0 8px 16px -4px rgba(0, 0, 0, 0.5);
+    --shadow-focus: 0 0 0 3px rgba(255, 110, 54, 0.5);
+}
+
+/* Auto dark for users who haven't picked. Toggle overrides this. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        color-scheme: dark;
+    }
+}
+
+/* ---- reset ------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--surface-canvas);
+    color: var(--ink-default);
+    font-family:
+        'Inter',
+        'Inter Variable',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Focus ring — accessible, brand-toned, always visible on keyboard nav. */
+:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: 4px;
+}
+
+/* Tabular numbers wherever data shows up. */
+.utsa-tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+}
+
+/* Reduced-motion override: instant transitions. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

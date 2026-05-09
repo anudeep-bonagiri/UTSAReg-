@@ -1,2 +1,4 @@
-// Tokens + primitives defined in subsequent commit (Task #6).
-export {};
+export * from './colors.js';
+export * from './spacing.js';
+export * from './typography.js';
+export * from './motion.js';
