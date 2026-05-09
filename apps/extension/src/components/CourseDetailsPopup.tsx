@@ -44,8 +44,12 @@ const CourseDetailsPopup: React.FC<CourseDetailsPopupProps> = ({ course, onClose
                             <BarChart2 className="w-5 h-5" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-bold leading-tight">{course.subject} {course.courseNumber}</h2>
-                            <p className="text-xs opacity-80">{course.title} • Section {course.section}</p>
+                            <h2 className="text-lg font-bold leading-tight">
+                                {course.subject} {course.courseNumber}
+                            </h2>
+                            <p className="text-xs opacity-80">
+                                {course.title} • Section {course.section}
+                            </p>
                         </div>
                     </div>
                     <button
@@ -73,7 +77,9 @@ const CourseDetailsPopup: React.FC<CourseDetailsPopupProps> = ({ course, onClose
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-4">
                                     <div className="text-center">
-                                        <span className="text-3xl font-black text-utsa-blue">{rating?.score}</span>
+                                        <span className="text-3xl font-black text-utsa-blue">
+                                            {rating?.score}
+                                        </span>
                                         <span className="text-sm text-gray-500 block">/ 5.0</span>
                                     </div>
                                     <div className="h-10 w-[1px] bg-gray-200"></div>
@@ -98,11 +104,20 @@ const CourseDetailsPopup: React.FC<CourseDetailsPopupProps> = ({ course, onClose
                     {showGrades && (
                         <section className="bg-white p-4 rounded-lg shadow-sm border border-utsa-orange animation-slide-down">
                             <div className="flex justify-between items-center mb-2">
-                                <h3 className="text-xs font-bold text-utsa-blue uppercase tracking-widest">Historical Grade Distribution</h3>
-                                <button onClick={() => setShowGrades(false)} className="text-[10px] text-utsa-orange font-bold uppercase hover:underline">Close</button>
+                                <h3 className="text-xs font-bold text-utsa-blue uppercase tracking-widest">
+                                    Historical Grade Distribution
+                                </h3>
+                                <button
+                                    onClick={() => setShowGrades(false)}
+                                    className="text-[10px] text-utsa-orange font-bold uppercase hover:underline"
+                                >
+                                    Close
+                                </button>
                             </div>
                             <GradeChart data={mockGrades} />
-                            <p className="text-[9px] text-gray-400 mt-2 italic text-center text-balance">Data based on the last 3 regular semesters for this instructor.</p>
+                            <p className="text-[9px] text-gray-400 mt-2 italic text-center text-balance">
+                                Data based on the last 3 regular semesters for this instructor.
+                            </p>
                         </section>
                     )}
 
@@ -123,18 +138,24 @@ const CourseDetailsPopup: React.FC<CourseDetailsPopupProps> = ({ course, onClose
                             className={`flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm border ${showGrades ? 'border-utsa-orange bg-utsa-limestone' : 'border-utsa-concrete'} hover:border-utsa-orange hover:bg-utsa-limestone transition-all group`}
                         >
                             <BarChart2 className="w-6 h-6 text-utsa-blue group-hover:text-utsa-orange mb-2" />
-                            <span className="text-sm font-bold text-utsa-blue">Grade Distribution</span>
+                            <span className="text-sm font-bold text-utsa-blue">
+                                Grade Distribution
+                            </span>
                             <span className="text-[10px] text-gray-500">See A-F History</span>
                         </button>
                     </section>
 
                     {/* Course Details */}
                     <section className="bg-white p-4 rounded-lg shadow-sm border border-utsa-concrete">
-                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Schedule Info</h3>
+                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                            Schedule Info
+                        </h3>
                         <div className="grid grid-cols-2 gap-y-3 text-sm">
                             <div>
                                 <p className="text-gray-500 text-[10px] uppercase">Days & Time</p>
-                                <p className="font-medium text-utsa-blue">{course.days} {course.time}</p>
+                                <p className="font-medium text-utsa-blue">
+                                    {course.days} {course.time}
+                                </p>
                             </div>
                             <div>
                                 <p className="text-gray-500 text-[10px] uppercase">Location</p>
@@ -142,7 +163,9 @@ const CourseDetailsPopup: React.FC<CourseDetailsPopupProps> = ({ course, onClose
                             </div>
                             <div>
                                 <p className="text-gray-500 text-[10px] uppercase">CRN</p>
-                                <p className="font-medium text-utsa-blue tracking-widest">{course.crn}</p>
+                                <p className="font-medium text-utsa-blue tracking-widest">
+                                    {course.crn}
+                                </p>
                             </div>
                             <div>
                                 <p className="text-gray-500 text-[10px] uppercase">Credits</p>

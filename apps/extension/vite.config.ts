@@ -11,7 +11,7 @@ export default defineConfig({
                 popup: resolve(import.meta.dirname, 'index.html'),
                 dashboard: resolve(import.meta.dirname, 'dashboard.html'),
                 background: resolve(import.meta.dirname, 'src/background/index.ts'),
-                content: resolve(import.meta.dirname, 'src/content/index.tsx'),
+                content: resolve(import.meta.dirname, 'src/content/index.tsx')
             },
             output: {
                 entryFileNames: (chunkInfo) => {
@@ -24,8 +24,8 @@ export default defineConfig({
                         return '[name][extname]';
                     }
                     return 'assets/[name]-[hash][extname]';
-                },
-            },
-        },
-    },
+                }
+            }
+        }
+    }
 });

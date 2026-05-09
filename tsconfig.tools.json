@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "types": ["node"],
+        "allowJs": true,
+        "checkJs": false
+    },
+    "include": [
+        "*.config.{js,ts,mjs}",
+        "**/*.config.{js,ts,mjs}",
+        "scripts/**/*.{js,ts}",
+        "apps/extension/src/scripts/**/*.{js,ts}",
+        "vitest.config.ts"
+    ],
+    "exclude": ["node_modules", "**/dist/**"]
+}

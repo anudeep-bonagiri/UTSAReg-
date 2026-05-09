@@ -3,11 +3,7 @@
     "name": "UTSA Registration Plus",
     "version": "1.0.0",
     "description": "Streamline course registration at UTSA with professor ratings, grade distributions, and visual schedule building.",
-    "permissions": [
-        "scripting",
-        "activeTab",
-        "storage"
-    ],
+    "permissions": ["scripting", "activeTab", "storage"],
     "host_permissions": [
         "https://asap.utsa.edu/*",
         "https://catalog.utsa.edu/*",
@@ -22,16 +18,9 @@
     },
     "content_scripts": [
         {
-            "matches": [
-                "https://asap.utsa.edu/*",
-                "https://catalog.utsa.edu/*"
-            ],
-            "js": [
-                "content.js"
-            ],
-            "css": [
-                "main.css"
-            ]
+            "matches": ["https://asap.utsa.edu/*", "https://catalog.utsa.edu/*"],
+            "js": ["content.js"],
+            "css": ["main.css"]
         }
     ],
     "icons": {

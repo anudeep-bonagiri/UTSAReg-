@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "allowJs": true,
+        "checkJs": false,
+        "types": ["chrome", "node", "vite/client"]
+    },
+    "include": [
+        "apps/extension/src/**/*",
+        "packages/core/src/**/*",
+        "packages/ui/src/**/*",
+        "packages/adapter-utsa/src/**/*",
+        "vitest.config.ts"
+    ],
+    "exclude": ["**/dist/**", "**/node_modules/**"]
+}

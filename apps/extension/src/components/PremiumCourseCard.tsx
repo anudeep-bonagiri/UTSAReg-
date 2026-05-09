@@ -18,7 +18,9 @@ const PremiumCourseCard: React.FC<PremiumCourseCardProps> = ({ course, onAdd, on
     return (
         <div className="glass-card animate-premium p-5 space-y-4 border-l-4 border-l-utsa-orange">
             <div className="space-y-1">
-                <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold">Course Detail</span>
+                <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold">
+                    Course Detail
+                </span>
                 <h2 className="text-lg font-bold text-white leading-tight">
                     {course.subject} {course.courseNumber} - {course.title}
                 </h2>
@@ -45,7 +47,9 @@ const PremiumCourseCard: React.FC<PremiumCourseCardProps> = ({ course, onAdd, on
                     </div>
                 </div>
                 <div className="text-right">
-                    <span className="text-[10px] uppercase tracking-wider text-white/40 block">Section</span>
+                    <span className="text-[10px] uppercase tracking-wider text-white/40 block">
+                        Section
+                    </span>
                     <span className="text-sm font-bold text-white">{course.section}</span>
                 </div>
             </div>
@@ -58,7 +62,9 @@ const PremiumCourseCard: React.FC<PremiumCourseCardProps> = ({ course, onAdd, on
             <div className="grid grid-cols-2 gap-6 pt-2">
                 <div className="space-y-2">
                     <div className="flex justify-between items-end">
-                        <span className="text-[10px] uppercase font-bold text-white/40">Grade Distribution</span>
+                        <span className="text-[10px] uppercase font-bold text-white/40">
+                            Grade Distribution
+                        </span>
                     </div>
                     <div className="h-[80px]">
                         <GradeChart data={mockGrades} />
@@ -68,8 +74,12 @@ const PremiumCourseCard: React.FC<PremiumCourseCardProps> = ({ course, onAdd, on
                 <div className="space-y-3">
                     <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2.5 flex items-center justify-between">
                         <div>
-                            <span className="text-[10px] uppercase font-bold text-emerald-400 block">Enrollment</span>
-                            <span className="text-xs font-bold text-white">{enrollment.current}/{enrollment.max} seats</span>
+                            <span className="text-[10px] uppercase font-bold text-emerald-400 block">
+                                Enrollment
+                            </span>
+                            <span className="text-xs font-bold text-white">
+                                {enrollment.current}/{enrollment.max} seats
+                            </span>
                         </div>
                         <div className="flex items-center gap-1 text-emerald-400">
                             <div className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />

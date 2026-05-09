@@ -6,18 +6,11 @@ import {
     BarElement,
     Title,
     Tooltip,
-    Legend,
+    Legend
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 interface GradeChartProps {
     data: {
@@ -45,9 +38,9 @@ const GradeChart: React.FC<GradeChartProps> = ({ data }) => {
                     '#666666',
                     '#F8F4F1'
                 ],
-                borderRadius: 4,
-            },
-        ],
+                borderRadius: 4
+            }
+        ]
     };
 
     const options = {
@@ -55,13 +48,13 @@ const GradeChart: React.FC<GradeChartProps> = ({ data }) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: false,
+                display: false
             },
             tooltip: {
                 callbacks: {
-                    label: (context: any) => `${context.parsed.y}%`,
-                },
-            },
+                    label: (context: any) => `${context.parsed.y}%`
+                }
+            }
         },
         scales: {
             y: {
@@ -70,12 +63,12 @@ const GradeChart: React.FC<GradeChartProps> = ({ data }) => {
                 ticks: {
                     callback: (value: any) => `${value}%`,
                     font: { size: 10 }
-                },
+                }
             },
             x: {
                 ticks: { font: { size: 10, weight: 'bold' } }
             }
-        },
+        }
     };
 
     return (

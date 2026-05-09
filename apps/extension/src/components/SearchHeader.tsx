@@ -25,7 +25,9 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({ onSearch }) => {
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2 bg-white/5 px-2 py-1 rounded-full border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                        <div className="w-6 h-6 rounded-full bg-utsa-orange flex items-center justify-center text-[10px] font-bold">JS</div>
+                        <div className="w-6 h-6 rounded-full bg-utsa-orange flex items-center justify-center text-[10px] font-bold">
+                            JS
+                        </div>
                         <span className="text-[10px] font-medium text-white/80">J. Smith</span>
                     </div>
                     <button className="text-white/60 hover:text-utsa-orange transition-colors">
