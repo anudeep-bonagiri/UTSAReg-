@@ -1,0 +1,267 @@
+import { useMemo } from 'react';
+import { Star, Users, MapPin, Clock, Calendar as CalIcon, Bookmark, ExternalLink } from 'lucide-react';
+import {
+    Badge,
+    Button,
+    Card,
+    FreshnessChip,
+    Tooltip,
+    cn
+} from '@utsaregplus/ui';
+import {
+    formatDays,
+    formatTimeRange,
+    type Course,
+    type Section
+} from '@utsaregplus/core';
+import { useRmpRating } from '../hooks/useRmpRating.js';
+
+interface SectionCardProps {
+    section: Section;
+    course: Course | undefined;
+    saved: boolean;
+    inConflict: boolean;
+    onAdd: (section: Section) => void;
+    onSave: (section: Section) => void;
+    onOpen: (section: Section) => void;
+}
+
+const STATUS_TONE: Record<Section['status'], 'open' | 'warn' | 'danger' | 'neutral'> = {
+    open: 'open',
+    waitlist: 'warn',
+    closed: 'danger',
+    cancelled: 'neutral'
+};
+
+const STATUS_LABEL: Record<Section['status'], string> = {
+    open: 'Open',
+    waitlist: 'Waitlist',
+    closed: 'Closed',
+    cancelled: 'Cancelled'
+};
+
+const MODALITY_LABEL: Record<Section['modality'], string | null> = {
+    in_person: null,
+    online_async: 'Online (async)',
+    online_sync: 'Online (live)',
+    hybrid: 'Hybrid',
+    unspecified: null
+};
+
+export const SectionCard = ({
+    section,
+    course,
+    saved,
+    inConflict,
+    onAdd,
+    onSave,
+    onOpen
+}: SectionCardProps) => {
+    const rmp = useRmpRating(section.instructorName);
+    const meeting = section.meetings[0];
+
+    const seatPct = useMemo(() => {
+        if (!section.capacity || !section.enrolled) return null;
+        return Math.min(100, Math.round((section.enrolled / section.capacity) * 100));
+    }, [section.capacity, section.enrolled]);
+
+    const ratingBadge = (() => {
+        if (rmp.loading) {
+            return (
+                <span className="inline-flex items-center gap-1 text-[--ink-subtle] text-[11px]">
+                    <span className="w-3 h-3 rounded-full bg-[--surface-sunken] animate-pulse" />
+                    fetching rating...
+                </span>
+            );
+        }
+        if (!rmp.data || rmp.data.data.numRatings === 0) {
+            return <span className="text-[--ink-subtle] text-[11px]">No RMP data</span>;
+        }
+        const r = rmp.data.data;
+        const tone =
+            r.avgRating >= 4 ? 'open' : r.avgRating >= 3 ? 'warn' : 'danger';
+        return (
+            <Tooltip
+                content={
+                    <div className="text-[11px] leading-tight">
+                        <div className="font-bold">
+                            {r.avgRating.toFixed(2)}★ on RateMyProfessors
+                        </div>
+                        <div className="text-white/70">
+                            {r.numRatings} reviews
+                            {r.avgDifficulty !== undefined &&
+                                ` · ${r.avgDifficulty.toFixed(1)} difficulty`}
+                            {r.wouldTakeAgainPercent !== undefined &&
+                                ` · ${Math.round(r.wouldTakeAgainPercent)}% retake`}
+                        </div>
+                    </div>
+                }
+            >
+                <span
+                    className={cn(
+                        'inline-flex items-center gap-1 text-[11px] font-semibold cursor-help',
+                        tone === 'open' && 'text-[--status-open]',
+                        tone === 'warn' && 'text-[--status-warn]',
+                        tone === 'danger' && 'text-[--status-danger]'
+                    )}
+                >
+                    <Star className="w-3 h-3 fill-current" />
+                    {r.avgRating.toFixed(1)}
+                    <span className="text-[--ink-subtle] font-normal">
+                        ({r.numRatings})
+                    </span>
+                </span>
+            </Tooltip>
+        );
+    })();
+
+    return (
+        <Card
+            elevation={inConflict ? 'flat' : 'low'}
+            padding="md"
+            className={cn(
+                'transition-opacity',
+                inConflict && 'opacity-60 line-through decoration-[--status-danger]/30'
+            )}
+        >
+            {/* Header row */}
+            <button
+                type="button"
+                onClick={() => {
+                    onOpen(section);
+                }}
+                className="w-full text-left flex items-start justify-between gap-2 mb-2 hover:opacity-80 transition-opacity"
+            >
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-[13px] font-bold text-[--ink-strong] tracking-tight utsa-tabular">
+                            {section.courseId.slice(0, -4)} {section.courseId.slice(-4)}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-semibold">
+                            §{section.sectionCode}
+                        </span>
+                        <Badge tone={STATUS_TONE[section.status]} size="sm" withDot>
+                            {STATUS_LABEL[section.status]}
+                        </Badge>
+                    </div>
+                    <h3 className="text-[12px] font-semibold text-[--ink-default] mt-0.5 truncate">
+                        {course?.title ?? section.title}
+                    </h3>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 text-[--ink-subtle] shrink-0 mt-1" />
+            </button>
+
+            {/* Instructor + RMP */}
+            <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-1.5 min-w-0">
+                    <div className="w-6 h-6 rounded-full bg-[--brand-soft] text-[--brand-default] flex items-center justify-center text-[10px] font-bold shrink-0">
+                        {section.instructorName
+                            .split(/[, ]+/)
+                            .slice(0, 2)
+                            .map((p) => p[0])
+                            .join('')
+                            .toUpperCase()}
+                    </div>
+                    <span className="text-[12px] text-[--ink-default] truncate">
+                        {section.instructorName}
+                    </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                    {ratingBadge}
+                    {rmp.data && (
+                        <FreshnessChip freshness={rmp.data.freshness} timeOnly />
+                    )}
+                </div>
+            </div>
+
+            {/* Schedule line */}
+            <div className="flex items-center gap-3 text-[11px] text-[--ink-muted] mb-3 utsa-tabular">
+                {meeting ? (
+                    <>
+                        <span className="inline-flex items-center gap-1">
+                            <CalIcon className="w-3 h-3" />
+                            <strong className="text-[--ink-default]">{formatDays(meeting.days)}</strong>
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {formatTimeRange(meeting.startMin, meeting.endMin)}
+                        </span>
+                        {meeting.location && (
+                            <span className="inline-flex items-center gap-1 truncate">
+                                <MapPin className="w-3 h-3" />
+                                {meeting.location}
+                            </span>
+                        )}
+                    </>
+                ) : MODALITY_LABEL[section.modality] ? (
+                    <span className="inline-flex items-center gap-1 text-[--status-info]">
+                        <Clock className="w-3 h-3" /> {MODALITY_LABEL[section.modality]}
+                    </span>
+                ) : (
+                    <span className="text-[--ink-subtle]">No meeting time scheduled</span>
+                )}
+            </div>
+
+            {/* Seats + actions */}
+            <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 text-[11px] text-[--ink-muted] utsa-tabular min-w-0">
+                    <Users className="w-3 h-3 shrink-0" />
+                    {section.enrolled !== undefined && section.capacity !== undefined ? (
+                        <>
+                            <span>
+                                <strong className="text-[--ink-default]">
+                                    {section.enrolled}
+                                </strong>
+                                /{section.capacity}
+                            </span>
+                            {seatPct !== null && (
+                                <div className="w-12 h-1.5 bg-[--surface-sunken] rounded-full overflow-hidden">
+                                    <div
+                                        className={cn(
+                                            'h-full',
+                                            seatPct >= 90
+                                                ? 'bg-[--status-danger]'
+                                                : seatPct >= 70
+                                                    ? 'bg-[--status-warn]'
+                                                    : 'bg-[--status-open]'
+                                        )}
+                                        style={{ width: `${seatPct}%` }}
+                                    />
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <span className="text-[--ink-subtle]">No seat data</span>
+                    )}
+                </div>
+                <div className="flex items-center gap-1">
+                    <Tooltip content={saved ? 'Already saved' : 'Save for later'}>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label={saved ? 'Saved' : 'Save course'}
+                            onClick={() => {
+                                onSave(section);
+                            }}
+                            className={cn(saved && 'text-[--accent-default]')}
+                        >
+                            <Bookmark
+                                className={cn('w-4 h-4', saved && 'fill-current')}
+                            />
+                        </Button>
+                    </Tooltip>
+                    <Button
+                        size="sm"
+                        variant="primary"
+                        onClick={() => {
+                            onAdd(section);
+                        }}
+                        disabled={inConflict || section.status === 'closed'}
+                    >
+                        Add
+                    </Button>
+                </div>
+            </div>
+        </Card>
+    );
+};
