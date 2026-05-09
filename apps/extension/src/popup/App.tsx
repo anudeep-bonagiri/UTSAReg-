@@ -186,8 +186,8 @@ export const App = () => {
                             tab.id === 'schedule'
                                 ? crns.length
                                 : tab.id === 'saved'
-                                    ? saved.length
-                                    : null;
+                                  ? saved.length
+                                  : null;
                         return (
                             <button
                                 key={tab.id}
@@ -367,9 +367,7 @@ interface ScheduleTabProps {
 
 const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTabProps) => {
     if (!hydrated) {
-        return (
-            <div className="text-center py-6 text-[--ink-subtle] text-[12px]">Loading...</div>
-        );
+        return <div className="text-center py-6 text-[--ink-subtle] text-[12px]">Loading...</div>;
     }
     if (committed.length === 0) {
         return (
@@ -383,8 +381,8 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
                     </p>
                     <p className="text-[11px] text-[--ink-muted] mt-1">
                         Search and tap{' '}
-                        <span className="font-semibold text-[--accent-default]">Add</span> on
-                        any section.
+                        <span className="font-semibold text-[--accent-default]">Add</span> on any
+                        section.
                     </p>
                 </div>
             </div>
@@ -422,8 +420,8 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
                     <div className="mt-2 pt-2 border-t border-[--border-default] flex items-start gap-1.5 text-[10px] text-[--status-warn]">
                         <AlertTriangle className="w-3 h-3 shrink-0 mt-0.5" />
                         <span>
-                            <strong>F1 alert:</strong> Below 12 credits. International students
-                            need ≥12 in-person hours to maintain CPT/OPT eligibility.
+                            <strong>F1 alert:</strong> Below 12 credits. International students need
+                            ≥12 in-person hours to maintain CPT/OPT eligibility.
                         </span>
                     </div>
                 )}
@@ -440,9 +438,7 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
                                 §{section.sectionCode}
                             </Badge>
                         </div>
-                        <p className="text-[10px] text-[--ink-muted] truncate">
-                            {section.title}
-                        </p>
+                        <p className="text-[10px] text-[--ink-muted] truncate">{section.title}</p>
                         <p className="text-[10px] text-[--ink-muted] mt-0.5 utsa-tabular">
                             {section.meetings[0]
                                 ? `${formatDays(section.meetings[0].days)} · ${formatTimeRange(section.meetings[0].startMin, section.meetings[0].endMin)}`

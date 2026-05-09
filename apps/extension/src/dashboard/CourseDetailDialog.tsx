@@ -11,12 +11,7 @@ import {
     DialogTitle,
     FreshnessChip
 } from '@utsaregplus/ui';
-import {
-    formatDays,
-    formatTimeRange,
-    type Course,
-    type Section
-} from '@utsaregplus/core';
+import { formatDays, formatTimeRange, type Course, type Section } from '@utsaregplus/core';
 import { useRmpRating } from '../hooks/useRmpRating.js';
 
 interface CourseDetailDialogProps {
@@ -48,8 +43,8 @@ export const CourseDetailDialog = ({
         ? r.avgRating >= 4
             ? 'open'
             : r.avgRating >= 3
-                ? 'warn'
-                : 'danger'
+              ? 'warn'
+              : 'danger'
         : 'neutral';
 
     return (
@@ -96,9 +91,7 @@ export const CourseDetailDialog = ({
                                     </div>
                                 </div>
                             </div>
-                            {rmp.data && (
-                                <FreshnessChip freshness={rmp.data.freshness} />
-                            )}
+                            {rmp.data && <FreshnessChip freshness={rmp.data.freshness} />}
                         </div>
 
                         {rmp.loading ? (
@@ -115,16 +108,14 @@ export const CourseDetailDialog = ({
                                                 ratingTone === 'open'
                                                     ? 'text-[--status-open]'
                                                     : ratingTone === 'warn'
-                                                        ? 'text-[--status-warn]'
-                                                        : 'text-[--status-danger]'
+                                                      ? 'text-[--status-warn]'
+                                                      : 'text-[--status-danger]'
                                             }`}
                                         />
                                         <span className="text-[20px] font-black text-[--ink-strong] utsa-tabular">
                                             {r.avgRating.toFixed(1)}
                                         </span>
-                                        <span className="text-[10px] text-[--ink-muted]">
-                                            / 5
-                                        </span>
+                                        <span className="text-[10px] text-[--ink-muted]">/ 5</span>
                                     </div>
                                     <div className="text-[10px] text-[--ink-muted] mt-1">
                                         {r.numRatings} reviews
@@ -137,9 +128,7 @@ export const CourseDetailDialog = ({
                                     <div className="text-[20px] font-black text-[--ink-strong] utsa-tabular mt-1">
                                         {r.avgDifficulty?.toFixed(1) ?? '—'}
                                     </div>
-                                    <div className="text-[10px] text-[--ink-muted] mt-1">
-                                        / 5
-                                    </div>
+                                    <div className="text-[10px] text-[--ink-muted] mt-1">/ 5</div>
                                 </div>
                                 <div className="rounded-xl bg-[--surface-muted] p-3">
                                     <div className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-bold">
@@ -169,7 +158,11 @@ export const CourseDetailDialog = ({
                         </h4>
                         {meeting ? (
                             <div className="grid grid-cols-3 gap-3 text-[12px]">
-                                <Stat icon={Calendar} label="Days" value={formatDays(meeting.days)} />
+                                <Stat
+                                    icon={Calendar}
+                                    label="Days"
+                                    value={formatDays(meeting.days)}
+                                />
                                 <Stat
                                     icon={Clock}
                                     label="Time"
@@ -223,8 +216,8 @@ export const CourseDetailDialog = ({
                                         section.status === 'open'
                                             ? 'open'
                                             : section.status === 'waitlist'
-                                                ? 'warn'
-                                                : 'danger'
+                                              ? 'warn'
+                                              : 'danger'
                                     }
                                     withDot
                                     size="md"

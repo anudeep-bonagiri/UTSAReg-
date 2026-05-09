@@ -16,14 +16,7 @@ import {
     AlertTriangle,
     CheckCircle2
 } from 'lucide-react';
-import {
-    Button,
-    Card,
-    FreshnessChip,
-    Input,
-    TooltipProvider,
-    cn
-} from '@utsaregplus/ui';
+import { Button, Card, FreshnessChip, Input, TooltipProvider, cn } from '@utsaregplus/ui';
 import {
     findConflictsAgainst,
     formatDays,
@@ -421,9 +414,7 @@ const FeatureCard = ({ icon: Icon, title, body }: FeatureCardProps) => (
             <Icon className="w-5 h-5" />
         </div>
         <div>
-            <h3 className="text-[15px] font-bold text-[--ink-strong] tracking-tight">
-                {title}
-            </h3>
+            <h3 className="text-[15px] font-bold text-[--ink-strong] tracking-tight">{title}</h3>
             <p className="text-[12px] text-[--ink-muted] leading-relaxed mt-1">{body}</p>
         </div>
     </Card>
@@ -478,8 +469,8 @@ const SchedulePane = ({
                             </p>
                             <p className="text-[12px] text-[--ink-default] mt-1">
                                 International students must maintain ≥12 in-person credits to
-                                preserve CPT/OPT eligibility. Add an in-person section or
-                                disable F1 mode if you have an exception.
+                                preserve CPT/OPT eligibility. Add an in-person section or disable F1
+                                mode if you have an exception.
                             </p>
                         </div>
                     </div>
@@ -542,9 +533,7 @@ const StatBlock = ({ label, value, suffix, tone = 'default' }: StatBlockProps) =
         >
             {value}
             {suffix && (
-                <span className="text-[14px] text-[--ink-muted] font-medium ml-1">
-                    {suffix}
-                </span>
+                <span className="text-[14px] text-[--ink-muted] font-medium ml-1">{suffix}</span>
             )}
         </p>
     </Card>
@@ -632,12 +621,12 @@ const SettingsPane = ({ prefs, onChange }: SettingsPaneProps) => (
                             combination ranked by RMP + grade history + compactness.
                         </li>
                         <li>
-                            Waitlist watcher (v1.2) — desktop notifications when a closed
-                            section opens up.
+                            Waitlist watcher (v1.2) — desktop notifications when a closed section
+                            opens up.
                         </li>
                         <li>
-                            AI registration coach — Claude-backed advisor that reads your
-                            degree audit + saved sections.
+                            AI registration coach — Claude-backed advisor that reads your degree
+                            audit + saved sections.
                         </li>
                     </ul>
                 </div>
@@ -683,9 +672,7 @@ const ToggleRow = ({
                         {badge}
                     </span>
                 </div>
-                <p className="text-[12px] text-[--ink-muted] leading-relaxed mt-1">
-                    {description}
-                </p>
+                <p className="text-[12px] text-[--ink-muted] leading-relaxed mt-1">{description}</p>
             </div>
             <button
                 type="button"

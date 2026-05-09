@@ -114,9 +114,7 @@ export const WeeklyScheduleGrid = ({
         return out;
     }, [sections]);
 
-    const onlineSections = sections.filter((s) =>
-        s.meetings.every((m) => m.days.length === 0)
-    );
+    const onlineSections = sections.filter((s) => s.meetings.every((m) => m.days.length === 0));
     const hasAnyMeeting = blocks.length > 0;
     const hasNothing = sections.length === 0;
 
@@ -247,8 +245,7 @@ export const WeeklyScheduleGrid = ({
                         {onlineSections.length} online section
                         {onlineSections.length === 1 ? '' : 's'}
                     </span>{' '}
-                    not shown on grid:{' '}
-                    {onlineSections.map((s) => s.courseId).join(', ')}
+                    not shown on grid: {onlineSections.map((s) => s.courseId).join(', ')}
                 </div>
             )}
         </div>

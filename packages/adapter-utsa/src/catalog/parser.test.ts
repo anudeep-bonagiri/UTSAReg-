@@ -5,10 +5,7 @@ import { dirname, join } from 'node:path';
 import { parseCatalogHtml } from './parser.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const realCatalogHtml = readFileSync(
-    join(here, '__fixtures__', 'cs_catalog_2026.html'),
-    'utf8'
-);
+const realCatalogHtml = readFileSync(join(here, '__fixtures__', 'cs_catalog_2026.html'), 'utf8');
 
 describe('parseCatalogHtml — real catalog.utsa.edu CS page', () => {
     const courses = parseCatalogHtml(realCatalogHtml, { expectedSubject: 'CS' });

@@ -66,10 +66,7 @@ export const findAllConflicts = (sections: Section[]): ConflictPair[] => {
  * Return the subset of `candidates` that conflict with at least one section
  * in `committed`. Useful for highlighting search results.
  */
-export const findConflictsAgainst = (
-    committed: Section[],
-    candidates: Section[]
-): Set<string> => {
+export const findConflictsAgainst = (committed: Section[], candidates: Section[]): Set<string> => {
     const out = new Set<string>();
     for (const candidate of candidates) {
         for (const c of committed) {

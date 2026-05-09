@@ -1,19 +1,15 @@
 import { useMemo } from 'react';
-import { Star, Users, MapPin, Clock, Calendar as CalIcon, Bookmark, ExternalLink } from 'lucide-react';
 import {
-    Badge,
-    Button,
-    Card,
-    FreshnessChip,
-    Tooltip,
-    cn
-} from '@utsaregplus/ui';
-import {
-    formatDays,
-    formatTimeRange,
-    type Course,
-    type Section
-} from '@utsaregplus/core';
+    Star,
+    Users,
+    MapPin,
+    Clock,
+    Calendar as CalIcon,
+    Bookmark,
+    ExternalLink
+} from 'lucide-react';
+import { Badge, Button, Card, FreshnessChip, Tooltip, cn } from '@utsaregplus/ui';
+import { formatDays, formatTimeRange, type Course, type Section } from '@utsaregplus/core';
 import { useRmpRating } from '../hooks/useRmpRating.js';
 
 interface SectionCardProps {
@@ -78,8 +74,7 @@ export const SectionCard = ({
             return <span className="text-[--ink-subtle] text-[11px]">No RMP data</span>;
         }
         const r = rmp.data.data;
-        const tone =
-            r.avgRating >= 4 ? 'open' : r.avgRating >= 3 ? 'warn' : 'danger';
+        const tone = r.avgRating >= 4 ? 'open' : r.avgRating >= 3 ? 'warn' : 'danger';
         return (
             <Tooltip
                 content={
@@ -107,9 +102,7 @@ export const SectionCard = ({
                 >
                     <Star className="w-3 h-3 fill-current" />
                     {r.avgRating.toFixed(1)}
-                    <span className="text-[--ink-subtle] font-normal">
-                        ({r.numRatings})
-                    </span>
+                    <span className="text-[--ink-subtle] font-normal">({r.numRatings})</span>
                 </span>
             </Tooltip>
         );
@@ -168,9 +161,7 @@ export const SectionCard = ({
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                     {ratingBadge}
-                    {rmp.data && (
-                        <FreshnessChip freshness={rmp.data.freshness} timeOnly />
-                    )}
+                    {rmp.data && <FreshnessChip freshness={rmp.data.freshness} timeOnly />}
                 </div>
             </div>
 
@@ -180,7 +171,9 @@ export const SectionCard = ({
                     <>
                         <span className="inline-flex items-center gap-1">
                             <CalIcon className="w-3 h-3" />
-                            <strong className="text-[--ink-default]">{formatDays(meeting.days)}</strong>
+                            <strong className="text-[--ink-default]">
+                                {formatDays(meeting.days)}
+                            </strong>
                         </span>
                         <span className="inline-flex items-center gap-1">
                             <Clock className="w-3 h-3" />
@@ -209,9 +202,7 @@ export const SectionCard = ({
                     {section.enrolled !== undefined && section.capacity !== undefined ? (
                         <>
                             <span>
-                                <strong className="text-[--ink-default]">
-                                    {section.enrolled}
-                                </strong>
+                                <strong className="text-[--ink-default]">{section.enrolled}</strong>
                                 /{section.capacity}
                             </span>
                             {seatPct !== null && (
@@ -222,8 +213,8 @@ export const SectionCard = ({
                                             seatPct >= 90
                                                 ? 'bg-[--status-danger]'
                                                 : seatPct >= 70
-                                                    ? 'bg-[--status-warn]'
-                                                    : 'bg-[--status-open]'
+                                                  ? 'bg-[--status-warn]'
+                                                  : 'bg-[--status-open]'
                                         )}
                                         style={{ width: `${seatPct}%` }}
                                     />
@@ -245,9 +236,7 @@ export const SectionCard = ({
                             }}
                             className={cn(saved && 'text-[--accent-default]')}
                         >
-                            <Bookmark
-                                className={cn('w-4 h-4', saved && 'fill-current')}
-                            />
+                            <Bookmark className={cn('w-4 h-4', saved && 'fill-current')} />
                         </Button>
                     </Tooltip>
                     <Button

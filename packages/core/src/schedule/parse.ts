@@ -133,8 +133,7 @@ export const parseTimeRange = (input: string): TimeRange => {
         const endMeridian = (trailing?.[1] ?? '').toLowerCase().replace('.', '');
         const startHour = parseInt(/^(\d{1,2})/.exec(startStr)?.[1] ?? '0', 10);
         const endHour = parseInt(/^(\d{1,2})/.exec(endStr)?.[1] ?? '0', 10);
-        const startMeridian =
-            endMeridian === 'pm' && startHour > endHour ? 'am' : endMeridian;
+        const startMeridian = endMeridian === 'pm' && startHour > endHour ? 'am' : endMeridian;
         startStr = `${startStr.trim()}${startMeridian}`;
     }
 
@@ -153,11 +152,7 @@ export const parseTimeRange = (input: string): TimeRange => {
  * section has no scheduled meetings (online-async, TBA, etc.) — callers
  * should treat the section as having empty Section.meetings.
  */
-export const buildMeeting = (
-    daysStr: string,
-    timeStr: string,
-    location = ''
-): Meeting | null => {
+export const buildMeeting = (daysStr: string, timeStr: string, location = ''): Meeting | null => {
     const days = parseDays(daysStr);
     if (days.length === 0) return null;
     let range: TimeRange;

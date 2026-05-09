@@ -33,8 +33,7 @@ export const getCachedRating = async (
 
     const fetchedAtMs = new Date(stored.freshness.fetchedAt).getTime();
     const ageMs = nowMs - fetchedAtMs;
-    const stale =
-        stored.freshness.maxAgeMs !== undefined && ageMs > stored.freshness.maxAgeMs;
+    const stale = stored.freshness.maxAgeMs !== undefined && ageMs > stored.freshness.maxAgeMs;
 
     return {
         data: stored.data,

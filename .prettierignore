@@ -5,3 +5,7 @@ coverage
 package-lock.json
 *.zip
 data/raw
+data/catalog.json
+**/__fixtures__/**
+apps/extension/src/data/*.json
+apps/extension/test/**

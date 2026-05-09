@@ -25,9 +25,7 @@ export type WorkerResponse<R extends WorkerRequest> = R extends GetRmpRatingRequ
  * Typed sendMessage wrapper. Returns the structured response or throws on
  * the underlying chrome.runtime.lastError.
  */
-export const sendToBackground = <R extends WorkerRequest>(
-    request: R
-): Promise<WorkerResponse<R>> =>
+export const sendToBackground = <R extends WorkerRequest>(request: R): Promise<WorkerResponse<R>> =>
     new Promise((resolve, reject) => {
         chrome.runtime.sendMessage(request, (response: WorkerResponse<R>) => {
             const lastError = chrome.runtime.lastError;

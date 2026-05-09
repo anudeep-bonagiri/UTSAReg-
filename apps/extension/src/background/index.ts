@@ -49,9 +49,7 @@ const ensureSchoolId = async (): Promise<string> => {
  * hit, fires off a background refresh that updates the cache so the next
  * request gets fresh data.
  */
-const lookupRating = async (
-    instructorName: string
-): Promise<GetRmpRatingResponse> => {
+const lookupRating = async (instructorName: string): Promise<GetRmpRatingResponse> => {
     if (!instructorName || instructorName.toUpperCase() === 'TBA') {
         return { ok: true, result: null };
     }
@@ -100,27 +98,23 @@ const revalidateInBackground = async (instructorName: string): Promise<void> => 
 };
 
 const isRatingRequest = (msg: unknown): msg is GetRmpRatingRequest =>
-    typeof msg === 'object' &&
-    msg !== null &&
-    (msg as { type?: string }).type === 'getRmpRating';
+    typeof msg === 'object' && msg !== null && (msg as { type?: string }).type === 'getRmpRating';
 
-chrome.runtime.onMessage.addListener(
-    (message: WorkerRequest, _sender, sendResponse) => {
-        if (isRatingRequest(message)) {
-            lookupRating(message.instructorName)
-                .then((response) => {
-                    sendResponse(response);
-                })
-                .catch((err: unknown) => {
-                    sendResponse({
-                        ok: false,
-                        error: err instanceof Error ? err.message : String(err)
-                    } satisfies GetRmpRatingResponse);
-                });
-            return true; // keep the channel open for async sendResponse
-        }
-        return false;
+chrome.runtime.onMessage.addListener((message: WorkerRequest, _sender, sendResponse) => {
+    if (isRatingRequest(message)) {
+        lookupRating(message.instructorName)
+            .then((response) => {
+                sendResponse(response);
+            })
+            .catch((err: unknown) => {
+                sendResponse({
+                    ok: false,
+                    error: err instanceof Error ? err.message : String(err)
+                } satisfies GetRmpRatingResponse);
+            });
+        return true; // keep the channel open for async sendResponse
     }
-);
+    return false;
+});
 
 log('service worker started');

@@ -46,10 +46,7 @@ export interface ParseCatalogOptions {
     warn?: (msg: string) => void;
 }
 
-export const parseCatalogHtml = (
-    html: string,
-    options: ParseCatalogOptions = {}
-): Course[] => {
+export const parseCatalogHtml = (html: string, options: ParseCatalogOptions = {}): Course[] => {
     const courses: Course[] = [];
     const warn = options.warn;
     const expected = options.expectedSubject;

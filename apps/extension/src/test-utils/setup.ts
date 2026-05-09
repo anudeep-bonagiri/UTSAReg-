@@ -22,13 +22,10 @@ const chromeStub = {
     storage: {
         local: {
             get: vi.fn(
-                async (
-                    keys?: string | string[] | StorageRecord | null
-                ): Promise<StorageRecord> => {
+                async (keys?: string | string[] | StorageRecord | null): Promise<StorageRecord> => {
                     // Chrome behavior: undefined OR null means "all keys".
                     if (keys === undefined || keys === null) return { ...memoryStore };
-                    if (typeof keys === 'string')
-                        return { [keys]: memoryStore[keys] };
+                    if (typeof keys === 'string') return { [keys]: memoryStore[keys] };
                     if (Array.isArray(keys)) {
                         return Object.fromEntries(keys.map((k) => [k, memoryStore[k]]));
                     }

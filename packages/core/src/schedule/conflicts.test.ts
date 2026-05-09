@@ -28,9 +28,7 @@ const section = (crn: string, meetings: ReturnType<typeof meet>[]): Section =>
 
 describe('meetingsConflict', () => {
     it('detects same-day overlap', () => {
-        expect(meetingsConflict(meet(['M', 'W'], 540, 600), meet(['M'], 570, 630))).toBe(
-            true
-        );
+        expect(meetingsConflict(meet(['M', 'W'], 540, 600), meet(['M'], 570, 630))).toBe(true);
     });
 
     it('does not flag same time on different days', () => {

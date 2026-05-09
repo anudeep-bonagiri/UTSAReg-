@@ -13,7 +13,9 @@
             "sectionCode": "001",
             "title": "Introduction to Computer Programming I",
             "instructorName": "Rutherford",
-            "meetings": [{ "days": ["M", "W", "F"], "startMin": 540, "endMin": 590, "location": "NPB 1.202" }],
+            "meetings": [
+                { "days": ["M", "W", "F"], "startMin": 540, "endMin": 590, "location": "NPB 1.202" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 100,
@@ -27,7 +29,9 @@
             "sectionCode": "001",
             "title": "Programming I for Computer Scientists",
             "instructorName": "Gomez Morales",
-            "meetings": [{ "days": ["M", "W", "F"], "startMin": 540, "endMin": 590, "location": "NPB 1.202" }],
+            "meetings": [
+                { "days": ["M", "W", "F"], "startMin": 540, "endMin": 590, "location": "NPB 1.202" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 100,
@@ -41,7 +45,9 @@
             "sectionCode": "002",
             "title": "Programming I for Computer Scientists",
             "instructorName": "Tinghui Wang",
-            "meetings": [{ "days": ["T", "R"], "startMin": 600, "endMin": 675, "location": "NPB 1.250" }],
+            "meetings": [
+                { "days": ["T", "R"], "startMin": 600, "endMin": 675, "location": "NPB 1.250" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 80,
@@ -55,7 +61,14 @@
             "sectionCode": "002",
             "title": "Data Structures",
             "instructorName": "Sherette",
-            "meetings": [{ "days": ["M", "W", "F"], "startMin": 720, "endMin": 770, "location": "FLN 2.02.02" }],
+            "meetings": [
+                {
+                    "days": ["M", "W", "F"],
+                    "startMin": 720,
+                    "endMin": 770,
+                    "location": "FLN 2.02.02"
+                }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 80,
@@ -70,7 +83,9 @@
             "sectionCode": "003",
             "title": "Data Structures",
             "instructorName": "Murtuza Jadliwala",
-            "meetings": [{ "days": ["T", "R"], "startMin": 780, "endMin": 855, "location": "MH 3.02.38" }],
+            "meetings": [
+                { "days": ["T", "R"], "startMin": 780, "endMin": 855, "location": "MH 3.02.38" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 80,
@@ -84,7 +99,14 @@
             "sectionCode": "001",
             "title": "Design and Analysis of Algorithms",
             "instructorName": "Najem",
-            "meetings": [{ "days": ["M", "W", "F"], "startMin": 780, "endMin": 830, "location": "MH 3.02.38" }],
+            "meetings": [
+                {
+                    "days": ["M", "W", "F"],
+                    "startMin": 780,
+                    "endMin": 830,
+                    "location": "MH 3.02.38"
+                }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 60,
@@ -99,7 +121,9 @@
             "sectionCode": "002",
             "title": "Design and Analysis of Algorithms",
             "instructorName": "Murtuza Jadliwala",
-            "meetings": [{ "days": ["T", "R"], "startMin": 660, "endMin": 735, "location": "NPB 1.250" }],
+            "meetings": [
+                { "days": ["T", "R"], "startMin": 660, "endMin": 735, "location": "NPB 1.250" }
+            ],
             "modality": "in_person",
             "status": "waitlist",
             "capacity": 60,
@@ -114,7 +138,9 @@
             "sectionCode": "001",
             "title": "Application Programming",
             "instructorName": "Alkittawi",
-            "meetings": [{ "days": ["T", "R"], "startMin": 600, "endMin": 675, "location": "NPB 1.250" }],
+            "meetings": [
+                { "days": ["T", "R"], "startMin": 600, "endMin": 675, "location": "NPB 1.250" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 120,
@@ -142,7 +168,9 @@
             "sectionCode": "001",
             "title": "Operating Systems",
             "instructorName": "Rajendra Boppana",
-            "meetings": [{ "days": ["M", "W", "F"], "startMin": 660, "endMin": 710, "location": "NPB 1.202" }],
+            "meetings": [
+                { "days": ["M", "W", "F"], "startMin": 660, "endMin": 710, "location": "NPB 1.202" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 50,
@@ -156,7 +184,9 @@
             "sectionCode": "001",
             "title": "Artificial Intelligence",
             "instructorName": "Najem",
-            "meetings": [{ "days": ["T", "R"], "startMin": 600, "endMin": 675, "location": "MH 3.02.38" }],
+            "meetings": [
+                { "days": ["T", "R"], "startMin": 600, "endMin": 675, "location": "MH 3.02.38" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 50,
@@ -170,7 +200,9 @@
             "sectionCode": "001",
             "title": "Computer Networks",
             "instructorName": "Rajendra Boppana",
-            "meetings": [{ "days": ["T", "R"], "startMin": 780, "endMin": 855, "location": "NPB 1.250" }],
+            "meetings": [
+                { "days": ["T", "R"], "startMin": 780, "endMin": 855, "location": "NPB 1.250" }
+            ],
             "modality": "in_person",
             "status": "closed",
             "capacity": 60,
@@ -185,7 +217,14 @@
             "sectionCode": "003",
             "title": "Calculus I",
             "instructorName": "Rodriguez",
-            "meetings": [{ "days": ["M", "W", "F"], "startMin": 660, "endMin": 710, "location": "MS 3.02.02" }],
+            "meetings": [
+                {
+                    "days": ["M", "W", "F"],
+                    "startMin": 660,
+                    "endMin": 710,
+                    "location": "MS 3.02.02"
+                }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 40,
@@ -200,7 +239,14 @@
             "sectionCode": "001",
             "title": "Calculus II",
             "instructorName": "Rodriguez",
-            "meetings": [{ "days": ["M", "W", "F"], "startMin": 720, "endMin": 770, "location": "MS 3.02.02" }],
+            "meetings": [
+                {
+                    "days": ["M", "W", "F"],
+                    "startMin": 720,
+                    "endMin": 770,
+                    "location": "MS 3.02.02"
+                }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 40,
@@ -214,7 +260,9 @@
             "sectionCode": "012",
             "title": "Composition I",
             "instructorName": "Smith",
-            "meetings": [{ "days": ["T", "R"], "startMin": 540, "endMin": 615, "location": "MH 1.02.20" }],
+            "meetings": [
+                { "days": ["T", "R"], "startMin": 540, "endMin": 615, "location": "MH 1.02.20" }
+            ],
             "modality": "in_person",
             "status": "open",
             "capacity": 25,
