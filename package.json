@@ -17,7 +17,9 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "smoke:rmp": "tsx scripts/smoke-rmp.ts",
-        "data:catalog": "tsx scripts/scrape-catalog.ts"
+        "smoke:asap": "tsx scripts/smoke-asap.ts",
+        "data:catalog": "tsx scripts/scrape-catalog.ts",
+        "data:sections": "tsx scripts/scrape-sections.ts"
     },
     "devDependencies": {
         "@eslint/js": "^9.18.0",

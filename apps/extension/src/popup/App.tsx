@@ -169,6 +169,7 @@ export const App = () => {
                             setQuery(e.target.value);
                         }}
                         placeholder="Search CRN, class code, or title..."
+                        // eslint-disable-next-line jsx-a11y/no-autofocus -- popup opens with intent to type; AT users can Tab away instantly
                         autoFocus
                     />
                 </header>

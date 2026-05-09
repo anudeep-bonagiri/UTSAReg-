@@ -257,7 +257,8 @@ export const App = () => {
                                     onChange={(e) => {
                                         setQuery(e.target.value);
                                     }}
-                                    placeholder="Search 1,400 UTSA courses..."
+                                    placeholder="Search 2,400+ UTSA Fall 2026 sections..."
+                                    // eslint-disable-next-line jsx-a11y/no-autofocus -- explicit-by-design on a primary search surface
                                     autoFocus
                                 />
                             </div>
