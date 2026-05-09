@@ -1,0 +1,41 @@
+{
+    "name": "@utsaregplus/extension",
+    "private": true,
+    "version": "0.1.0",
+    "description": "UTSA Registration Plus — Chrome MV3 extension surface.",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "bundle": "npm run build && cd dist && zip -r ../../../utsa-reg-plus-$(node -p \"require('./manifest.json').version\").zip . && cd ..",
+        "preview": "vite preview",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "dependencies": {
+        "@utsaregplus/adapter-utsa": "*",
+        "@utsaregplus/core": "*",
+        "@utsaregplus/ui": "*",
+        "chart.js": "^4.5.1",
+        "react": "^19.2.4",
+        "react-chartjs-2": "^5.3.1",
+        "react-dom": "^19.2.4"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.2.1",
+        "@testing-library/jest-dom": "^6.6.3",
+        "@testing-library/react": "^16.1.0",
+        "@testing-library/user-event": "^14.5.2",
+        "@types/chrome": "^0.1.37",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "@vitejs/plugin-react": "^5.1.4",
+        "autoprefixer": "^10.4.27",
+        "jsdom": "^26.0.0",
+        "lucide-react": "^0.577.0",
+        "postcss": "^8.5.8",
+        "tailwindcss": "^4.2.1",
+        "vite": "^7.3.1"
+    }
+}

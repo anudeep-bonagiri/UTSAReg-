@@ -6,7 +6,7 @@ interface RatingResponse {
     url: string;
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     if (request.action === 'getProfessorRating') {
         // In a production environment, this would hit a secondary API or parse RMP
         // For now, we simulate a robust response

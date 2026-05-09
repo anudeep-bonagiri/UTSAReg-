@@ -1,39 +1,36 @@
 {
-  "name": "utsaregplus",
-  "type": "module",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "bundle": "npm run build && zip -r utsa-reg-plus-v1.0.0.zip dist",
-    "preview": "vite preview"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@tailwindcss/vite": "^4.2.1",
-    "chart.js": "^4.5.1",
-    "react": "^19.2.4",
-    "react-chartjs-2": "^5.3.1",
-    "react-dom": "^19.2.4"
-  },
-  "devDependencies": {
-    "@types/chrome": "^0.1.37",
-    "@types/node": "^25.3.3",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.4",
-    "autoprefixer": "^10.4.27",
-    "lucide-react": "^0.577.0",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1"
-  }
+    "name": "utsaregplus",
+    "private": true,
+    "version": "0.0.0",
+    "description": "UTSA Registration Plus — the canonical UTSA student registration tool.",
+    "type": "module",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "npm run build --workspace=@utsaregplus/extension",
+        "dev": "npm run dev --workspace=@utsaregplus/extension",
+        "test": "npm run test --workspaces --if-present",
+        "typecheck": "npm run typecheck --workspaces --if-present",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.18.0",
+        "@types/node": "^25.3.3",
+        "eslint": "^9.18.0",
+        "eslint-plugin-jsx-a11y": "^6.10.2",
+        "eslint-plugin-react": "^7.37.4",
+        "eslint-plugin-react-hooks": "^5.1.0",
+        "globals": "^15.14.0",
+        "prettier": "^3.4.2",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.21.0",
+        "vitest": "^2.1.8"
+    },
+    "engines": {
+        "node": ">=20"
+    }
 }

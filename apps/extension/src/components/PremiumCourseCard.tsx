@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Users, CheckCircle2, Calendar, Bookmark } from 'lucide-react';
+import { Star, CheckCircle2, Calendar, Bookmark } from 'lucide-react';
 import GradeChart from './GradeChart';
 
 interface PremiumCourseCardProps {

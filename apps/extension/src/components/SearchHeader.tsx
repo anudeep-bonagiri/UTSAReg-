@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, ChevronDown, Bell, Settings } from 'lucide-react';
+import { Search, ChevronDown, Settings } from 'lucide-react';
 
 interface SearchHeaderProps {
     onSearch: (query: string) => void;
