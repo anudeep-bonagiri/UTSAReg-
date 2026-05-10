@@ -17,13 +17,14 @@ const badgeStyles = cva(
     {
         variants: {
             tone: {
-                neutral: 'bg-[--surface-muted] text-[--ink-muted] border border-[--border-default]',
-                brand: 'bg-[--brand-soft] text-[--brand-default]',
-                accent: 'bg-[--accent-soft] text-[--accent-active]',
-                open: 'bg-[--status-open-soft] text-[--status-open]',
-                warn: 'bg-[--status-warn-soft] text-[--status-warn]',
-                danger: 'bg-[--status-danger-soft] text-[--status-danger]',
-                info: 'bg-[--status-info-soft] text-[--status-info]'
+                neutral:
+                    'bg-[var(--surface-muted)] text-[var(--ink-muted)] border border-[var(--border-default)]',
+                brand: 'bg-[var(--brand-soft)] text-[var(--brand-default)]',
+                accent: 'bg-[var(--accent-soft)] text-[var(--accent-active)]',
+                open: 'bg-[var(--status-open-soft)] text-[var(--status-open)]',
+                warn: 'bg-[var(--status-warn-soft)] text-[var(--status-warn)]',
+                danger: 'bg-[var(--status-danger-soft)] text-[var(--status-danger)]',
+                info: 'bg-[var(--status-info-soft)] text-[var(--status-info)]'
             },
             size: {
                 sm: 'h-5 px-2 text-[9px]',

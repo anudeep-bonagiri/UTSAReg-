@@ -17,7 +17,7 @@ const buttonStyles = cva(
         'transition-[background-color,box-shadow,transform] duration-[120ms] ease-out',
         'select-none',
         'disabled:opacity-50 disabled:cursor-not-allowed',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--border-focus]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[--surface-canvas]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-canvas)]',
         // SVG icons inside take their color from the button text.
         '[&>svg]:shrink-0 [&>svg]:[stroke-width:2.25]'
     ],
@@ -25,28 +25,31 @@ const buttonStyles = cva(
         variants: {
             variant: {
                 primary: [
-                    'bg-[--accent-default] text-[--ink-on-accent]',
-                    'hover:bg-[--accent-hover] active:bg-[--accent-active]',
+                    'bg-[var(--accent-default)] text-[var(--ink-on-accent)]',
+                    'hover:bg-[var(--accent-hover)] active:bg-[var(--accent-active)]',
                     'shadow-[0_1px_2px_0_rgba(241,90,34,0.25)]',
                     'active:translate-y-[1px]'
                 ],
                 secondary: [
-                    'bg-[--brand-default] text-[--ink-on-brand]',
-                    'hover:bg-[--brand-hover] active:bg-[--brand-default]',
+                    'bg-[var(--brand-default)] text-[var(--ink-on-brand)]',
+                    'hover:bg-[var(--brand-hover)] active:bg-[var(--brand-default)]',
                     'active:translate-y-[1px]'
                 ],
                 outline: [
-                    'bg-[--surface-default] text-[--ink-strong]',
-                    'border border-[--border-strong]',
-                    'hover:bg-[--surface-muted]'
+                    'bg-[var(--surface-default)] text-[var(--ink-strong)]',
+                    'border border-[var(--border-strong)]',
+                    'hover:bg-[var(--surface-muted)]'
                 ],
-                ghost: ['bg-transparent text-[--ink-default]', 'hover:bg-[--surface-muted]'],
+                ghost: [
+                    'bg-transparent text-[var(--ink-default)]',
+                    'hover:bg-[var(--surface-muted)]'
+                ],
                 destructive: [
-                    'bg-[--status-danger] text-white',
+                    'bg-[var(--status-danger)] text-white',
                     'hover:opacity-90 active:opacity-80'
                 ],
                 link: [
-                    'bg-transparent text-[--accent-default] underline-offset-4',
+                    'bg-transparent text-[var(--accent-default)] underline-offset-4',
                     'hover:underline px-0 py-0'
                 ]
             },

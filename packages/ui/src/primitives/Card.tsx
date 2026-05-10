@@ -4,8 +4,8 @@ import { cn } from '../utils/cn.js';
 
 const cardStyles = cva(
     [
-        'bg-[--surface-default] text-[--ink-default]',
-        'border border-[--border-default]',
+        'bg-[var(--surface-default)] text-[var(--ink-default)]',
+        'border border-[var(--border-default)]',
         'rounded-[12px]',
         'transition-shadow duration-[200ms] ease-out'
     ],
@@ -18,7 +18,7 @@ const cardStyles = cva(
                 high: 'shadow-[0_8px_24px_-4px_rgba(3,32,68,0.10),0_4px_8px_-2px_rgba(3,32,68,0.05)]'
             },
             interactive: {
-                true: 'cursor-pointer hover:border-[--border-strong] hover:shadow-[0_8px_24px_-4px_rgba(3,32,68,0.10)] focus-within:border-[--border-focus]',
+                true: 'cursor-pointer hover:border-[var(--border-strong)] hover:shadow-[0_8px_24px_-4px_rgba(3,32,68,0.10)] focus-within:border-[var(--border-focus)]',
                 false: ''
             },
             padding: {
@@ -62,7 +62,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadi
         <h3
             ref={ref}
             className={cn(
-                'text-[15px] font-bold leading-tight text-[--ink-strong] tracking-tight',
+                'text-[15px] font-bold leading-tight text-[var(--ink-strong)] tracking-tight',
                 className
             )}
             {...props}
@@ -79,7 +79,7 @@ export const CardDescription = forwardRef<
 >(({ className, ...props }, ref) => (
     <p
         ref={ref}
-        className={cn('text-[13px] leading-snug text-[--ink-muted]', className)}
+        className={cn('text-[13px] leading-snug text-[var(--ink-muted)]', className)}
         {...props}
     />
 ));

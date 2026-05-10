@@ -36,7 +36,7 @@ export const Tooltip = ({
                     collisionPadding={8}
                     className={cn(
                         'z-[10001]',
-                        'bg-[--brand-default] text-[--ink-on-brand]',
+                        'bg-[var(--brand-default)] text-[var(--ink-on-brand)]',
                         'px-2.5 py-1.5 rounded-md text-[12px] font-medium leading-tight',
                         'shadow-[0_8px_24px_-4px_rgba(3,32,68,0.30)]',
                         'data-[state=delayed-open]:animate-in data-[state=closed]:animate-out',
@@ -46,7 +46,7 @@ export const Tooltip = ({
                     )}
                 >
                     {content}
-                    <Radix.Arrow className="fill-[--brand-default]" />
+                    <Radix.Arrow className="fill-[var(--brand-default)]" />
                 </Radix.Content>
             </Radix.Portal>
         </Radix.Root>

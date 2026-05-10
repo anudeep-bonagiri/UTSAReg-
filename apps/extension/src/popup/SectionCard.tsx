@@ -64,14 +64,14 @@ export const SectionCard = ({
     const ratingBadge = (() => {
         if (rmp.loading) {
             return (
-                <span className="inline-flex items-center gap-1 text-[--ink-subtle] text-[11px]">
-                    <span className="w-3 h-3 rounded-full bg-[--surface-sunken] animate-pulse" />
+                <span className="inline-flex items-center gap-1 text-[var(--ink-subtle)] text-[11px]">
+                    <span className="w-3 h-3 rounded-full bg-[var(--surface-sunken)] animate-pulse" />
                     fetching rating...
                 </span>
             );
         }
         if (!rmp.data || rmp.data.data.numRatings === 0) {
-            return <span className="text-[--ink-subtle] text-[11px]">No RMP data</span>;
+            return <span className="text-[var(--ink-subtle)] text-[11px]">No RMP data</span>;
         }
         const r = rmp.data.data;
         const tone = r.avgRating >= 4 ? 'open' : r.avgRating >= 3 ? 'warn' : 'danger';
@@ -95,14 +95,14 @@ export const SectionCard = ({
                 <span
                     className={cn(
                         'inline-flex items-center gap-1 text-[11px] font-semibold cursor-help',
-                        tone === 'open' && 'text-[--status-open]',
-                        tone === 'warn' && 'text-[--status-warn]',
-                        tone === 'danger' && 'text-[--status-danger]'
+                        tone === 'open' && 'text-[var(--status-open)]',
+                        tone === 'warn' && 'text-[var(--status-warn)]',
+                        tone === 'danger' && 'text-[var(--status-danger)]'
                     )}
                 >
                     <Star className="w-3 h-3 fill-current" />
                     {r.avgRating.toFixed(1)}
-                    <span className="text-[--ink-subtle] font-normal">({r.numRatings})</span>
+                    <span className="text-[var(--ink-subtle)] font-normal">({r.numRatings})</span>
                 </span>
             </Tooltip>
         );
@@ -114,9 +114,9 @@ export const SectionCard = ({
             padding="md"
             className={cn(
                 'relative overflow-hidden transition-opacity',
-                'border-l-[3px] border-l-[--accent-default]',
+                'border-l-[3px] border-l-[var(--accent-default)]',
                 inConflict &&
-                    'opacity-60 line-through decoration-[--status-danger]/30 border-l-[--status-danger]'
+                    'opacity-60 line-through decoration-[var(--status-danger)]/30 border-l-[var(--status-danger)]'
             )}
         >
             {/* Header row */}
@@ -129,27 +129,27 @@ export const SectionCard = ({
             >
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[13px] font-bold text-[--ink-strong] tracking-tight utsa-tabular">
+                        <span className="text-[13px] font-bold text-[var(--ink-strong)] tracking-tight utsa-tabular">
                             {section.courseId.slice(0, -4)} {section.courseId.slice(-4)}
                         </span>
-                        <span className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-semibold">
+                        <span className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-semibold">
                             §{section.sectionCode}
                         </span>
                         <Badge tone={STATUS_TONE[section.status]} size="sm" withDot>
                             {STATUS_LABEL[section.status]}
                         </Badge>
                     </div>
-                    <h3 className="text-[12px] font-semibold text-[--ink-default] mt-0.5 truncate">
+                    <h3 className="text-[12px] font-semibold text-[var(--ink-default)] mt-0.5 truncate">
                         {course?.title ?? section.title}
                     </h3>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-[--ink-subtle] shrink-0 mt-1" />
+                <ExternalLink className="w-3.5 h-3.5 text-[var(--ink-subtle)] shrink-0 mt-1" />
             </button>
 
             {/* Instructor + RMP */}
             <div className="flex items-center justify-between gap-2 mb-2">
                 <div className="flex items-center gap-1.5 min-w-0">
-                    <div className="w-6 h-6 rounded-full bg-[--brand-soft] text-[--brand-default] flex items-center justify-center text-[10px] font-bold shrink-0">
+                    <div className="w-6 h-6 rounded-full bg-[var(--brand-soft)] text-[var(--brand-default)] flex items-center justify-center text-[10px] font-bold shrink-0">
                         {section.instructorName
                             .split(/[, ]+/)
                             .slice(0, 2)
@@ -157,7 +157,7 @@ export const SectionCard = ({
                             .join('')
                             .toUpperCase()}
                     </div>
-                    <span className="text-[12px] text-[--ink-default] truncate">
+                    <span className="text-[12px] text-[var(--ink-default)] truncate">
                         {section.instructorName}
                     </span>
                 </div>
@@ -168,12 +168,12 @@ export const SectionCard = ({
             </div>
 
             {/* Schedule line */}
-            <div className="flex items-center gap-3 text-[11px] text-[--ink-muted] mb-3 utsa-tabular">
+            <div className="flex items-center gap-3 text-[11px] text-[var(--ink-muted)] mb-3 utsa-tabular">
                 {meeting ? (
                     <>
                         <span className="inline-flex items-center gap-1">
                             <CalIcon className="w-3 h-3" />
-                            <strong className="text-[--ink-default]">
+                            <strong className="text-[var(--ink-default)]">
                                 {formatDays(meeting.days)}
                             </strong>
                         </span>
@@ -189,34 +189,36 @@ export const SectionCard = ({
                         )}
                     </>
                 ) : MODALITY_LABEL[section.modality] ? (
-                    <span className="inline-flex items-center gap-1 text-[--status-info]">
+                    <span className="inline-flex items-center gap-1 text-[var(--status-info)]">
                         <Clock className="w-3 h-3" /> {MODALITY_LABEL[section.modality]}
                     </span>
                 ) : (
-                    <span className="text-[--ink-subtle]">No meeting time scheduled</span>
+                    <span className="text-[var(--ink-subtle)]">No meeting time scheduled</span>
                 )}
             </div>
 
             {/* Seats + actions */}
             <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5 text-[11px] text-[--ink-muted] utsa-tabular min-w-0">
+                <div className="flex items-center gap-1.5 text-[11px] text-[var(--ink-muted)] utsa-tabular min-w-0">
                     <Users className="w-3 h-3 shrink-0" />
                     {section.enrolled !== undefined && section.capacity !== undefined ? (
                         <>
                             <span>
-                                <strong className="text-[--ink-default]">{section.enrolled}</strong>
+                                <strong className="text-[var(--ink-default)]">
+                                    {section.enrolled}
+                                </strong>
                                 /{section.capacity}
                             </span>
                             {seatPct !== null && (
-                                <div className="w-12 h-1.5 bg-[--surface-sunken] rounded-full overflow-hidden">
+                                <div className="w-12 h-1.5 bg-[var(--surface-sunken)] rounded-full overflow-hidden">
                                     <div
                                         className={cn(
                                             'h-full',
                                             seatPct >= 90
-                                                ? 'bg-[--status-danger]'
+                                                ? 'bg-[var(--status-danger)]'
                                                 : seatPct >= 70
-                                                  ? 'bg-[--status-warn]'
-                                                  : 'bg-[--status-open]'
+                                                  ? 'bg-[var(--status-warn)]'
+                                                  : 'bg-[var(--status-open)]'
                                         )}
                                         style={{ width: `${seatPct}%` }}
                                     />
@@ -224,7 +226,7 @@ export const SectionCard = ({
                             )}
                         </>
                     ) : (
-                        <span className="text-[--ink-subtle]">No seat data</span>
+                        <span className="text-[var(--ink-subtle)]">No seat data</span>
                     )}
                 </div>
                 <div className="flex items-center gap-1">
@@ -236,7 +238,7 @@ export const SectionCard = ({
                             onClick={() => {
                                 onSave(section);
                             }}
-                            className={cn(saved && 'text-[--accent-default]')}
+                            className={cn(saved && 'text-[var(--accent-default)]')}
                         >
                             <Bookmark className={cn('w-4 h-4', saved && 'fill-current')} />
                         </Button>

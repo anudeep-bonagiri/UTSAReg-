@@ -21,14 +21,14 @@ export const SelectTrigger = forwardRef<ElementRef<typeof Radix.Trigger>, Select
             ref={ref}
             className={cn(
                 'inline-flex items-center justify-between gap-2 w-full',
-                'bg-[--surface-default] text-[--ink-strong]',
+                'bg-[var(--surface-default)] text-[var(--ink-strong)]',
                 'border rounded-[8px] transition-colors duration-[120ms]',
                 invalid
-                    ? 'border-[--status-danger]'
-                    : 'border-[--border-strong] hover:border-[--ink-subtle]',
-                'focus-visible:outline-none focus-visible:border-[--border-focus] focus-visible:ring-2 focus-visible:ring-[--border-focus]/35',
+                    ? 'border-[var(--status-danger)]'
+                    : 'border-[var(--border-strong)] hover:border-[var(--ink-subtle)]',
+                'focus-visible:outline-none focus-visible:border-[var(--border-focus)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/35',
                 compact ? 'h-8 px-2.5 text-[12px]' : 'h-10 px-3 text-[13px]',
-                'data-[placeholder]:text-[--ink-subtle]',
+                'data-[placeholder]:text-[var(--ink-subtle)]',
                 'disabled:opacity-60 disabled:cursor-not-allowed',
                 className
             )}
@@ -36,7 +36,7 @@ export const SelectTrigger = forwardRef<ElementRef<typeof Radix.Trigger>, Select
         >
             {children}
             <Radix.Icon asChild>
-                <ChevronDown className="w-4 h-4 text-[--ink-muted] shrink-0" />
+                <ChevronDown className="w-4 h-4 text-[var(--ink-muted)] shrink-0" />
             </Radix.Icon>
         </Radix.Trigger>
     )
@@ -54,8 +54,8 @@ export const SelectContent = forwardRef<
             sideOffset={sideOffset}
             className={cn(
                 'z-[10001] overflow-hidden',
-                'bg-[--surface-raised] text-[--ink-default]',
-                'border border-[--border-default] rounded-[10px]',
+                'bg-[var(--surface-raised)] text-[var(--ink-default)]',
+                'border border-[var(--border-default)] rounded-[10px]',
                 'shadow-[0_8px_24px_-4px_rgba(3,32,68,0.18)]',
                 'min-w-[var(--radix-select-trigger-width)]',
                 'data-[state=open]:animate-in data-[state=closed]:animate-out',
@@ -78,7 +78,7 @@ export const SelectLabel = forwardRef<
     <Radix.Label
         ref={ref}
         className={cn(
-            'px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-bold text-[--ink-subtle]',
+            'px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-bold text-[var(--ink-subtle)]',
             className
         )}
         {...props}
@@ -97,9 +97,9 @@ export const SelectItem = forwardRef<ElementRef<typeof Radix.Item>, SelectItemPr
             className={cn(
                 'relative flex items-center justify-between gap-2',
                 'px-2.5 py-1.5 rounded-[6px]',
-                'text-[13px] text-[--ink-default] cursor-pointer select-none outline-none',
-                'data-[highlighted]:bg-[--surface-muted]',
-                'data-[state=checked]:text-[--ink-strong] data-[state=checked]:font-semibold',
+                'text-[13px] text-[var(--ink-default)] cursor-pointer select-none outline-none',
+                'data-[highlighted]:bg-[var(--surface-muted)]',
+                'data-[state=checked]:text-[var(--ink-strong)] data-[state=checked]:font-semibold',
                 'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
                 className
             )}
@@ -107,7 +107,7 @@ export const SelectItem = forwardRef<ElementRef<typeof Radix.Item>, SelectItemPr
         >
             <Radix.ItemText>{children}</Radix.ItemText>
             <Radix.ItemIndicator>
-                <Check className="w-3.5 h-3.5 text-[--accent-default]" />
+                <Check className="w-3.5 h-3.5 text-[var(--accent-default)]" />
             </Radix.ItemIndicator>
         </Radix.Item>
     )
@@ -120,7 +120,7 @@ export const SelectSeparator = forwardRef<
 >(({ className, ...props }, ref) => (
     <Radix.Separator
         ref={ref}
-        className={cn('h-px bg-[--border-default] my-1', className)}
+        className={cn('h-px bg-[var(--border-default)] my-1', className)}
         {...props}
     />
 ));

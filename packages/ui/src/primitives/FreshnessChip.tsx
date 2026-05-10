@@ -25,27 +25,28 @@ const sourceTone: Record<
 > = {
     live: {
         label: 'Live',
-        toneClass: 'bg-[--status-open-soft] text-[--status-open]',
+        toneClass: 'bg-[var(--status-open-soft)] text-[var(--status-open)]',
         Icon: Wifi
     },
     'cache-fresh': {
         label: 'Cached',
-        toneClass: 'bg-[--status-info-soft] text-[--status-info]',
+        toneClass: 'bg-[var(--status-info-soft)] text-[var(--status-info)]',
         Icon: Database
     },
     'cache-stale': {
         label: 'Stale',
-        toneClass: 'bg-[--status-warn-soft] text-[--status-warn]',
+        toneClass: 'bg-[var(--status-warn-soft)] text-[var(--status-warn)]',
         Icon: AlertCircle
     },
     snapshot: {
         label: 'Snapshot',
-        toneClass: 'bg-[--brand-soft] text-[--brand-default]',
+        toneClass: 'bg-[var(--brand-soft)] text-[var(--brand-default)]',
         Icon: FileText
     },
     'user-input': {
         label: 'Pasted',
-        toneClass: 'bg-[--surface-muted] text-[--ink-muted] border border-[--border-default]',
+        toneClass:
+            'bg-[var(--surface-muted)] text-[var(--ink-muted)] border border-[var(--border-default)]',
         Icon: Clock
     }
 };

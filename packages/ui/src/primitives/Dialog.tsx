@@ -42,8 +42,8 @@ export const DialogContent = forwardRef<ElementRef<typeof Radix.Content>, Dialog
                 className={cn(
                     'fixed left-1/2 top-1/2 z-[10001] -translate-x-1/2 -translate-y-1/2',
                     'w-[min(540px,calc(100vw-32px))] max-h-[min(85vh,720px)]',
-                    'bg-[--surface-raised] text-[--ink-default]',
-                    'border border-[--border-default] rounded-[16px]',
+                    'bg-[var(--surface-raised)] text-[var(--ink-default)]',
+                    'border border-[var(--border-default)] rounded-[16px]',
                     'shadow-[0_20px_40px_-8px_rgba(3,32,68,0.18),0_8px_16px_-4px_rgba(3,32,68,0.08)]',
                     'flex flex-col overflow-hidden',
                     'data-[state=open]:animate-in data-[state=closed]:animate-out',
@@ -61,10 +61,10 @@ export const DialogContent = forwardRef<ElementRef<typeof Radix.Content>, Dialog
                         className={cn(
                             'absolute top-3 right-3',
                             'h-8 w-8 inline-flex items-center justify-center',
-                            'rounded-full text-[--ink-muted]',
-                            'hover:bg-[--surface-muted] hover:text-[--ink-strong]',
+                            'rounded-full text-[var(--ink-muted)]',
+                            'hover:bg-[var(--surface-muted)] hover:text-[var(--ink-strong)]',
                             'transition-colors',
-                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--border-focus]/55'
+                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/55'
                         )}
                     >
                         <X className="w-4 h-4" />
@@ -79,7 +79,7 @@ DialogContent.displayName = 'DialogContent';
 export const DialogHeader = ({ className, ...props }: ComponentPropsWithoutRef<'div'>) => (
     <div
         className={cn(
-            'px-6 pt-6 pb-4 border-b border-[--border-default]',
+            'px-6 pt-6 pb-4 border-b border-[var(--border-default)]',
             'flex flex-col gap-1',
             className
         )}
@@ -93,7 +93,7 @@ export const DialogTitle = forwardRef<
 >(({ className, ...props }, ref) => (
     <Radix.Title
         ref={ref}
-        className={cn('text-[18px] font-bold leading-tight text-[--ink-strong]', className)}
+        className={cn('text-[18px] font-bold leading-tight text-[var(--ink-strong)]', className)}
         {...props}
     />
 ));
@@ -105,7 +105,7 @@ export const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
     <Radix.Description
         ref={ref}
-        className={cn('text-[13px] leading-snug text-[--ink-muted]', className)}
+        className={cn('text-[13px] leading-snug text-[var(--ink-muted)]', className)}
         {...props}
     />
 ));
@@ -118,9 +118,9 @@ export const DialogBody = ({ className, ...props }: ComponentPropsWithoutRef<'di
 export const DialogFooter = ({ className, ...props }: ComponentPropsWithoutRef<'div'>) => (
     <div
         className={cn(
-            'px-6 py-4 border-t border-[--border-default]',
+            'px-6 py-4 border-t border-[var(--border-default)]',
             'flex items-center justify-end gap-3',
-            'bg-[--surface-canvas]',
+            'bg-[var(--surface-canvas)]',
             className
         )}
         {...props}

@@ -28,20 +28,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ) => {
         const wrapperClass = cn(
             'group flex items-center gap-2 w-full',
-            'bg-[--surface-default] border rounded-[8px]',
+            'bg-[var(--surface-default)] border rounded-[8px]',
             'transition-colors duration-[120ms]',
             invalid
-                ? 'border-[--status-danger]'
-                : 'border-[--border-strong] focus-within:border-[--border-focus]',
-            'focus-within:ring-2 focus-within:ring-[--border-focus]/35',
+                ? 'border-[var(--status-danger)]'
+                : 'border-[var(--border-strong)] focus-within:border-[var(--border-focus)]',
+            'focus-within:ring-2 focus-within:ring-[var(--border-focus)]/35',
             compact ? 'h-8 px-2.5 text-[12px]' : 'h-10 px-3 text-[13px]',
-            disabled && 'opacity-60 cursor-not-allowed bg-[--surface-muted]',
+            disabled && 'opacity-60 cursor-not-allowed bg-[var(--surface-muted)]',
             className
         );
         return (
             <div className={wrapperClass}>
                 {leadingAdornment && (
-                    <span className="flex items-center text-[--ink-subtle] [&>svg]:w-4 [&>svg]:h-4">
+                    <span className="flex items-center text-[var(--ink-subtle)] [&>svg]:w-4 [&>svg]:h-4">
                         {leadingAdornment}
                     </span>
                 )}
@@ -51,14 +51,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     disabled={disabled}
                     className={cn(
                         'flex-1 min-w-0 bg-transparent border-0 outline-none',
-                        'placeholder:text-[--ink-subtle]',
-                        'text-[--ink-strong]'
+                        'placeholder:text-[var(--ink-subtle)]',
+                        'text-[var(--ink-strong)]'
                     )}
                     aria-invalid={invalid || undefined}
                     {...props}
                 />
                 {trailingAdornment && (
-                    <span className="flex items-center text-[--ink-muted] [&>svg]:w-4 [&>svg]:h-4">
+                    <span className="flex items-center text-[var(--ink-muted)] [&>svg]:w-4 [&>svg]:h-4">
                         {trailingAdornment}
                     </span>
                 )}

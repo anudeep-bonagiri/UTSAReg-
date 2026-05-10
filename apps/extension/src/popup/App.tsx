@@ -119,19 +119,19 @@ export const App = () => {
 
     return (
         <TooltipProvider delayDuration={250}>
-            <div className="w-[420px] h-[600px] flex flex-col bg-[--surface-canvas] text-[--ink-default] overflow-hidden">
+            <div className="w-[420px] h-[600px] flex flex-col bg-[var(--surface-canvas)] text-[var(--ink-default)] overflow-hidden">
                 {/* Midnight-blue header — strongest UTSA brand signal in the popup. */}
-                <header className="px-5 pt-4 pb-4 bg-[--brand-default] text-[--ink-on-brand] relative">
+                <header className="px-5 pt-4 pb-4 bg-[var(--brand-default)] text-[var(--ink-on-brand)] relative">
                     {/* UTSA-orange accent stripe along the top */}
-                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-[--accent-default]" />
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-[var(--accent-default)]" />
                     <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2.5">
-                            <div className="w-9 h-9 rounded-xl bg-[--accent-default] flex items-center justify-center shadow-[0_2px_8px_rgba(241,90,34,0.35)]">
+                            <div className="w-9 h-9 rounded-xl bg-[var(--accent-default)] flex items-center justify-center shadow-[0_2px_8px_rgba(241,90,34,0.35)]">
                                 <GraduationCap className="w-5 h-5 text-white" />
                             </div>
                             <div>
                                 <h1 className="utsa-display-black text-[18px] text-white leading-tight">
-                                    UTSA Reg<span className="text-[--accent-default]">+</span>
+                                    UTSA Reg<span className="text-[var(--accent-default)]">+</span>
                                 </h1>
                                 <p className="text-[9px] text-white/55 uppercase tracking-[0.18em] font-semibold mt-0.5">
                                     {SECTIONS_TERM_LABEL}
@@ -172,13 +172,13 @@ export const App = () => {
                             setQuery(e.target.value);
                         }}
                         placeholder="Search CRN, class code, or title..."
-                        className="bg-white/95 border-transparent focus-within:border-[--accent-default] focus-within:ring-[--accent-default]/40"
+                        className="bg-white/95 border-transparent focus-within:border-[var(--accent-default)] focus-within:ring-[var(--accent-default)]/40"
                         // eslint-disable-next-line jsx-a11y/no-autofocus -- popup opens with intent to type
                         autoFocus
                     />
                 </header>
 
-                <nav className="flex border-b border-[--border-default] bg-[--surface-default]">
+                <nav className="flex border-b border-[var(--border-default)] bg-[var(--surface-default)]">
                     {(
                         [
                             { id: 'explore', icon: BookOpen, label: 'Explore' },
@@ -204,8 +204,8 @@ export const App = () => {
                                     'flex-1 flex items-center justify-center gap-1.5 py-3 text-[11px] font-bold tracking-wide transition-colors uppercase',
                                     'border-b-[3px] -mb-px relative',
                                     isActive
-                                        ? 'text-[--accent-default] border-[--accent-default] bg-[--surface-muted]'
-                                        : 'text-[--ink-muted] border-transparent hover:text-[--ink-default] hover:bg-[--surface-muted]'
+                                        ? 'text-[var(--accent-default)] border-[var(--accent-default)] bg-[var(--surface-muted)]'
+                                        : 'text-[var(--ink-muted)] border-transparent hover:text-[var(--ink-default)] hover:bg-[var(--surface-muted)]'
                                 )}
                             >
                                 <tab.icon className="w-3.5 h-3.5" />
@@ -215,8 +215,8 @@ export const App = () => {
                                         className={cn(
                                             'ml-0.5 h-4 min-w-4 px-1 rounded-full text-[9px] flex items-center justify-center utsa-tabular',
                                             isActive
-                                                ? 'bg-[--accent-default] text-white'
-                                                : 'bg-[--surface-sunken] text-[--ink-muted]'
+                                                ? 'bg-[var(--accent-default)] text-white'
+                                                : 'bg-[var(--surface-sunken)] text-[var(--ink-muted)]'
                                         )}
                                     >
                                         {count}
@@ -258,9 +258,9 @@ export const App = () => {
                     )}
                 </main>
 
-                <footer className="px-4 py-2 border-t border-[--border-default] bg-[--surface-default] flex items-center justify-between text-[10px]">
-                    <div className="flex items-center gap-1.5 text-[--ink-subtle]">
-                        <Sparkles className="w-3 h-3 text-[--accent-default]" />
+                <footer className="px-4 py-2 border-t border-[var(--border-default)] bg-[var(--surface-default)] flex items-center justify-between text-[10px]">
+                    <div className="flex items-center gap-1.5 text-[var(--ink-subtle)]">
+                        <Sparkles className="w-3 h-3 text-[var(--accent-default)]" />
                         <span className="font-semibold tracking-wide">UTSA Reg+ v0.1</span>
                     </div>
                     <FreshnessChip freshness={sectionsFreshness} />
@@ -298,14 +298,14 @@ const ExploreTab = ({
     if (query.trim().length === 0) {
         return (
             <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-5">
-                <div className="w-14 h-14 rounded-2xl bg-[--accent-soft] flex items-center justify-center ring-4 ring-[--accent-default]/10">
-                    <Search className="w-7 h-7 text-[--accent-default]" />
+                <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center ring-4 ring-[var(--accent-default)]/10">
+                    <Search className="w-7 h-7 text-[var(--accent-default)]" />
                 </div>
                 <div>
-                    <p className="utsa-display text-[16px] font-bold text-[--ink-strong]">
+                    <p className="utsa-display text-[16px] font-bold text-[var(--ink-strong)]">
                         Search any UTSA section
                     </p>
-                    <p className="text-[11px] text-[--ink-muted] mt-1.5 leading-relaxed">
+                    <p className="text-[11px] text-[var(--ink-muted)] mt-1.5 leading-relaxed">
                         CRN, class code, title, or instructor.
                         <br />
                         Live data on every result.
@@ -319,7 +319,7 @@ const ExploreTab = ({
                             onClick={() => {
                                 onSetQuery(prompt);
                             }}
-                            className="px-3 py-1.5 rounded-full bg-[--brand-soft] border border-[--brand-default]/15 text-[10px] font-bold text-[--brand-default] hover:bg-[--brand-default] hover:text-white hover:border-[--brand-default] transition-colors utsa-tabular"
+                            className="px-3 py-1.5 rounded-full bg-[var(--brand-soft)] border border-[var(--brand-default)]/15 text-[10px] font-bold text-[var(--brand-default)] hover:bg-[var(--brand-default)] hover:text-white hover:border-[var(--brand-default)] transition-colors utsa-tabular"
                         >
                             {prompt}
                         </button>
@@ -331,10 +331,10 @@ const ExploreTab = ({
 
     if (visibleResults.length === 0) {
         return (
-            <div className="text-center py-12 text-[12px] text-[--ink-muted]">
+            <div className="text-center py-12 text-[12px] text-[var(--ink-muted)]">
                 <p>
                     No matches for{' '}
-                    <span className="font-semibold text-[--ink-default]">"{query}"</span>
+                    <span className="font-semibold text-[var(--ink-default)]">"{query}"</span>
                 </p>
                 <p className="text-[10px] mt-2">
                     Demo data is CS-major sample. Live ASAP harvest will widen this.
@@ -372,22 +372,24 @@ interface ScheduleTabProps {
 
 const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTabProps) => {
     if (!hydrated) {
-        return <div className="text-center py-6 text-[--ink-subtle] text-[12px]">Loading...</div>;
+        return (
+            <div className="text-center py-6 text-[var(--ink-subtle)] text-[12px]">Loading...</div>
+        );
     }
     if (committed.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center text-center py-10 space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-[--brand-soft] flex items-center justify-center">
-                    <Calendar className="w-6 h-6 text-[--brand-default]" />
+                <div className="w-12 h-12 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
+                    <Calendar className="w-6 h-6 text-[var(--brand-default)]" />
                 </div>
                 <div>
-                    <p className="text-[13px] font-bold text-[--ink-strong]">
+                    <p className="text-[13px] font-bold text-[var(--ink-strong)]">
                         No classes added yet
                     </p>
-                    <p className="text-[11px] text-[--ink-muted] mt-1">
+                    <p className="text-[11px] text-[var(--ink-muted)] mt-1">
                         Search and tap{' '}
-                        <span className="font-semibold text-[--accent-default]">Add</span> on any
-                        section.
+                        <span className="font-semibold text-[var(--accent-default)]">Add</span> on
+                        any section.
                     </p>
                 </div>
             </div>
@@ -401,28 +403,28 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
             <Card padding="sm">
                 <div className="flex items-center justify-between gap-2">
                     <div>
-                        <p className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-semibold">
+                        <p className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-semibold">
                             Credits
                         </p>
-                        <p className="utsa-display-black utsa-tabular text-[22px] text-[--ink-strong] leading-tight">
+                        <p className="utsa-display-black utsa-tabular text-[22px] text-[var(--ink-strong)] leading-tight">
                             {totalCredits}
-                            <span className="text-[--ink-muted] text-[12px] font-medium">
+                            <span className="text-[var(--ink-muted)] text-[12px] font-medium">
                                 {' '}
                                 / 18
                             </span>
                         </p>
                     </div>
                     <div className="text-right">
-                        <p className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-semibold">
+                        <p className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-semibold">
                             Sections
                         </p>
-                        <p className="utsa-display-black utsa-tabular text-[22px] text-[--ink-strong] leading-tight">
+                        <p className="utsa-display-black utsa-tabular text-[22px] text-[var(--ink-strong)] leading-tight">
                             {committed.length}
                         </p>
                     </div>
                 </div>
                 {f1WarningTriggered && (
-                    <div className="mt-2 pt-2 border-t border-[--border-default] flex items-start gap-1.5 text-[10px] text-[--status-warn]">
+                    <div className="mt-2 pt-2 border-t border-[var(--border-default)] flex items-start gap-1.5 text-[10px] text-[var(--status-warn)]">
                         <AlertTriangle className="w-3 h-3 shrink-0 mt-0.5" />
                         <span>
                             <strong>F1 alert:</strong> Below 12 credits. International students need
@@ -436,15 +438,17 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
                 <Card key={section.crn} padding="sm" className="flex items-center gap-2">
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
-                            <span className="text-[12px] font-bold text-[--ink-strong] utsa-tabular">
+                            <span className="text-[12px] font-bold text-[var(--ink-strong)] utsa-tabular">
                                 {section.courseId}
                             </span>
                             <Badge tone="brand" size="sm">
                                 §{section.sectionCode}
                             </Badge>
                         </div>
-                        <p className="text-[10px] text-[--ink-muted] truncate">{section.title}</p>
-                        <p className="text-[10px] text-[--ink-muted] mt-0.5 utsa-tabular">
+                        <p className="text-[10px] text-[var(--ink-muted)] truncate">
+                            {section.title}
+                        </p>
+                        <p className="text-[10px] text-[var(--ink-muted)] mt-0.5 utsa-tabular">
                             {section.meetings[0]
                                 ? `${formatDays(section.meetings[0].days)} · ${formatTimeRange(section.meetings[0].startMin, section.meetings[0].endMin)}`
                                 : 'Online'}
@@ -458,7 +462,7 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
                             onRemove(section.crn);
                         }}
                     >
-                        <Trash2 className="w-4 h-4 text-[--status-danger]" />
+                        <Trash2 className="w-4 h-4 text-[var(--status-danger)]" />
                     </Button>
                 </Card>
             ))}
@@ -476,10 +480,10 @@ const SavedTab = ({ saved, onUnsave, onAddToSchedule }: SavedTabProps) => {
     if (saved.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center text-center py-10 space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-[--brand-soft] flex items-center justify-center">
-                    <Bookmark className="w-6 h-6 text-[--brand-default]" />
+                <div className="w-12 h-12 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
+                    <Bookmark className="w-6 h-6 text-[var(--brand-default)]" />
                 </div>
-                <p className="text-[12px] text-[--ink-muted]">
+                <p className="text-[12px] text-[var(--ink-muted)]">
                     Tap the bookmark on any section to save it for later.
                 </p>
             </div>
@@ -494,10 +498,10 @@ const SavedTab = ({ saved, onUnsave, onAddToSchedule }: SavedTabProps) => {
                 return (
                     <Card key={crn} padding="sm" className="flex items-center gap-2">
                         <div className="flex-1 min-w-0">
-                            <p className="text-[12px] font-bold text-[--ink-strong] utsa-tabular">
+                            <p className="text-[12px] font-bold text-[var(--ink-strong)] utsa-tabular">
                                 {section.courseId} §{section.sectionCode}
                             </p>
-                            <p className="text-[10px] text-[--ink-muted] truncate">
+                            <p className="text-[10px] text-[var(--ink-muted)] truncate">
                                 {section.title} · {section.instructorName}
                             </p>
                         </div>
@@ -518,7 +522,7 @@ const SavedTab = ({ saved, onUnsave, onAddToSchedule }: SavedTabProps) => {
                                 onUnsave(crn);
                             }}
                         >
-                            <Trash2 className="w-4 h-4 text-[--status-danger]" />
+                            <Trash2 className="w-4 h-4 text-[var(--status-danger)]" />
                         </Button>
                     </Card>
                 );

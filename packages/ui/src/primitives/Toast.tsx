@@ -32,7 +32,7 @@ const toastStyles = cva(
         'group pointer-events-auto',
         'flex items-start gap-3 w-full',
         'p-3 pr-10 rounded-[10px] border',
-        'bg-[--surface-raised]',
+        'bg-[var(--surface-raised)]',
         'shadow-[0_8px_24px_-4px_rgba(3,32,68,0.18),0_4px_8px_-2px_rgba(3,32,68,0.05)]',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=open]:slide-in-from-bottom-2 data-[state=closed]:fade-out-0',
@@ -42,11 +42,11 @@ const toastStyles = cva(
     {
         variants: {
             tone: {
-                neutral: 'border-[--border-default]',
-                success: 'border-[--status-open]/40',
-                warn: 'border-[--status-warn]/40',
-                danger: 'border-[--status-danger]/40',
-                info: 'border-[--status-info]/40'
+                neutral: 'border-[var(--border-default)]',
+                success: 'border-[var(--status-open)]/40',
+                warn: 'border-[var(--status-warn)]/40',
+                danger: 'border-[var(--status-danger)]/40',
+                info: 'border-[var(--status-info)]/40'
             }
         },
         defaultVariants: { tone: 'neutral' }
@@ -54,11 +54,11 @@ const toastStyles = cva(
 );
 
 const ToneIcon: Record<NonNullable<VariantProps<typeof toastStyles>['tone']>, ReactNode> = {
-    neutral: <Info className="w-4 h-4 text-[--ink-muted]" />,
-    success: <CheckCircle2 className="w-4 h-4 text-[--status-open]" />,
-    warn: <AlertCircle className="w-4 h-4 text-[--status-warn]" />,
-    danger: <XCircle className="w-4 h-4 text-[--status-danger]" />,
-    info: <Info className="w-4 h-4 text-[--status-info]" />
+    neutral: <Info className="w-4 h-4 text-[var(--ink-muted)]" />,
+    success: <CheckCircle2 className="w-4 h-4 text-[var(--status-open)]" />,
+    warn: <AlertCircle className="w-4 h-4 text-[var(--status-warn)]" />,
+    danger: <XCircle className="w-4 h-4 text-[var(--status-danger)]" />,
+    info: <Info className="w-4 h-4 text-[var(--status-info)]" />
 };
 
 interface ToastProps
@@ -76,7 +76,7 @@ export const Toast = forwardRef<ElementRef<typeof Radix.Root>, ToastProps>(
                 className={cn(
                     'absolute top-2 right-2',
                     'h-7 w-7 inline-flex items-center justify-center rounded-full',
-                    'text-[--ink-muted] hover:text-[--ink-strong] hover:bg-[--surface-muted]',
+                    'text-[var(--ink-muted)] hover:text-[var(--ink-strong)] hover:bg-[var(--surface-muted)]',
                     'opacity-0 group-hover:opacity-100 focus:opacity-100',
                     'transition-opacity'
                 )}

@@ -38,29 +38,29 @@ const DAY_HEADER_LABEL: Record<Weekday, { abbr: string; full: string }> = {
 
 const SECTION_PALETTE = [
     {
-        bg: 'bg-[--accent-soft]',
-        border: 'border-[--accent-default]',
-        text: 'text-[--accent-active]'
+        bg: 'bg-[var(--accent-soft)]',
+        border: 'border-[var(--accent-default)]',
+        text: 'text-[var(--accent-active)]'
     },
     {
-        bg: 'bg-[--brand-soft]',
-        border: 'border-[--brand-default]',
-        text: 'text-[--brand-default]'
+        bg: 'bg-[var(--brand-soft)]',
+        border: 'border-[var(--brand-default)]',
+        text: 'text-[var(--brand-default)]'
     },
     {
-        bg: 'bg-[--status-info-soft]',
-        border: 'border-[--status-info]',
-        text: 'text-[--status-info]'
+        bg: 'bg-[var(--status-info-soft)]',
+        border: 'border-[var(--status-info)]',
+        text: 'text-[var(--status-info)]'
     },
     {
-        bg: 'bg-[--status-open-soft]',
-        border: 'border-[--status-open]',
-        text: 'text-[--status-open]'
+        bg: 'bg-[var(--status-open-soft)]',
+        border: 'border-[var(--status-open)]',
+        text: 'text-[var(--status-open)]'
     },
     {
-        bg: 'bg-[--status-warn-soft]',
-        border: 'border-[--status-warn]',
-        text: 'text-[--status-warn]'
+        bg: 'bg-[var(--status-warn-soft)]',
+        border: 'border-[var(--status-warn)]',
+        text: 'text-[var(--status-warn)]'
     }
 ];
 
@@ -120,15 +120,15 @@ export const WeeklyScheduleGrid = ({
 
     if (hasNothing) {
         return (
-            <div className="flex flex-col items-center justify-center text-center py-24 px-8 space-y-4 border border-dashed border-[--border-default] rounded-2xl bg-[--surface-muted]">
-                <div className="w-14 h-14 rounded-2xl bg-[--brand-soft] flex items-center justify-center">
-                    <Calendar className="w-7 h-7 text-[--brand-default]" />
+            <div className="flex flex-col items-center justify-center text-center py-24 px-8 space-y-4 border border-dashed border-[var(--border-default)] rounded-2xl bg-[var(--surface-muted)]">
+                <div className="w-14 h-14 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
+                    <Calendar className="w-7 h-7 text-[var(--brand-default)]" />
                 </div>
                 <div>
-                    <h3 className="text-[16px] font-bold text-[--ink-strong]">
+                    <h3 className="text-[16px] font-bold text-[var(--ink-strong)]">
                         Build your weekly view
                     </h3>
-                    <p className="text-[13px] text-[--ink-muted] mt-1">
+                    <p className="text-[13px] text-[var(--ink-muted)] mt-1">
                         Add sections from Explore and they'll plot here automatically.
                     </p>
                 </div>
@@ -141,18 +141,18 @@ export const WeeklyScheduleGrid = ({
 
     return (
         <div className="space-y-4">
-            <div className="grid grid-cols-[64px_repeat(5,1fr)] border border-[--border-default] rounded-2xl bg-[--surface-default] overflow-hidden">
+            <div className="grid grid-cols-[64px_repeat(5,1fr)] border border-[var(--border-default)] rounded-2xl bg-[var(--surface-default)] overflow-hidden">
                 {/* Column headers */}
-                <div className="border-b border-[--border-default] bg-[--surface-muted]" />
+                <div className="border-b border-[var(--border-default)] bg-[var(--surface-muted)]" />
                 {DAYS.map((d) => (
                     <div
                         key={d}
-                        className="border-b border-l border-[--border-default] bg-[--surface-muted] py-3 text-center"
+                        className="border-b border-l border-[var(--border-default)] bg-[var(--surface-muted)] py-3 text-center"
                     >
-                        <div className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-bold">
+                        <div className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-bold">
                             {DAY_HEADER_LABEL[d].abbr}
                         </div>
-                        <div className="text-[12px] font-semibold text-[--ink-strong]">
+                        <div className="text-[12px] font-semibold text-[var(--ink-strong)]">
                             {DAY_HEADER_LABEL[d].full}
                         </div>
                     </div>
@@ -163,7 +163,7 @@ export const WeeklyScheduleGrid = ({
                     {hours.map((h, i) => (
                         <div
                             key={h}
-                            className="absolute left-0 right-0 text-[10px] text-[--ink-subtle] utsa-tabular pr-2 text-right border-t border-[--border-default]"
+                            className="absolute left-0 right-0 text-[10px] text-[var(--ink-subtle)] utsa-tabular pr-2 text-right border-t border-[var(--border-default)]"
                             style={{ top: i * HOUR_HEIGHT, height: HOUR_HEIGHT }}
                         >
                             <span className="absolute right-2 top-1">
@@ -176,13 +176,13 @@ export const WeeklyScheduleGrid = ({
                 {DAYS.map((day) => (
                     <div
                         key={day}
-                        className="relative border-l border-[--border-default]"
+                        className="relative border-l border-[var(--border-default)]"
                         style={{ height: hours.length * HOUR_HEIGHT }}
                     >
                         {hours.map((h, i) => (
                             <div
                                 key={h}
-                                className="absolute left-0 right-0 border-t border-[--border-default]/50"
+                                className="absolute left-0 right-0 border-t border-[var(--border-default)]/50"
                                 style={{ top: i * HOUR_HEIGHT, height: HOUR_HEIGHT }}
                             />
                         ))}
@@ -206,11 +206,11 @@ export const WeeklyScheduleGrid = ({
                                         className={cn(
                                             'absolute left-1 right-1 rounded-lg border-l-4 px-2 py-1 text-left',
                                             'transition-all hover:shadow-md hover:-translate-y-px',
-                                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--border-focus]/55',
+                                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/55',
                                             c.bg,
                                             c.border,
                                             c.text,
-                                            isConflict && 'ring-2 ring-[--status-danger]/60'
+                                            isConflict && 'ring-2 ring-[var(--status-danger)]/60'
                                         )}
                                         style={{
                                             top: top + 2,
@@ -235,13 +235,13 @@ export const WeeklyScheduleGrid = ({
             </div>
 
             {!hasAnyMeeting && (
-                <p className="text-[12px] text-[--ink-muted] text-center">
+                <p className="text-[12px] text-[var(--ink-muted)] text-center">
                     All sections are online — nothing to plot.
                 </p>
             )}
             {onlineSections.length > 0 && hasAnyMeeting && (
-                <div className="rounded-xl border border-[--border-default] bg-[--surface-muted] px-4 py-2 text-[12px] text-[--ink-muted]">
-                    <span className="font-semibold text-[--ink-strong]">
+                <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-2 text-[12px] text-[var(--ink-muted)]">
+                    <span className="font-semibold text-[var(--ink-strong)]">
                         {onlineSections.length} online section
                         {onlineSections.length === 1 ? '' : 's'}
                     </span>{' '}

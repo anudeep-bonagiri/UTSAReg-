@@ -149,18 +149,18 @@ export const App = () => {
 
     return (
         <TooltipProvider delayDuration={250}>
-            <div className="flex h-screen w-screen bg-[--surface-canvas] text-[--ink-default] overflow-hidden">
-                <aside className="w-60 border-r border-[--border-default] bg-[--surface-default] flex flex-col">
+            <div className="flex h-screen w-screen bg-[var(--surface-canvas)] text-[var(--ink-default)] overflow-hidden">
+                <aside className="w-60 border-r border-[var(--border-default)] bg-[var(--surface-default)] flex flex-col">
                     {/* Midnight wordmark block — strongest UTSA brand cue */}
-                    <div className="p-6 bg-[--brand-default] text-white relative">
-                        <div className="absolute top-0 left-0 right-0 h-1 bg-[--accent-default]" />
+                    <div className="p-6 bg-[var(--brand-default)] text-white relative">
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--accent-default)]" />
                         <div className="flex items-center gap-3">
-                            <div className="w-11 h-11 rounded-2xl bg-[--accent-default] flex items-center justify-center shadow-[0_4px_14px_rgba(241,90,34,0.45)]">
+                            <div className="w-11 h-11 rounded-2xl bg-[var(--accent-default)] flex items-center justify-center shadow-[0_4px_14px_rgba(241,90,34,0.45)]">
                                 <GraduationCap className="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <div className="utsa-display-black text-[20px] text-white leading-tight">
-                                    UTSA Reg<span className="text-[--accent-default]">+</span>
+                                    UTSA Reg<span className="text-[var(--accent-default)]">+</span>
                                 </div>
                                 <div className="text-[9px] text-white/55 uppercase tracking-[0.2em] font-semibold mt-0.5">
                                     {SECTIONS_TERM_LABEL}
@@ -189,14 +189,14 @@ export const App = () => {
                                     className={cn(
                                         'w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-semibold transition-colors',
                                         isActive
-                                            ? 'bg-[--accent-soft] text-[--accent-active]'
-                                            : 'text-[--ink-default] hover:bg-[--surface-muted]'
+                                            ? 'bg-[var(--accent-soft)] text-[var(--accent-active)]'
+                                            : 'text-[var(--ink-default)] hover:bg-[var(--surface-muted)]'
                                     )}
                                 >
                                     <item.icon className="w-4 h-4" />
                                     <span>{item.label}</span>
                                     {item.id === 'schedule' && committed.length > 0 && (
-                                        <span className="ml-auto utsa-tabular text-[10px] bg-[--accent-default] text-white px-1.5 py-0.5 rounded-full">
+                                        <span className="ml-auto utsa-tabular text-[10px] bg-[var(--accent-default)] text-white px-1.5 py-0.5 rounded-full">
                                             {committed.length}
                                         </span>
                                     )}
@@ -205,9 +205,9 @@ export const App = () => {
                         })}
                     </nav>
 
-                    <div className="p-3 border-t border-[--border-default] space-y-2">
+                    <div className="p-3 border-t border-[var(--border-default)] space-y-2">
                         <div className="flex items-center justify-between">
-                            <span className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-bold">
+                            <span className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-bold">
                                 Theme
                             </span>
                             <Button
@@ -232,21 +232,21 @@ export const App = () => {
                 </aside>
 
                 <main className="flex-1 flex flex-col overflow-hidden">
-                    <header className="px-8 py-4 border-b border-[--border-default] bg-[--surface-default] flex items-center gap-4">
+                    <header className="px-8 py-4 border-b border-[var(--border-default)] bg-[var(--surface-default)] flex items-center gap-4">
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                                <span className="inline-block h-1 w-6 bg-[--accent-default] rounded-full" />
-                                <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-[--accent-default]">
+                                <span className="inline-block h-1 w-6 bg-[var(--accent-default)] rounded-full" />
+                                <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-[var(--accent-default)]">
                                     UTSA Reg+
                                 </span>
                             </div>
-                            <h2 className="utsa-display-black text-[24px] text-[--ink-strong] leading-tight">
+                            <h2 className="utsa-display-black text-[24px] text-[var(--ink-strong)] leading-tight">
                                 {activeTab === 'explore' && 'Course Explorer'}
                                 {activeTab === 'schedule' && 'Weekly Schedule'}
                                 {activeTab === 'saved' && 'Saved Courses'}
                                 {activeTab === 'settings' && 'Settings'}
                             </h2>
-                            <p className="text-[12px] text-[--ink-muted] mt-1">
+                            <p className="text-[12px] text-[var(--ink-muted)] mt-1">
                                 {activeTab === 'explore' &&
                                     'Search live UTSA sections with RateMyProfessor and grade-history overlays.'}
                                 {activeTab === 'schedule' &&
@@ -384,7 +384,7 @@ const ExplorePane = ({
 
     if (results.length === 0) {
         return (
-            <div className="text-center py-16 text-[14px] text-[--ink-muted]">
+            <div className="text-center py-16 text-[14px] text-[var(--ink-muted)]">
                 <p>No sections match {`"${query}"`}.</p>
                 {f1Mode && (
                     <p className="text-[12px] mt-2">
@@ -426,19 +426,19 @@ const ACCENT_THEME: Record<
     { tile: string; iconColor: string; stripe: string }
 > = {
     orange: {
-        tile: 'bg-[--accent-soft]',
-        iconColor: 'text-[--accent-default]',
-        stripe: 'bg-[--accent-default]'
+        tile: 'bg-[var(--accent-soft)]',
+        iconColor: 'text-[var(--accent-default)]',
+        stripe: 'bg-[var(--accent-default)]'
     },
     brand: {
-        tile: 'bg-[--brand-soft]',
-        iconColor: 'text-[--brand-default]',
-        stripe: 'bg-[--brand-default]'
+        tile: 'bg-[var(--brand-soft)]',
+        iconColor: 'text-[var(--brand-default)]',
+        stripe: 'bg-[var(--brand-default)]'
     },
     info: {
-        tile: 'bg-[--status-info-soft]',
-        iconColor: 'text-[--status-info]',
-        stripe: 'bg-[--status-info]'
+        tile: 'bg-[var(--status-info-soft)]',
+        iconColor: 'text-[var(--status-info)]',
+        stripe: 'bg-[var(--status-info)]'
     }
 };
 
@@ -458,10 +458,12 @@ const FeatureCard = ({ icon: Icon, title, body, accent }: FeatureCardProps) => {
                     <Icon className="w-5 h-5" />
                 </div>
                 <div>
-                    <h3 className="utsa-display text-[16px] font-bold text-[--ink-strong]">
+                    <h3 className="utsa-display text-[16px] font-bold text-[var(--ink-strong)]">
                         {title}
                     </h3>
-                    <p className="text-[12px] text-[--ink-muted] leading-relaxed mt-1">{body}</p>
+                    <p className="text-[12px] text-[var(--ink-muted)] leading-relaxed mt-1">
+                        {body}
+                    </p>
                 </div>
             </div>
         </Card>
@@ -487,7 +489,7 @@ const SchedulePane = ({
     onSectionClick,
     onRemove
 }: SchedulePaneProps) => {
-    if (!hydrated) return <p className="text-[--ink-muted]">Loading...</p>;
+    if (!hydrated) return <p className="text-[var(--ink-muted)]">Loading...</p>;
 
     const f1Insufficient = f1Mode && inPersonCredits < 12;
 
@@ -508,14 +510,17 @@ const SchedulePane = ({
             </div>
 
             {f1Insufficient && (
-                <Card padding="md" className="border-[--status-warn]/40 bg-[--status-warn-soft]">
+                <Card
+                    padding="md"
+                    className="border-[var(--status-warn)]/40 bg-[var(--status-warn-soft)]"
+                >
                     <div className="flex items-start gap-3">
-                        <AlertTriangle className="w-5 h-5 text-[--status-warn] shrink-0 mt-0.5" />
+                        <AlertTriangle className="w-5 h-5 text-[var(--status-warn)] shrink-0 mt-0.5" />
                         <div>
-                            <p className="text-[13px] font-bold text-[--status-warn]">
+                            <p className="text-[13px] font-bold text-[var(--status-warn)]">
                                 F1 mode: below 12 in-person credit hours
                             </p>
-                            <p className="text-[12px] text-[--ink-default] mt-1">
+                            <p className="text-[12px] text-[var(--ink-default)] mt-1">
                                 International students must maintain ≥12 in-person credits to
                                 preserve CPT/OPT eligibility. Add an in-person section or disable F1
                                 mode if you have an exception.
@@ -532,13 +537,13 @@ const SchedulePane = ({
                     {committed.map((s) => (
                         <Card key={s.crn} padding="sm" className="flex items-center gap-3">
                             <div className="flex-1 min-w-0">
-                                <p className="text-[13px] font-bold text-[--ink-strong] utsa-tabular">
+                                <p className="text-[13px] font-bold text-[var(--ink-strong)] utsa-tabular">
                                     {s.courseId} §{s.sectionCode}
                                 </p>
-                                <p className="text-[11px] text-[--ink-muted] truncate">
+                                <p className="text-[11px] text-[var(--ink-muted)] truncate">
                                     {s.title} · {s.instructorName}
                                 </p>
-                                <p className="text-[11px] text-[--ink-muted] mt-0.5 utsa-tabular">
+                                <p className="text-[11px] text-[var(--ink-muted)] mt-0.5 utsa-tabular">
                                     {s.meetings[0]
                                         ? `${formatDays(s.meetings[0].days)} · ${formatTimeRange(s.meetings[0].startMin, s.meetings[0].endMin)}`
                                         : 'Online (asynchronous)'}
@@ -552,7 +557,7 @@ const SchedulePane = ({
                                     onRemove(s.crn);
                                 }}
                             >
-                                <Trash2 className="w-4 h-4 text-[--status-danger]" />
+                                <Trash2 className="w-4 h-4 text-[var(--status-danger)]" />
                             </Button>
                         </Card>
                     ))}
@@ -570,18 +575,18 @@ interface StatBlockProps {
 }
 const StatBlock = ({ label, value, suffix, tone = 'default' }: StatBlockProps) => (
     <Card padding="md">
-        <p className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-bold">
+        <p className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-bold">
             {label}
         </p>
         <p
             className={cn(
                 'mt-1 utsa-display-black utsa-tabular text-[28px] leading-tight',
-                tone === 'warn' ? 'text-[--status-warn]' : 'text-[--ink-strong]'
+                tone === 'warn' ? 'text-[var(--status-warn)]' : 'text-[var(--ink-strong)]'
             )}
         >
             {value}
             {suffix && (
-                <span className="text-[14px] text-[--ink-muted] font-medium ml-1 utsa-display">
+                <span className="text-[14px] text-[var(--ink-muted)] font-medium ml-1 utsa-display">
                     {suffix}
                 </span>
             )}
@@ -599,10 +604,10 @@ const SavedPane = ({ saved, onUnsave, onAdd, onOpen }: SavedPaneProps) => {
     if (saved.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-20 space-y-3">
-                <div className="w-14 h-14 rounded-2xl bg-[--brand-soft] flex items-center justify-center">
-                    <Bookmark className="w-7 h-7 text-[--brand-default]" />
+                <div className="w-14 h-14 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
+                    <Bookmark className="w-7 h-7 text-[var(--brand-default)]" />
                 </div>
-                <p className="text-[13px] text-[--ink-muted]">
+                <p className="text-[13px] text-[var(--ink-muted)]">
                     Bookmarks land here. Tap the bookmark icon on any section card.
                 </p>
             </div>
@@ -660,12 +665,12 @@ const SettingsPane = ({ prefs, onChange }: SettingsPaneProps) => (
             }}
             badge="v1.1 preview"
         />
-        <Card padding="md" className="bg-[--surface-muted] border-dashed">
+        <Card padding="md" className="bg-[var(--surface-muted)] border-dashed">
             <div className="flex items-start gap-3">
-                <Sparkles className="w-5 h-5 text-[--accent-default] shrink-0 mt-0.5" />
+                <Sparkles className="w-5 h-5 text-[var(--accent-default)] shrink-0 mt-0.5" />
                 <div>
-                    <p className="text-[13px] font-bold text-[--ink-strong]">Coming next</p>
-                    <ul className="text-[12px] text-[--ink-muted] mt-1 space-y-0.5 list-disc list-inside">
+                    <p className="text-[13px] font-bold text-[var(--ink-strong)]">Coming next</p>
+                    <ul className="text-[12px] text-[var(--ink-muted)] mt-1 space-y-0.5 list-disc list-inside">
                         <li>
                             Schedule optimizer (v1.1) — set your courses, get the best valid
                             combination ranked by RMP + grade history + compactness.
@@ -707,22 +712,24 @@ const ToggleRow = ({
                 className={cn(
                     'w-10 h-10 rounded-xl flex items-center justify-center shrink-0',
                     checked
-                        ? 'bg-[--accent-default] text-white'
-                        : 'bg-[--surface-muted] text-[--ink-muted]'
+                        ? 'bg-[var(--accent-default)] text-white'
+                        : 'bg-[var(--surface-muted)] text-[var(--ink-muted)]'
                 )}
             >
                 <Icon className="w-5 h-5" />
             </div>
             <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                    <h3 className="text-[14px] font-bold text-[--ink-strong] tracking-tight">
+                    <h3 className="text-[14px] font-bold text-[var(--ink-strong)] tracking-tight">
                         {title}
                     </h3>
-                    <span className="px-1.5 py-0.5 rounded-md bg-[--accent-soft] text-[--accent-default] text-[9px] uppercase font-bold tracking-wider">
+                    <span className="px-1.5 py-0.5 rounded-md bg-[var(--accent-soft)] text-[var(--accent-default)] text-[9px] uppercase font-bold tracking-wider">
                         {badge}
                     </span>
                 </div>
-                <p className="text-[12px] text-[--ink-muted] leading-relaxed mt-1">{description}</p>
+                <p className="text-[12px] text-[var(--ink-muted)] leading-relaxed mt-1">
+                    {description}
+                </p>
             </div>
             <button
                 type="button"
@@ -734,7 +741,7 @@ const ToggleRow = ({
                 }}
                 className={cn(
                     'relative w-11 h-6 rounded-full transition-colors shrink-0',
-                    checked ? 'bg-[--accent-default]' : 'bg-[--surface-sunken]'
+                    checked ? 'bg-[var(--accent-default)]' : 'bg-[var(--surface-sunken)]'
                 )}
             >
                 <span
