@@ -108,11 +108,11 @@ export const App = () => {
     };
 
     const handleOpenDashboard = (): void => {
-        chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') });
+        void chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') });
     };
 
     const handleOpenDetails = (section: Section): void => {
-        chrome.tabs.create({
+        void chrome.tabs.create({
             url: `${chrome.runtime.getURL('dashboard.html')}#course=${section.courseId}`
         });
     };

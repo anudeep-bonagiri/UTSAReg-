@@ -59,7 +59,6 @@ CardHeader.displayName = 'CardHeader';
 
 export const CardTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(
     ({ className, children, ...props }, ref) => (
-        // eslint-disable-next-line jsx-a11y/heading-has-content -- content is forwarded via children
         <h3
             ref={ref}
             className={cn(

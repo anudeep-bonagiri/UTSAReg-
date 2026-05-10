@@ -113,8 +113,10 @@ export const SectionCard = ({
             elevation={inConflict ? 'flat' : 'low'}
             padding="md"
             className={cn(
-                'transition-opacity',
-                inConflict && 'opacity-60 line-through decoration-[--status-danger]/30'
+                'relative overflow-hidden transition-opacity',
+                'border-l-[3px] border-l-[--accent-default]',
+                inConflict &&
+                    'opacity-60 line-through decoration-[--status-danger]/30 border-l-[--status-danger]'
             )}
         >
             {/* Header row */}

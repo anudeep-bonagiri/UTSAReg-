@@ -17,7 +17,7 @@ export const saveCourse = async (course: SavedCourse): Promise<void> => {
     if (!savedCourses.some((c: SavedCourse) => c.crn === course.crn)) {
         const updated = [...savedCourses, course];
         await chrome.storage.local.set({ savedCourses: updated });
-        console.log(`UTSA Registration Plus: Saved course ${course.crn}`);
+        console.info(`[utsa-reg+] saved course ${course.crn}`);
     }
 };
 

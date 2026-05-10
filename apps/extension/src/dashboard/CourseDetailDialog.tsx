@@ -15,7 +15,6 @@ import {
     DialogContent,
     DialogDescription,
     DialogFooter,
-    DialogHeader,
     DialogRoot,
     DialogTitle,
     FreshnessChip
@@ -61,24 +60,26 @@ export const CourseDetailDialog = ({
     return (
         <DialogRoot open={open} onOpenChange={onOpenChange}>
             <DialogContent>
-                <DialogHeader>
-                    <div className="flex items-center justify-between gap-3">
-                        <div>
-                            <DialogTitle>
-                                <span className="utsa-tabular">{section.courseId}</span>
-                                <span className="text-[--ink-muted] mx-2">·</span>
-                                <span>{course?.title ?? section.title}</span>
-                            </DialogTitle>
-                            <DialogDescription className="mt-1">
-                                Section §{section.sectionCode} · CRN{' '}
-                                <span className="utsa-tabular font-semibold text-[--ink-default]">
-                                    {section.crn}
-                                </span>{' '}
-                                · {section.creditHours ?? 3} credit hours
-                            </DialogDescription>
-                        </div>
+                {/* Midnight header — strongest UTSA brand cue at the most-seen moment */}
+                <div className="relative bg-[--brand-default] text-white px-6 pt-6 pb-5">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-[--accent-default]" />
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="inline-flex h-1.5 w-1.5 rounded-full bg-[--accent-default]" />
+                        <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-[--brand-soft]">
+                            Course detail · {section.termId.slice(0, 4)} term
+                        </span>
                     </div>
-                </DialogHeader>
+                    <DialogTitle className="utsa-display-black text-white text-[26px] leading-tight">
+                        <span className="utsa-tabular">{section.courseId}</span>
+                        <span className="text-[--accent-default] mx-2">·</span>
+                        <span>{course?.title ?? section.title}</span>
+                    </DialogTitle>
+                    <DialogDescription className="mt-2 text-[12px] text-[--brand-soft]">
+                        Section §{section.sectionCode} · CRN{' '}
+                        <span className="utsa-tabular font-bold text-white">{section.crn}</span> ·{' '}
+                        {section.creditHours ?? 3} credit hours
+                    </DialogDescription>
+                </div>
 
                 <DialogBody className="space-y-6">
                     {/* Instructor + RMP */}

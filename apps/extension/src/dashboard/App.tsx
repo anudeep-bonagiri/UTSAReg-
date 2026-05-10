@@ -234,13 +234,19 @@ export const App = () => {
                 <main className="flex-1 flex flex-col overflow-hidden">
                     <header className="px-8 py-4 border-b border-[--border-default] bg-[--surface-default] flex items-center gap-4">
                         <div className="flex-1">
-                            <h2 className="text-[20px] font-bold text-[--ink-strong] tracking-tight">
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className="inline-block h-1 w-6 bg-[--accent-default] rounded-full" />
+                                <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-[--accent-default]">
+                                    UTSA Reg+
+                                </span>
+                            </div>
+                            <h2 className="utsa-display-black text-[24px] text-[--ink-strong] leading-tight">
                                 {activeTab === 'explore' && 'Course Explorer'}
                                 {activeTab === 'schedule' && 'Weekly Schedule'}
                                 {activeTab === 'saved' && 'Saved Courses'}
                                 {activeTab === 'settings' && 'Settings'}
                             </h2>
-                            <p className="text-[12px] text-[--ink-muted] mt-0.5">
+                            <p className="text-[12px] text-[--ink-muted] mt-1">
                                 {activeTab === 'explore' &&
                                     'Search live UTSA sections with RateMyProfessor and grade-history overlays.'}
                                 {activeTab === 'schedule' &&
@@ -358,16 +364,19 @@ const ExplorePane = ({
                     icon={LayoutDashboard}
                     title="Real-time RMP"
                     body="Every result fetches live RateMyProfessor ratings. Shows freshness so you know when data was last fetched."
+                    accent="orange"
                 />
                 <FeatureCard
                     icon={Calendar}
                     title="Conflict-aware"
                     body="Add sections and any overlapping search result crosses out automatically — no more registration-day surprises."
+                    accent="brand"
                 />
                 <FeatureCard
                     icon={PlaneTakeoff}
                     title="F1 mode"
                     body="Hide online sections, monitor in-person credit hours, and protect your CPT/OPT eligibility."
+                    accent="info"
                 />
             </div>
         );
@@ -410,18 +419,54 @@ interface FeatureCardProps {
     icon: typeof Calendar;
     title: string;
     body: string;
+    accent: 'orange' | 'brand' | 'info';
 }
-const FeatureCard = ({ icon: Icon, title, body }: FeatureCardProps) => (
-    <Card padding="lg" className="space-y-3">
-        <div className="w-10 h-10 rounded-xl bg-[--accent-soft] text-[--accent-default] flex items-center justify-center">
-            <Icon className="w-5 h-5" />
-        </div>
-        <div>
-            <h3 className="text-[15px] font-bold text-[--ink-strong] tracking-tight">{title}</h3>
-            <p className="text-[12px] text-[--ink-muted] leading-relaxed mt-1">{body}</p>
-        </div>
-    </Card>
-);
+const ACCENT_THEME: Record<
+    FeatureCardProps['accent'],
+    { tile: string; iconColor: string; stripe: string }
+> = {
+    orange: {
+        tile: 'bg-[--accent-soft]',
+        iconColor: 'text-[--accent-default]',
+        stripe: 'bg-[--accent-default]'
+    },
+    brand: {
+        tile: 'bg-[--brand-soft]',
+        iconColor: 'text-[--brand-default]',
+        stripe: 'bg-[--brand-default]'
+    },
+    info: {
+        tile: 'bg-[--status-info-soft]',
+        iconColor: 'text-[--status-info]',
+        stripe: 'bg-[--status-info]'
+    }
+};
+
+const FeatureCard = ({ icon: Icon, title, body, accent }: FeatureCardProps) => {
+    const theme = ACCENT_THEME[accent];
+    return (
+        <Card padding="lg" className="relative overflow-hidden">
+            <div className={cn('absolute top-0 left-0 right-0 h-1', theme.stripe)} />
+            <div className="space-y-3 pt-2">
+                <div
+                    className={cn(
+                        'w-11 h-11 rounded-xl flex items-center justify-center',
+                        theme.tile,
+                        theme.iconColor
+                    )}
+                >
+                    <Icon className="w-5 h-5" />
+                </div>
+                <div>
+                    <h3 className="utsa-display text-[16px] font-bold text-[--ink-strong]">
+                        {title}
+                    </h3>
+                    <p className="text-[12px] text-[--ink-muted] leading-relaxed mt-1">{body}</p>
+                </div>
+            </div>
+        </Card>
+    );
+};
 
 interface SchedulePaneProps {
     committed: Section[];

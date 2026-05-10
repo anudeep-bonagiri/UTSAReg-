@@ -98,33 +98,9 @@ export default tseslint.config(
             '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/no-non-null-assertion': 'off'
         }
-    },
-    // Legacy v0 surface scheduled for replacement once @utsaregplus/ui and
-    // packages/adapter-utsa land. Strict rules downgraded to warn so CI stays
-    // green while we rebuild on top of the design system + data adapters.
-    // Remove a path from this list as soon as its rewrite ships.
-    {
-        files: [
-            'apps/extension/src/popup/App.tsx',
-            'apps/extension/src/dashboard/App.tsx',
-            'apps/extension/src/content/index.tsx',
-            'apps/extension/src/components/CourseDetailsPopup.tsx',
-            'apps/extension/src/components/PremiumCourseCard.tsx',
-            'apps/extension/src/components/SearchHeader.tsx',
-            'apps/extension/src/components/GradeChart.tsx'
-        ],
-        rules: {
-            '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/no-unsafe-assignment': 'warn',
-            '@typescript-eslint/no-unsafe-member-access': 'warn',
-            '@typescript-eslint/no-unsafe-argument': 'warn',
-            '@typescript-eslint/no-unsafe-return': 'warn',
-            '@typescript-eslint/no-unsafe-call': 'warn',
-            '@typescript-eslint/no-misused-promises': 'warn',
-            '@typescript-eslint/no-floating-promises': 'warn',
-            '@typescript-eslint/prefer-nullish-coalescing': 'warn',
-            '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
-            '@typescript-eslint/dot-notation': 'warn'
-        }
     }
+    // The legacy v0 override block was retired once the popup, dashboard, and
+    // background were rewritten on top of the design system + data adapters
+    // and the four legacy components (PremiumCourseCard, CourseDetailsPopup,
+    // SearchHeader, GradeChart) were deleted as dead code.
 );

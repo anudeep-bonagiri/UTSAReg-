@@ -1,5 +1,4 @@
 #!/usr/bin/env tsx
-/* eslint-disable no-console -- script-time logging */
 /**
  * UTSA Reg+ Brand Guidelines PDF — strict absolute-positioning version.
  *

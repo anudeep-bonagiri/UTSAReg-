@@ -95,7 +95,6 @@ export const fetchSubjects = async (
 
     if (errors.length > 0) {
         for (const { subject, error } of errors) {
-            // eslint-disable-next-line no-console -- intentional script-time logging
             console.warn(
                 `[catalog] failed to fetch ${subject}: ${error instanceof Error ? error.message : String(error)}`
             );
