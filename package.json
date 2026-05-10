@@ -20,7 +20,8 @@
         "smoke:asap": "tsx scripts/smoke-asap.ts",
         "smoke:syllabus": "tsx scripts/smoke-syllabus.ts",
         "data:catalog": "tsx scripts/scrape-catalog.ts",
-        "data:sections": "tsx scripts/scrape-sections.ts"
+        "data:sections": "tsx scripts/scrape-sections.ts",
+        "brand:book": "tsx scripts/generate-brand-book.ts"
     },
     "devDependencies": {
         "@eslint/js": "^9.18.0",

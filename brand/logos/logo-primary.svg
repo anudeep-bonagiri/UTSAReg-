@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  UTSA Reg+ Primary Logo (horizontal lockup)
+  - Roundel: orange tile with stylized "R+" monogram
+  - Wordmark: Manrope ExtraBold, midnight color
+  - Spacing: clear-space = roundel half-height
+  Designed to NOT impersonate UTSA's official identity. No UTSA logos used.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" role="img" aria-label="UTSA Reg+">
+    <!-- roundel -->
+    <rect x="8" y="16" width="64" height="64" rx="14" fill="#F15A22" />
+    <!-- monogram: stylized R+ via overlapping geometric strokes -->
+    <g transform="translate(40,48)">
+        <!-- Stem of R -->
+        <rect x="-15" y="-17" width="6" height="34" rx="1" fill="#FFFFFF" />
+        <!-- Bowl of R -->
+        <path
+            d="M -9 -17 H 0 a 8 8 0 0 1 8 8 v 0 a 8 8 0 0 1 -8 8 H -9 z"
+            fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round" />
+        <!-- Leg of R -->
+        <path d="M 0 -1 L 9 17" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" />
+        <!-- Plus sign in upper-right corner -->
+        <g transform="translate(11,-11)">
+            <rect x="-1.4" y="-7" width="2.8" height="14" rx="0.6" fill="#FFFFFF" />
+            <rect x="-7" y="-1.4" width="14" height="2.8" rx="0.6" fill="#FFFFFF" />
+        </g>
+    </g>
+    <!-- wordmark -->
+    <text x="92" y="48"
+          font-family="Manrope, Inter, sans-serif"
+          font-weight="800"
+          font-size="34"
+          fill="#032044"
+          letter-spacing="-0.7"
+          dominant-baseline="middle">UTSA Reg<tspan fill="#F15A22">+</tspan></text>
+    <!-- supporting line -->
+    <text x="92" y="74"
+          font-family="Inter, sans-serif"
+          font-weight="600"
+          font-size="10"
+          fill="#5A6480"
+          letter-spacing="2.4"
+          dominant-baseline="middle">REGISTRATION INTELLIGENCE FOR UTSA STUDENTS</text>
+</svg>

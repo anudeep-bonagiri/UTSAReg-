@@ -151,16 +151,18 @@ export const App = () => {
         <TooltipProvider delayDuration={250}>
             <div className="flex h-screen w-screen bg-[--surface-canvas] text-[--ink-default] overflow-hidden">
                 <aside className="w-60 border-r border-[--border-default] bg-[--surface-default] flex flex-col">
-                    <div className="p-5 border-b border-[--border-default]">
-                        <div className="flex items-center gap-2">
-                            <div className="w-9 h-9 rounded-xl bg-[--accent-default] flex items-center justify-center">
-                                <GraduationCap className="w-5 h-5 text-white" />
+                    {/* Midnight wordmark block — strongest UTSA brand cue */}
+                    <div className="p-6 bg-[--brand-default] text-white relative">
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-[--accent-default]" />
+                        <div className="flex items-center gap-3">
+                            <div className="w-11 h-11 rounded-2xl bg-[--accent-default] flex items-center justify-center shadow-[0_4px_14px_rgba(241,90,34,0.45)]">
+                                <GraduationCap className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <div className="text-[16px] font-bold text-[--ink-strong] leading-tight tracking-tight">
+                                <div className="utsa-display-black text-[20px] text-white leading-tight">
                                     UTSA Reg<span className="text-[--accent-default]">+</span>
                                 </div>
-                                <div className="text-[10px] text-[--ink-subtle] uppercase tracking-wider font-semibold">
+                                <div className="text-[9px] text-white/55 uppercase tracking-[0.2em] font-semibold mt-0.5">
                                     {SECTIONS_TERM_LABEL}
                                 </div>
                             </div>
@@ -528,13 +530,15 @@ const StatBlock = ({ label, value, suffix, tone = 'default' }: StatBlockProps) =
         </p>
         <p
             className={cn(
-                'mt-1 text-[24px] font-black utsa-tabular leading-tight',
+                'mt-1 utsa-display-black utsa-tabular text-[28px] leading-tight',
                 tone === 'warn' ? 'text-[--status-warn]' : 'text-[--ink-strong]'
             )}
         >
             {value}
             {suffix && (
-                <span className="text-[14px] text-[--ink-muted] font-medium ml-1">{suffix}</span>
+                <span className="text-[14px] text-[--ink-muted] font-medium ml-1 utsa-display">
+                    {suffix}
+                </span>
             )}
         </p>
     </Card>

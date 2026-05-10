@@ -120,45 +120,48 @@ export const App = () => {
     return (
         <TooltipProvider delayDuration={250}>
             <div className="w-[420px] h-[600px] flex flex-col bg-[--surface-canvas] text-[--ink-default] overflow-hidden">
-                <header className="px-5 pt-4 pb-3 border-b border-[--border-default] bg-[--surface-default]">
+                {/* Midnight-blue header — strongest UTSA brand signal in the popup. */}
+                <header className="px-5 pt-4 pb-4 bg-[--brand-default] text-[--ink-on-brand] relative">
+                    {/* UTSA-orange accent stripe along the top */}
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-[--accent-default]" />
                     <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-lg bg-[--accent-default] flex items-center justify-center">
-                                <GraduationCap className="w-4 h-4 text-white" />
+                        <div className="flex items-center gap-2.5">
+                            <div className="w-9 h-9 rounded-xl bg-[--accent-default] flex items-center justify-center shadow-[0_2px_8px_rgba(241,90,34,0.35)]">
+                                <GraduationCap className="w-5 h-5 text-white" />
                             </div>
                             <div>
-                                <h1 className="text-[14px] font-bold text-[--ink-strong] leading-tight tracking-tight">
+                                <h1 className="utsa-display-black text-[18px] text-white leading-tight">
                                     UTSA Reg<span className="text-[--accent-default]">+</span>
                                 </h1>
-                                <p className="text-[9px] text-[--ink-subtle] uppercase tracking-wider font-semibold">
+                                <p className="text-[9px] text-white/55 uppercase tracking-[0.18em] font-semibold mt-0.5">
                                     {SECTIONS_TERM_LABEL}
                                 </p>
                             </div>
                         </div>
                         <div className="flex items-center gap-1">
                             <Tooltip content={theme === 'light' ? 'Dark mode' : 'Light mode'}>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
+                                <button
+                                    type="button"
                                     onClick={toggleTheme}
                                     aria-label="Toggle theme"
+                                    className="h-9 w-9 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-center"
                                 >
                                     {theme === 'light' ? (
                                         <Moon className="w-4 h-4" />
                                     ) : (
                                         <Sun className="w-4 h-4" />
                                     )}
-                                </Button>
+                                </button>
                             </Tooltip>
                             <Tooltip content="Open full dashboard">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
+                                <button
+                                    type="button"
                                     onClick={handleOpenDashboard}
                                     aria-label="Open dashboard"
+                                    className="h-9 w-9 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-center"
                                 >
                                     <LayoutDashboard className="w-4 h-4" />
-                                </Button>
+                                </button>
                             </Tooltip>
                         </div>
                     </div>
@@ -169,7 +172,8 @@ export const App = () => {
                             setQuery(e.target.value);
                         }}
                         placeholder="Search CRN, class code, or title..."
-                        // eslint-disable-next-line jsx-a11y/no-autofocus -- popup opens with intent to type; AT users can Tab away instantly
+                        className="bg-white/95 border-transparent focus-within:border-[--accent-default] focus-within:ring-[--accent-default]/40"
+                        // eslint-disable-next-line jsx-a11y/no-autofocus -- popup opens with intent to type
                         autoFocus
                     />
                 </header>
@@ -197,10 +201,10 @@ export const App = () => {
                                     setActiveTab(tab.id);
                                 }}
                                 className={cn(
-                                    'flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-semibold tracking-wide transition-colors',
-                                    'border-b-2 -mb-px relative',
+                                    'flex-1 flex items-center justify-center gap-1.5 py-3 text-[11px] font-bold tracking-wide transition-colors uppercase',
+                                    'border-b-[3px] -mb-px relative',
                                     isActive
-                                        ? 'text-[--ink-strong] border-[--accent-default]'
+                                        ? 'text-[--accent-default] border-[--accent-default] bg-[--surface-muted]'
                                         : 'text-[--ink-muted] border-transparent hover:text-[--ink-default] hover:bg-[--surface-muted]'
                                 )}
                             >
@@ -293,18 +297,18 @@ const ExploreTab = ({
 }: ExploreProps) => {
     if (query.trim().length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center text-center py-10 px-4 space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[--accent-soft] flex items-center justify-center">
-                    <Search className="w-6 h-6 text-[--accent-default]" />
+            <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-5">
+                <div className="w-14 h-14 rounded-2xl bg-[--accent-soft] flex items-center justify-center ring-4 ring-[--accent-default]/10">
+                    <Search className="w-7 h-7 text-[--accent-default]" />
                 </div>
                 <div>
-                    <p className="text-[13px] font-bold text-[--ink-strong]">
+                    <p className="utsa-display text-[16px] font-bold text-[--ink-strong]">
                         Search any UTSA section
                     </p>
-                    <p className="text-[11px] text-[--ink-muted] mt-1 leading-relaxed">
+                    <p className="text-[11px] text-[--ink-muted] mt-1.5 leading-relaxed">
                         CRN, class code, title, or instructor.
                         <br />
-                        Live RateMyProfessor data on every result.
+                        Live data on every result.
                     </p>
                 </div>
                 <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[280px]">
@@ -315,7 +319,7 @@ const ExploreTab = ({
                             onClick={() => {
                                 onSetQuery(prompt);
                             }}
-                            className="px-2.5 py-1 rounded-full bg-[--surface-default] border border-[--border-default] text-[10px] font-semibold text-[--ink-default] hover:bg-[--surface-muted] hover:border-[--border-strong] transition-colors"
+                            className="px-3 py-1.5 rounded-full bg-[--brand-soft] border border-[--brand-default]/15 text-[10px] font-bold text-[--brand-default] hover:bg-[--brand-default] hover:text-white hover:border-[--brand-default] transition-colors utsa-tabular"
                         >
                             {prompt}
                         </button>
@@ -400,7 +404,7 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
                         <p className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-semibold">
                             Credits
                         </p>
-                        <p className="text-[18px] font-black text-[--ink-strong] utsa-tabular leading-tight">
+                        <p className="utsa-display-black utsa-tabular text-[22px] text-[--ink-strong] leading-tight">
                             {totalCredits}
                             <span className="text-[--ink-muted] text-[12px] font-medium">
                                 {' '}
@@ -412,7 +416,7 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
                         <p className="text-[10px] uppercase tracking-wider text-[--ink-subtle] font-semibold">
                             Sections
                         </p>
-                        <p className="text-[18px] font-black text-[--ink-strong] utsa-tabular leading-tight">
+                        <p className="utsa-display-black utsa-tabular text-[22px] text-[--ink-strong] leading-tight">
                             {committed.length}
                         </p>
                     </div>

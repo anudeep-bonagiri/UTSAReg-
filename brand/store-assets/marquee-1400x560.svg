@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Chrome Web Store marquee tile — 1400 x 560 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 560" width="1400" height="560">
+    <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#032044" />
+            <stop offset="1" stop-color="#06346E" />
+        </linearGradient>
+    </defs>
+    <rect width="1400" height="560" fill="url(#bg)" />
+    <rect x="0" y="0" width="1400" height="6" fill="#F15A22" />
+
+    <!-- left composition: roundel + headline -->
+    <g transform="translate(80,140)">
+        <rect width="120" height="120" rx="26" fill="#F15A22" />
+        <g transform="translate(60,60)">
+            <rect x="-26" y="-30" width="10" height="60" rx="2" fill="#FFFFFF" />
+            <path d="M -16 -30 H 4 a 14 14 0 0 1 14 14 v 0 a 14 14 0 0 1 -14 14 H -16 z" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linejoin="round" />
+            <path d="M 4 -2 L 18 30" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" />
+            <g transform="translate(20,-18)">
+                <rect x="-2.4" y="-12" width="4.8" height="24" rx="1" fill="#FFFFFF" />
+                <rect x="-12" y="-2.4" width="24" height="4.8" rx="1" fill="#FFFFFF" />
+            </g>
+        </g>
+    </g>
+
+    <!-- headline -->
+    <text x="240" y="200" font-family="Manrope, Inter, system-ui, sans-serif" font-weight="800" font-size="76" fill="#FFFFFF" letter-spacing="-2.5">UTSA Reg<tspan fill="#F15A22">+</tspan></text>
+    <text x="240" y="252" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" fill="#C8DCFF" letter-spacing="-0.2">Live UTSA registration intelligence on every section.</text>
+
+    <!-- right composition: stat row -->
+    <g transform="translate(80,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">2,401</text>
+        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">LIVE FALL 2026 SECTIONS</text>
+    </g>
+    <g transform="translate(420,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">825</text>
+        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">SYLLABI TRACKED · CS</text>
+    </g>
+    <g transform="translate(700,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">F1</text>
+        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">CPT/OPT-AWARE MODE</text>
+    </g>
+    <g transform="translate(940,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">0</text>
+        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">TELEMETRY · ALL LOCAL</text>
+    </g>
+
+    <!-- right edge accent block -->
+    <rect x="1320" y="80" width="60" height="60" fill="#F15A22" />
+</svg>
