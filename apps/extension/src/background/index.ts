@@ -45,10 +45,49 @@ const log = (...args: unknown[]): void => {
 
 const client = new RmpClient();
 
-// In-memory caches local to the SW lifetime. Service workers can be killed
-// at any time, so we re-fetch on cold start; that's fast enough for both.
-let orgsCache: { value: SyllabusOrganization[]; fetchedAt: number } | null = null;
+/**
+ * In-memory cache of the Simple Syllabus org tree. Service workers can be
+ * terminated by Chrome at any moment, so the cache is also persisted to
+ * chrome.storage.local for warm-start hydration. The wrapper checks memory
+ * first, falls back to storage, then finally fetches.
+ */
 const ORG_CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6h
+const ORG_CACHE_STORAGE_KEY = 'syllabus:orgs:v1';
+let orgsCache: { value: SyllabusOrganization[]; fetchedAt: number } | null = null;
+
+interface OrgsStoragePayload {
+    value: SyllabusOrganization[];
+    fetchedAt: number;
+}
+
+const hydrateOrgsCache = async (): Promise<void> => {
+    if (orgsCache) return;
+    try {
+        const stored = await chrome.storage.local.get(ORG_CACHE_STORAGE_KEY);
+        const raw = stored[ORG_CACHE_STORAGE_KEY] as OrgsStoragePayload | undefined;
+        if (
+            raw &&
+            Array.isArray(raw.value) &&
+            typeof raw.fetchedAt === 'number' &&
+            Date.now() - raw.fetchedAt < ORG_CACHE_TTL_MS
+        ) {
+            orgsCache = raw;
+            log('hydrated org cache from chrome.storage', raw.value.length, 'orgs');
+        }
+    } catch (err) {
+        log('failed to hydrate org cache:', err);
+    }
+};
+
+const persistOrgsCache = async (
+    payload: OrgsStoragePayload
+): Promise<void> => {
+    try {
+        await chrome.storage.local.set({ [ORG_CACHE_STORAGE_KEY]: payload });
+    } catch (err) {
+        log('failed to persist org cache:', err);
+    }
+};
 
 const ensureSchoolId = async (): Promise<string> => {
     const cached = await getCachedSchoolId();
@@ -62,12 +101,15 @@ const ensureSchoolId = async (): Promise<string> => {
 
 const ensureOrgs = async (): Promise<SyllabusOrganization[]> => {
     const now = Date.now();
+    await hydrateOrgsCache();
     if (orgsCache && now - orgsCache.fetchedAt < ORG_CACHE_TTL_MS) {
         return orgsCache.value;
     }
     log('fetching Simple Syllabus org tree...');
     const orgs = await fetchUtsaOrganizations();
-    orgsCache = { value: orgs, fetchedAt: now };
+    const payload = { value: orgs, fetchedAt: now };
+    orgsCache = payload;
+    await persistOrgsCache(payload);
     log('cached', orgs.length, 'organizations');
     return orgs;
 };
@@ -174,6 +216,69 @@ chrome.runtime.onMessage.addListener((message: WorkerRequest, _sender, sendRespo
         return true;
     }
     return false;
+});
+
+/**
+ * Daily refresh — wakes once every 12 hours, evicts stale RMP entries past
+ * their TTL and re-warms the org tree. Keeps the extension's data fresh
+ * without forcing the user to re-open the popup. Uses chrome.alarms which
+ * survives service-worker termination.
+ */
+const REFRESH_ALARM = 'utsa:refresh-caches';
+
+const evictStaleRatings = async (): Promise<number> => {
+    const all = await chrome.storage.local.get(null);
+    const now = Date.now();
+    const toRemove: string[] = [];
+    for (const [key, value] of Object.entries(all)) {
+        if (!key.startsWith('rmp:v1:')) continue;
+        if (key === 'rmp:v1:schoolId') continue;
+        const v = value as { freshness?: { fetchedAt?: string; maxAgeMs?: number } } | null;
+        if (!v?.freshness?.fetchedAt) {
+            toRemove.push(key);
+            continue;
+        }
+        const age = now - new Date(v.freshness.fetchedAt).getTime();
+        // Evict anything past 7 days regardless of TTL.
+        if (age > 7 * 24 * 60 * 60 * 1000) {
+            toRemove.push(key);
+        }
+    }
+    if (toRemove.length > 0) {
+        await chrome.storage.local.remove(toRemove);
+    }
+    return toRemove.length;
+};
+
+const refreshCaches = async (): Promise<void> => {
+    log('daily refresh: evicting stale RMP entries...');
+    try {
+        const evicted = await evictStaleRatings();
+        log(`evicted ${evicted} stale rating entries.`);
+    } catch (err) {
+        log('eviction failed:', err);
+    }
+    // Force-refresh the org tree on the next ensureOrgs call.
+    orgsCache = null;
+    try {
+        await chrome.storage.local.remove('syllabus:orgs:v1');
+    } catch (err) {
+        log('failed to clear org cache:', err);
+    }
+    log('daily refresh complete.');
+};
+
+chrome.runtime.onInstalled.addListener(() => {
+    log('extension installed/updated; scheduling daily refresh.');
+    void chrome.alarms.create(REFRESH_ALARM, {
+        periodInMinutes: 12 * 60
+    });
+});
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === REFRESH_ALARM) {
+        void refreshCaches();
+    }
 });
 
 log('service worker started');

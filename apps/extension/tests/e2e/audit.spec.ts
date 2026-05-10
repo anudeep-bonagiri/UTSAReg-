@@ -75,5 +75,5 @@ test('visual audit', async () => {
         fullPage: false
     });
 
-    console.log(`screenshots written to ${SHOTS}`);
+    console.info(`screenshots written to ${SHOTS}`);
 });

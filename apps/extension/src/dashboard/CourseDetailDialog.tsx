@@ -341,8 +341,10 @@ export const CourseDetailDialog = ({
                         onClick={() => {
                             onSave?.(section);
                         }}
+                        aria-pressed={saved}
+                        title={saved ? 'Click to unsave' : 'Save for later'}
                     >
-                        {saved ? 'Saved' : 'Save for later'}
+                        {saved ? '★ Saved — click to remove' : 'Save for later'}
                     </Button>
                     <Button
                         variant="primary"

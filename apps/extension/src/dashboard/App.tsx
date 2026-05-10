@@ -22,26 +22,16 @@ import {
     totalCreditHours,
     type Section
 } from '@utsaregplus/core';
-import {
-    ALL_COURSES,
-    ALL_SECTIONS,
-    SECTIONS_FETCHED_AT,
-    SECTIONS_TERM_LABEL
-} from '../data/index.js';
+import { ALL_COURSES, SECTIONS_TERM_LABEL } from '../data/index.js';
 import { SectionCard } from '../popup/SectionCard.js';
 import { usePersistedSchedule } from '../hooks/usePersistedSchedule.js';
+import { useSections } from '../hooks/useSections.js';
 import { WeeklyScheduleGrid } from './WeeklyScheduleGrid.js';
 import { CourseDetailDialog } from './CourseDetailDialog.js';
 
 type Tab = 'explore' | 'schedule' | 'saved' | 'settings';
 
 const courseById = new Map(ALL_COURSES.map((c) => [c.id, c]));
-const sectionByCrn = new Map(ALL_SECTIONS.map((s) => [s.crn, s]));
-
-const sectionsFreshness = {
-    source: 'snapshot' as const,
-    fetchedAt: SECTIONS_FETCHED_AT
-};
 
 interface UserPrefs {
     theme: 'light' | 'dark';
@@ -89,26 +79,33 @@ export const App = () => {
     const { crns, saved, addSection, removeSection, toggleSaved, hydrated } =
         usePersistedSchedule();
 
+    // Live-merged sections (live ASAP harvest > bundled snapshot).
+    const { sections: allSections, freshness: sectionsFreshness } = useSections();
+    const sectionByCrn = useMemo(
+        () => new Map(allSections.map((s) => [s.crn, s])),
+        [allSections]
+    );
+
     useEffect(() => {
         const m = /#course=([A-Z0-9]+)/.exec(window.location.hash);
         if (m?.[1]) {
-            const first = ALL_SECTIONS.find((s) => s.courseId === m[1]);
+            const first = allSections.find((s) => s.courseId === m[1]);
             if (first) setOpenDialogCrn(first.crn);
         }
-    }, []);
+    }, [allSections]);
 
     const committed = useMemo<Section[]>(
         () => crns.map((c) => sectionByCrn.get(c)).filter((s): s is Section => Boolean(s)),
-        [crns]
+        [crns, sectionByCrn]
     );
 
     const sourceSections = useMemo<Section[]>(() => {
-        let pool = ALL_SECTIONS;
+        let pool = allSections;
         if (prefs.f1Mode) {
             pool = pool.filter((s) => s.modality !== 'online_async');
         }
         return pool;
-    }, [prefs.f1Mode]);
+    }, [prefs.f1Mode, allSections]);
 
     const visibleResults = useMemo<Section[]>(() => {
         const q = query.trim().toLowerCase();
@@ -326,6 +323,7 @@ export const App = () => {
                         {activeTab === 'saved' && (
                             <SavedPane
                                 saved={saved}
+                                sectionByCrn={sectionByCrn}
                                 onUnsave={toggleSaved}
                                 onAdd={addSection}
                                 onOpen={(s) => {
@@ -617,11 +615,12 @@ const StatBlock = ({ label, value, suffix, tone = 'default' }: StatBlockProps) =
 
 interface SavedPaneProps {
     saved: string[];
+    sectionByCrn: Map<string, Section>;
     onUnsave: (crn: string) => void;
     onAdd: (crn: string) => void;
     onOpen: (s: Section) => void;
 }
-const SavedPane = ({ saved, onUnsave, onAdd, onOpen }: SavedPaneProps) => {
+const SavedPane = ({ saved, sectionByCrn, onUnsave, onAdd, onOpen }: SavedPaneProps) => {
     if (saved.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-20 space-y-3">

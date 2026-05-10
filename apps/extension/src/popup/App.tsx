@@ -18,24 +18,14 @@ import {
     totalCreditHours,
     type Section
 } from '@utsaregplus/core';
-import {
-    ALL_COURSES,
-    ALL_SECTIONS,
-    SECTIONS_FETCHED_AT,
-    SECTIONS_TERM_LABEL
-} from '../data/index.js';
+import { ALL_COURSES, SECTIONS_TERM_LABEL } from '../data/index.js';
 import { SectionCard } from './SectionCard.js';
 import { usePersistedSchedule } from '../hooks/usePersistedSchedule.js';
+import { useSections } from '../hooks/useSections.js';
 
 type Tab = 'explore' | 'schedule' | 'saved';
 
 const courseById = new Map(ALL_COURSES.map((c) => [c.id, c]));
-const sectionByCrn = new Map(ALL_SECTIONS.map((s) => [s.crn, s]));
-
-const sectionsFreshness = {
-    source: 'snapshot' as const,
-    fetchedAt: SECTIONS_FETCHED_AT
-};
 
 const useTheme = (): { theme: 'light' | 'dark'; toggle: () => void } => {
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -60,9 +50,13 @@ export const App = () => {
         usePersistedSchedule();
     const { theme, toggle: toggleTheme } = useTheme();
 
+    // Live-merged sections (live ASAP harvest > bundled snapshot).
+    const { sections, freshness: sectionsFreshness } = useSections();
+    const sectionByCrn = useMemo(() => new Map(sections.map((s) => [s.crn, s])), [sections]);
+
     const committed = useMemo<Section[]>(
         () => crns.map((c) => sectionByCrn.get(c)).filter((s): s is Section => Boolean(s)),
-        [crns]
+        [crns, sectionByCrn]
     );
 
     const visibleResults = useMemo<Section[]>(() => {
@@ -70,17 +64,19 @@ export const App = () => {
         const q = query.trim().toLowerCase();
         const qStripped = q.replace(/\s+/g, '');
         if (qStripped.length === 0) return [];
-        return ALL_SECTIONS.filter((s) => {
-            const course = courseById.get(s.courseId);
-            return (
-                s.crn.includes(qStripped) ||
-                s.courseId.toLowerCase().includes(qStripped) ||
-                s.title.toLowerCase().includes(q) ||
-                s.instructorName.toLowerCase().includes(q) ||
-                (course?.title.toLowerCase().includes(q) ?? false)
-            );
-        }).slice(0, 12);
-    }, [query]);
+        return sections
+            .filter((s) => {
+                const course = courseById.get(s.courseId);
+                return (
+                    s.crn.includes(qStripped) ||
+                    s.courseId.toLowerCase().includes(qStripped) ||
+                    s.title.toLowerCase().includes(q) ||
+                    s.instructorName.toLowerCase().includes(q) ||
+                    (course?.title.toLowerCase().includes(q) ?? false)
+                );
+            })
+            .slice(0, 12);
+    }, [query, sections]);
 
     const conflictSet = useMemo(
         () => findConflictsAgainst(committed, visibleResults),
@@ -88,6 +84,9 @@ export const App = () => {
     );
 
     const totalCredits = totalCreditHours(committed);
+    const inPersonCredits = totalCreditHours(
+        committed.filter((s) => s.modality !== 'online_async')
+    );
 
     const handleAdd = (section: Section): void => {
         addSection(section.crn);
@@ -250,6 +249,7 @@ export const App = () => {
                         <ScheduleTab
                             committed={committed}
                             totalCredits={totalCredits}
+                            inPersonCredits={inPersonCredits}
                             hydrated={hydrated}
                             onRemove={removeSection}
                         />
@@ -257,6 +257,7 @@ export const App = () => {
                     {activeTab === 'saved' && (
                         <SavedTab
                             saved={saved}
+                            sectionByCrn={sectionByCrn}
                             onUnsave={toggleSaved}
                             onAddToSchedule={addSection}
                         />
@@ -376,11 +377,18 @@ const ExploreTab = ({
 interface ScheduleTabProps {
     committed: Section[];
     totalCredits: number;
+    inPersonCredits: number;
     hydrated: boolean;
     onRemove: (crn: string) => void;
 }
 
-const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTabProps) => {
+const ScheduleTab = ({
+    committed,
+    totalCredits,
+    inPersonCredits,
+    hydrated,
+    onRemove
+}: ScheduleTabProps) => {
     if (!hydrated) {
         return (
             <div className="text-center py-6 text-[var(--ink-subtle)] text-[12px]">Loading…</div>
@@ -406,7 +414,9 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
         );
     }
 
-    const f1Triggered = totalCredits < 12;
+    // F1 students must maintain ≥12 IN-PERSON credit hours; online-async
+    // doesn't count toward the CPT/OPT minimum even if it counts academically.
+    const f1Triggered = inPersonCredits < 12;
 
     return (
         <div className="utsa-stagger space-y-3">
@@ -483,11 +493,12 @@ const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTa
 
 interface SavedTabProps {
     saved: string[];
+    sectionByCrn: Map<string, Section>;
     onUnsave: (crn: string) => void;
     onAddToSchedule: (crn: string) => void;
 }
 
-const SavedTab = ({ saved, onUnsave, onAddToSchedule }: SavedTabProps) => {
+const SavedTab = ({ saved, sectionByCrn, onUnsave, onAddToSchedule }: SavedTabProps) => {
     if (saved.length === 0) {
         return (
             <div className="utsa-anim-fade-up text-center py-12 px-4">
