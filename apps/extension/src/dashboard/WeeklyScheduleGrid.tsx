@@ -182,7 +182,7 @@ export const WeeklyScheduleGrid = ({
                         {hours.map((h, i) => (
                             <div
                                 key={h}
-                                className="absolute left-0 right-0 border-t border-[var(--border-default)]/50"
+                                className="absolute left-0 right-0 border-t border-(--border-default)/50"
                                 style={{ top: i * HOUR_HEIGHT, height: HOUR_HEIGHT }}
                             />
                         ))}
@@ -206,11 +206,11 @@ export const WeeklyScheduleGrid = ({
                                         className={cn(
                                             'absolute left-1 right-1 rounded-lg border-l-4 px-2 py-1 text-left',
                                             'transition-all hover:shadow-md hover:-translate-y-px',
-                                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/55',
+                                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--border-focus)/55',
                                             c.bg,
                                             c.border,
                                             c.text,
-                                            isConflict && 'ring-2 ring-[var(--status-danger)]/60'
+                                            isConflict && 'ring-2 ring-(--status-danger)/60'
                                         )}
                                         style={{
                                             top: top + 2,

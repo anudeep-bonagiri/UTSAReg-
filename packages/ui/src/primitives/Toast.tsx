@@ -43,10 +43,10 @@ const toastStyles = cva(
         variants: {
             tone: {
                 neutral: 'border-[var(--border-default)]',
-                success: 'border-[var(--status-open)]/40',
-                warn: 'border-[var(--status-warn)]/40',
-                danger: 'border-[var(--status-danger)]/40',
-                info: 'border-[var(--status-info)]/40'
+                success: 'border-(--status-open)/40',
+                warn: 'border-(--status-warn)/40',
+                danger: 'border-(--status-danger)/40',
+                info: 'border-(--status-info)/40'
             }
         },
         defaultVariants: { tone: 'neutral' }

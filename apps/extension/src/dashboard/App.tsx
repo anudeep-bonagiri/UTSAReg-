@@ -13,8 +13,7 @@ import {
     PlaneTakeoff,
     Shield,
     Trash2,
-    AlertTriangle,
-    CheckCircle2
+    AlertTriangle
 } from 'lucide-react';
 import { Button, Card, FreshnessChip, Input, TooltipProvider, cn } from '@utsaregplus/ui';
 import {
@@ -512,7 +511,7 @@ const SchedulePane = ({
             {f1Insufficient && (
                 <Card
                     padding="md"
-                    className="border-[var(--status-warn)]/40 bg-[var(--status-warn-soft)]"
+                    className="border-(--status-warn)/40 bg-[var(--status-warn-soft)]"
                 >
                     <div className="flex items-start gap-3">
                         <AlertTriangle className="w-5 h-5 text-[var(--status-warn)] shrink-0 mt-0.5" />
@@ -740,19 +739,19 @@ const ToggleRow = ({
                     onChange(!checked);
                 }}
                 className={cn(
-                    'relative w-11 h-6 rounded-full transition-colors shrink-0',
+                    'relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center',
+                    'rounded-full p-0.5 transition-colors duration-200',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-default)/40',
                     checked ? 'bg-[var(--accent-default)]' : 'bg-[var(--surface-sunken)]'
                 )}
             >
                 <span
+                    aria-hidden
                     className={cn(
-                        'absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform',
-                        checked ? 'translate-x-5' : 'translate-x-0.5'
+                        'block h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-200',
+                        checked ? 'translate-x-5' : 'translate-x-0'
                     )}
                 />
-                {checked && (
-                    <CheckCircle2 className="absolute right-0.5 top-1/2 -translate-y-1/2 w-3 h-3 text-white opacity-80" />
-                )}
             </button>
         </div>
     </Card>

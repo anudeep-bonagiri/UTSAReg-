@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             invalid
                 ? 'border-[var(--status-danger)]'
                 : 'border-[var(--border-strong)] focus-within:border-[var(--border-focus)]',
-            'focus-within:ring-2 focus-within:ring-[var(--border-focus)]/35',
+            'focus-within:ring-2 focus-within:ring-(--border-focus)/35',
             compact ? 'h-8 px-2.5 text-[12px]' : 'h-10 px-3 text-[13px]',
             disabled && 'opacity-60 cursor-not-allowed bg-[var(--surface-muted)]',
             className

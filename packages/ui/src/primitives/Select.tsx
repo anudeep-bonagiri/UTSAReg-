@@ -26,7 +26,7 @@ export const SelectTrigger = forwardRef<ElementRef<typeof Radix.Trigger>, Select
                 invalid
                     ? 'border-[var(--status-danger)]'
                     : 'border-[var(--border-strong)] hover:border-[var(--ink-subtle)]',
-                'focus-visible:outline-none focus-visible:border-[var(--border-focus)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/35',
+                'focus-visible:outline-none focus-visible:border-[var(--border-focus)] focus-visible:ring-2 focus-visible:ring-(--border-focus)/35',
                 compact ? 'h-8 px-2.5 text-[12px]' : 'h-10 px-3 text-[13px]',
                 'data-[placeholder]:text-[var(--ink-subtle)]',
                 'disabled:opacity-60 disabled:cursor-not-allowed',

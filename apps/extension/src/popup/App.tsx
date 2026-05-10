@@ -172,7 +172,7 @@ export const App = () => {
                             setQuery(e.target.value);
                         }}
                         placeholder="Search CRN, class code, or title..."
-                        className="bg-white/95 border-transparent focus-within:border-[var(--accent-default)] focus-within:ring-[var(--accent-default)]/40"
+                        className="bg-white/95 border-transparent focus-within:border-[var(--accent-default)] focus-within:ring-(--accent-default)/40"
                         // eslint-disable-next-line jsx-a11y/no-autofocus -- popup opens with intent to type
                         autoFocus
                     />
@@ -298,7 +298,7 @@ const ExploreTab = ({
     if (query.trim().length === 0) {
         return (
             <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-5">
-                <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center ring-4 ring-[var(--accent-default)]/10">
+                <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center ring-4 ring-(--accent-default)/10">
                     <Search className="w-7 h-7 text-[var(--accent-default)]" />
                 </div>
                 <div>
@@ -319,7 +319,7 @@ const ExploreTab = ({
                             onClick={() => {
                                 onSetQuery(prompt);
                             }}
-                            className="px-3 py-1.5 rounded-full bg-[var(--brand-soft)] border border-[var(--brand-default)]/15 text-[10px] font-bold text-[var(--brand-default)] hover:bg-[var(--brand-default)] hover:text-white hover:border-[var(--brand-default)] transition-colors utsa-tabular"
+                            className="px-3 py-1.5 rounded-full bg-[var(--brand-soft)] border border-(--brand-default)/15 text-[10px] font-bold text-[var(--brand-default)] hover:bg-[var(--brand-default)] hover:text-white hover:border-[var(--brand-default)] transition-colors utsa-tabular"
                         >
                             {prompt}
                         </button>

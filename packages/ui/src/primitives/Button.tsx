@@ -17,7 +17,7 @@ const buttonStyles = cva(
         'transition-[background-color,box-shadow,transform] duration-[120ms] ease-out',
         'select-none',
         'disabled:opacity-50 disabled:cursor-not-allowed',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-canvas)]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--border-focus)/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-canvas)]',
         // SVG icons inside take their color from the button text.
         '[&>svg]:shrink-0 [&>svg]:[stroke-width:2.25]'
     ],

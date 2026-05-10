@@ -64,7 +64,7 @@ export const DialogContent = forwardRef<ElementRef<typeof Radix.Content>, Dialog
                             'rounded-full text-[var(--ink-muted)]',
                             'hover:bg-[var(--surface-muted)] hover:text-[var(--ink-strong)]',
                             'transition-colors',
-                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)]/55'
+                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--border-focus)/55'
                         )}
                     >
                         <X className="w-4 h-4" />

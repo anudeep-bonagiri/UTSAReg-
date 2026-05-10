@@ -116,7 +116,7 @@ export const SectionCard = ({
                 'relative overflow-hidden transition-opacity',
                 'border-l-[3px] border-l-[var(--accent-default)]',
                 inConflict &&
-                    'opacity-60 line-through decoration-[var(--status-danger)]/30 border-l-[var(--status-danger)]'
+                    'opacity-60 line-through decoration-(--status-danger)/30 border-l-[var(--status-danger)]'
             )}
         >
             {/* Header row */}
