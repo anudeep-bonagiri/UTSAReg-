@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.js';
+import { ErrorBoundary } from '../components/ErrorBoundary.js';
 import '@utsaregplus/ui/styles';
 import '../styles/main.css';
 
@@ -22,6 +23,8 @@ const root = document.getElementById('root');
 if (!root) throw new Error('Dashboard root element missing');
 ReactDOM.createRoot(root).render(
     <React.StrictMode>
-        <App />
+        <ErrorBoundary surface="Dashboard">
+            <App />
+        </ErrorBoundary>
     </React.StrictMode>
 );

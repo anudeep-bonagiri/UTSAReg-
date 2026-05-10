@@ -8,6 +8,8 @@
     },
     "include": [
         "apps/extension/src/**/*",
+        "apps/extension/tests/**/*",
+        "apps/extension/playwright.config.ts",
         "packages/core/src/**/*",
         "packages/ui/src/**/*",
         "packages/adapter-utsa/src/**/*",

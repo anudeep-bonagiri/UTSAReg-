@@ -52,3 +52,39 @@ jobs:
                       echo "::error::Main bundle exceeded 1.7 MB raw — investigate before merging"
                       exit 1
                   fi
+
+    e2e:
+        name: Playwright e2e (extension surfaces)
+        runs-on: ubuntu-latest
+        needs: quality
+        timeout-minutes: 15
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js 20
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci --no-audit --prefer-offline
+
+            - name: Install Playwright Chromium with system deps
+              run: npx playwright install --with-deps chromium
+
+            - name: Build extension (Playwright loads dist/)
+              run: npm run build
+
+            - name: Run e2e suite
+              run: npm run test:e2e --workspace=@utsaregplus/extension
+
+            - name: Upload Playwright report on failure
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-report
+                  path: apps/extension/playwright-report/
+                  retention-days: 7

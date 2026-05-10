@@ -63,10 +63,17 @@ export const SectionCard = ({
 
     const ratingBadge = (() => {
         if (rmp.loading) {
+            // Compact rating skeleton — same footprint as the populated chip
+            // so layout doesn't reflow when data lands.
             return (
-                <span className="inline-flex items-center gap-1 text-[var(--ink-subtle)] text-[11px]">
+                <span
+                    aria-label="Loading RateMyProfessor rating"
+                    aria-busy="true"
+                    className="inline-flex items-center gap-1.5"
+                >
                     <span className="w-3 h-3 rounded-full bg-[var(--surface-sunken)] animate-pulse" />
-                    fetching rating...
+                    <span className="h-2.5 w-7 rounded-full bg-[var(--surface-sunken)] animate-pulse" />
+                    <span className="h-2.5 w-9 rounded-full bg-[var(--surface-sunken)] animate-pulse" />
                 </span>
             );
         }
