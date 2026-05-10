@@ -136,17 +136,17 @@ export const SectionCard = ({
             >
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[13px] font-bold text-[var(--ink-strong)] tracking-tight utsa-tabular">
+                        <span className="utsa-mono text-[13px] font-bold text-[var(--ink-strong)]">
                             {section.courseId.slice(0, -4)} {section.courseId.slice(-4)}
                         </span>
-                        <span className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-semibold">
+                        <span className="utsa-mono text-[10px] tracking-wider text-[var(--ink-subtle)] font-bold">
                             §{section.sectionCode}
                         </span>
                         <Badge tone={STATUS_TONE[section.status]} size="sm" withDot>
                             {STATUS_LABEL[section.status]}
                         </Badge>
                     </div>
-                    <h3 className="text-[12px] font-semibold text-[var(--ink-default)] mt-0.5 truncate">
+                    <h3 className="utsa-display text-[14px] font-medium text-[var(--ink-strong)] mt-1 truncate leading-tight">
                         {course?.title ?? section.title}
                     </h3>
                 </div>

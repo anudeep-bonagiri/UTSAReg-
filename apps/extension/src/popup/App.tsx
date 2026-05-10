@@ -1,27 +1,16 @@
 import { useMemo, useState } from 'react';
 import {
     Search,
-    Sparkles,
     LayoutDashboard,
     Calendar,
     BookOpen,
     Bookmark,
     Sun,
     Moon,
-    GraduationCap,
     Trash2,
     AlertTriangle
 } from 'lucide-react';
-import {
-    Badge,
-    Button,
-    Card,
-    FreshnessChip,
-    Input,
-    Tooltip,
-    TooltipProvider,
-    cn
-} from '@utsaregplus/ui';
+import { Badge, Button, Card, FreshnessChip, Tooltip, TooltipProvider, cn } from '@utsaregplus/ui';
 import {
     findConflictsAgainst,
     formatDays,
@@ -77,13 +66,15 @@ export const App = () => {
     );
 
     const visibleResults = useMemo<Section[]>(() => {
+        // Normalize: lowercase, strip all whitespace. So "CS 3343" matches "CS3343".
         const q = query.trim().toLowerCase();
-        if (q.length === 0) return [];
+        const qStripped = q.replace(/\s+/g, '');
+        if (qStripped.length === 0) return [];
         return ALL_SECTIONS.filter((s) => {
             const course = courseById.get(s.courseId);
             return (
-                s.crn.includes(q) ||
-                s.courseId.toLowerCase().includes(q) ||
+                s.crn.includes(qStripped) ||
+                s.courseId.toLowerCase().includes(qStripped) ||
                 s.title.toLowerCase().includes(q) ||
                 s.instructorName.toLowerCase().includes(q) ||
                 (course?.title.toLowerCase().includes(q) ?? false)
@@ -102,15 +93,12 @@ export const App = () => {
         addSection(section.crn);
         setActiveTab('schedule');
     };
-
     const handleSave = (section: Section): void => {
         toggleSaved(section.crn);
     };
-
     const handleOpenDashboard = (): void => {
         void chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') });
     };
-
     const handleOpenDetails = (section: Section): void => {
         void chrome.tabs.create({
             url: `${chrome.runtime.getURL('dashboard.html')}#course=${section.courseId}`
@@ -120,23 +108,23 @@ export const App = () => {
     return (
         <TooltipProvider delayDuration={250}>
             <div className="w-[420px] h-[600px] flex flex-col bg-[var(--surface-canvas)] text-[var(--ink-default)] overflow-hidden">
-                {/* Midnight-blue header — strongest UTSA brand signal in the popup. */}
-                <header className="px-5 pt-4 pb-4 bg-[var(--brand-default)] text-[var(--ink-on-brand)] relative">
-                    {/* UTSA-orange accent stripe along the top */}
-                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-[var(--accent-default)]" />
-                    <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-9 h-9 rounded-xl bg-[var(--accent-default)] flex items-center justify-center shadow-[0_2px_8px_rgba(241,90,34,0.35)]">
-                                <GraduationCap className="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                                <h1 className="utsa-display-black text-[18px] text-white leading-tight">
-                                    UTSA Reg<span className="text-[var(--accent-default)]">+</span>
-                                </h1>
-                                <p className="text-[9px] text-white/55 uppercase tracking-[0.18em] font-semibold mt-0.5">
-                                    {SECTIONS_TERM_LABEL}
-                                </p>
-                            </div>
+                {/* Editorial Midnight masthead */}
+                <header className="utsa-midnight px-5 pt-5 pb-5">
+                    <div className="flex items-start justify-between mb-4">
+                        <div className="flex flex-col">
+                            <span className="utsa-eyebrow text-[var(--accent-default)] mb-1">
+                                {SECTIONS_TERM_LABEL} · Issue 01
+                            </span>
+                            <h1 className="utsa-display-black text-white text-[28px] leading-none">
+                                UTSA Reg
+                                <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                                    +
+                                </span>
+                            </h1>
+                            <span className="text-[10px] text-white/60 mt-1.5 leading-tight">
+                                Registration intelligence,{' '}
+                                <span className="utsa-italic">written for students.</span>
+                            </span>
                         </div>
                         <div className="flex items-center gap-1">
                             <Tooltip content={theme === 'light' ? 'Dark mode' : 'Light mode'}>
@@ -144,7 +132,7 @@ export const App = () => {
                                     type="button"
                                     onClick={toggleTheme}
                                     aria-label="Toggle theme"
-                                    className="h-9 w-9 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-center"
+                                    className="h-8 w-8 rounded-md text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-center"
                                 >
                                     {theme === 'light' ? (
                                         <Moon className="w-4 h-4" />
@@ -158,26 +146,43 @@ export const App = () => {
                                     type="button"
                                     onClick={handleOpenDashboard}
                                     aria-label="Open dashboard"
-                                    className="h-9 w-9 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-center"
+                                    className="h-8 w-8 rounded-md text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-center"
                                 >
                                     <LayoutDashboard className="w-4 h-4" />
                                 </button>
                             </Tooltip>
                         </div>
                     </div>
-                    <Input
-                        leadingAdornment={<Search />}
-                        value={query}
-                        onChange={(e) => {
-                            setQuery(e.target.value);
-                        }}
-                        placeholder="Search CRN, class code, or title..."
-                        className="bg-white/95 border-transparent focus-within:border-[var(--accent-default)] focus-within:ring-(--accent-default)/40"
-                        // eslint-disable-next-line jsx-a11y/no-autofocus -- popup opens with intent to type
-                        autoFocus
-                    />
+
+                    {/* Inline search — dark on light, no inheritance from the white parent */}
+                    <label className="relative flex items-center group">
+                        <Search
+                            aria-hidden
+                            className="pointer-events-none absolute left-3 w-4 h-4 text-[#8C8475]"
+                        />
+                        <input
+                            type="text"
+                            value={query}
+                            onChange={(e) => {
+                                setQuery(e.target.value);
+                            }}
+                            placeholder="Search CRN, class, or instructor"
+                            // eslint-disable-next-line jsx-a11y/no-autofocus -- popup opens with intent to type
+                            autoFocus
+                            spellCheck={false}
+                            style={{ color: '#1F1B14' }}
+                            className={cn(
+                                'w-full h-10 pl-9 pr-3 rounded-md font-sans text-[13px]',
+                                'bg-white border border-white/0',
+                                'placeholder:text-[#8C8475] placeholder:utsa-italic',
+                                'focus:outline-none focus:border-[var(--accent-default)]',
+                                'focus:ring-2 focus:ring-(--accent-default)/35'
+                            )}
+                        />
+                    </label>
                 </header>
 
+                {/* Editorial tabs as small-caps with bottom rule */}
                 <nav className="flex border-b border-[var(--border-default)] bg-[var(--surface-default)]">
                     {(
                         [
@@ -201,11 +206,11 @@ export const App = () => {
                                     setActiveTab(tab.id);
                                 }}
                                 className={cn(
-                                    'flex-1 flex items-center justify-center gap-1.5 py-3 text-[11px] font-bold tracking-wide transition-colors uppercase',
+                                    'flex-1 flex items-center justify-center gap-1.5 py-3 text-[10px] font-bold tracking-[0.18em] transition-colors uppercase',
                                     'border-b-[3px] -mb-px relative',
                                     isActive
-                                        ? 'text-[var(--accent-default)] border-[var(--accent-default)] bg-[var(--surface-muted)]'
-                                        : 'text-[var(--ink-muted)] border-transparent hover:text-[var(--ink-default)] hover:bg-[var(--surface-muted)]'
+                                        ? 'text-[var(--ink-strong)] border-[var(--accent-default)] bg-[var(--surface-muted)]'
+                                        : 'text-[var(--ink-muted)] border-transparent hover:text-[var(--ink-strong)] hover:bg-[var(--surface-muted)]'
                                 )}
                             >
                                 <tab.icon className="w-3.5 h-3.5" />
@@ -213,7 +218,7 @@ export const App = () => {
                                 {count !== null && count > 0 && (
                                     <span
                                         className={cn(
-                                            'ml-0.5 h-4 min-w-4 px-1 rounded-full text-[9px] flex items-center justify-center utsa-tabular',
+                                            'ml-0.5 h-4 min-w-4 px-1 rounded-full text-[9px] flex items-center justify-center utsa-tabular font-bold',
                                             isActive
                                                 ? 'bg-[var(--accent-default)] text-white'
                                                 : 'bg-[var(--surface-sunken)] text-[var(--ink-muted)]'
@@ -227,7 +232,7 @@ export const App = () => {
                     })}
                 </nav>
 
-                <main className="flex-1 overflow-y-auto p-4 space-y-3">
+                <main className="flex-1 overflow-y-auto p-4">
                     {activeTab === 'explore' && (
                         <ExploreTab
                             visibleResults={visibleResults}
@@ -258,10 +263,13 @@ export const App = () => {
                     )}
                 </main>
 
-                <footer className="px-4 py-2 border-t border-[var(--border-default)] bg-[var(--surface-default)] flex items-center justify-between text-[10px]">
-                    <div className="flex items-center gap-1.5 text-[var(--ink-subtle)]">
-                        <Sparkles className="w-3 h-3 text-[var(--accent-default)]" />
-                        <span className="font-semibold tracking-wide">UTSA Reg+ v0.1</span>
+                <footer className="px-4 py-2.5 border-t border-[var(--border-default)] bg-[var(--surface-default)] flex items-center justify-between text-[10px]">
+                    <div className="flex items-center gap-2 text-[var(--ink-muted)]">
+                        <span className="utsa-display-black text-[var(--ink-strong)] text-[12px]">
+                            UTSA Reg
+                            <span className="text-[var(--accent-default)]">+</span>
+                        </span>
+                        <span className="text-[var(--ink-subtle)]">v0.1</span>
                     </div>
                     <FreshnessChip freshness={sectionsFreshness} />
                 </footer>
@@ -297,21 +305,22 @@ const ExploreTab = ({
 }: ExploreProps) => {
     if (query.trim().length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-5">
-                <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center ring-4 ring-(--accent-default)/10">
-                    <Search className="w-7 h-7 text-[var(--accent-default)]" />
+            <div className="utsa-anim-fade-up flex flex-col items-center text-center pt-6 pb-2 px-2 space-y-5">
+                <div className="utsa-eyebrow text-[var(--accent-default)]">
+                    The whole catalog. One search.
                 </div>
-                <div>
-                    <p className="utsa-display text-[16px] font-bold text-[var(--ink-strong)]">
-                        Search any UTSA section
-                    </p>
-                    <p className="text-[11px] text-[var(--ink-muted)] mt-1.5 leading-relaxed">
-                        CRN, class code, title, or instructor.
-                        <br />
-                        Live data on every result.
-                    </p>
-                </div>
-                <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[280px]">
+                <h2 className="utsa-display text-[var(--ink-strong)] text-[34px] leading-[1.05] -tracking-[0.025em] max-w-[300px]">
+                    Find any{' '}
+                    <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                        section
+                    </span>{' '}
+                    in seconds.
+                </h2>
+                <p className="text-[12px] text-[var(--ink-muted)] leading-relaxed max-w-[280px]">
+                    Search by CRN, class code, title, or instructor. Live RateMyProfessor ratings on
+                    every result.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[280px] pt-1">
                     {QUICK_PROMPTS.map((prompt) => (
                         <button
                             key={prompt}
@@ -319,7 +328,7 @@ const ExploreTab = ({
                             onClick={() => {
                                 onSetQuery(prompt);
                             }}
-                            className="px-3 py-1.5 rounded-full bg-[var(--brand-soft)] border border-(--brand-default)/15 text-[10px] font-bold text-[var(--brand-default)] hover:bg-[var(--brand-default)] hover:text-white hover:border-[var(--brand-default)] transition-colors utsa-tabular"
+                            className="px-3 py-1.5 rounded-full bg-[var(--surface-default)] border border-[var(--border-strong)] text-[10px] font-bold text-[var(--ink-strong)] utsa-tabular hover:bg-[var(--brand-default)] hover:text-white hover:border-[var(--brand-default)] transition-colors"
                         >
                             {prompt}
                         </button>
@@ -331,33 +340,34 @@ const ExploreTab = ({
 
     if (visibleResults.length === 0) {
         return (
-            <div className="text-center py-12 text-[12px] text-[var(--ink-muted)]">
-                <p>
-                    No matches for{' '}
-                    <span className="font-semibold text-[var(--ink-default)]">"{query}"</span>
+            <div className="utsa-anim-fade-in text-center py-12">
+                <div className="utsa-eyebrow text-[var(--ink-muted)] mb-3">No matches</div>
+                <p className="utsa-display text-[var(--ink-strong)] text-[20px]">
+                    Nothing for <span className="utsa-italic font-medium">"{query}"</span>
                 </p>
-                <p className="text-[10px] mt-2">
-                    Demo data is CS-major sample. Live ASAP harvest will widen this.
+                <p className="text-[11px] text-[var(--ink-subtle)] mt-3 max-w-[260px] mx-auto leading-relaxed">
+                    Demo data is a CS-major sample. Live ASAP harvest will widen this.
                 </p>
             </div>
         );
     }
 
     return (
-        <div className="space-y-2.5">
+        <div className="utsa-stagger space-y-2.5">
             {visibleResults.map((section) => (
-                <SectionCard
-                    key={section.crn}
-                    section={section}
-                    course={courseById.get(section.courseId)}
-                    saved={savedSet.has(section.crn)}
-                    inConflict={
-                        conflictSet.has(section.crn) && !committedCrns.includes(section.crn)
-                    }
-                    onAdd={onAdd}
-                    onSave={onSave}
-                    onOpen={onOpen}
-                />
+                <div key={section.crn} className="utsa-anim-fade-up">
+                    <SectionCard
+                        section={section}
+                        course={courseById.get(section.courseId)}
+                        saved={savedSet.has(section.crn)}
+                        inConflict={
+                            conflictSet.has(section.crn) && !committedCrns.includes(section.crn)
+                        }
+                        onAdd={onAdd}
+                        onSave={onSave}
+                        onOpen={onOpen}
+                    />
+                </div>
             ))}
         </div>
     );
@@ -373,82 +383,83 @@ interface ScheduleTabProps {
 const ScheduleTab = ({ committed, totalCredits, hydrated, onRemove }: ScheduleTabProps) => {
     if (!hydrated) {
         return (
-            <div className="text-center py-6 text-[var(--ink-subtle)] text-[12px]">Loading...</div>
+            <div className="text-center py-6 text-[var(--ink-subtle)] text-[12px]">Loading…</div>
         );
     }
     if (committed.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center text-center py-10 space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
-                    <Calendar className="w-6 h-6 text-[var(--brand-default)]" />
-                </div>
-                <div>
-                    <p className="text-[13px] font-bold text-[var(--ink-strong)]">
-                        No classes added yet
-                    </p>
-                    <p className="text-[11px] text-[var(--ink-muted)] mt-1">
-                        Search and tap{' '}
-                        <span className="font-semibold text-[var(--accent-default)]">Add</span> on
-                        any section.
-                    </p>
-                </div>
+            <div className="utsa-anim-fade-up text-center py-12 px-4">
+                <div className="utsa-eyebrow text-[var(--ink-muted)] mb-3">Nothing yet</div>
+                <p className="utsa-display text-[var(--ink-strong)] text-[22px] leading-tight max-w-[260px] mx-auto">
+                    Build your{' '}
+                    <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                        weekly
+                    </span>{' '}
+                    plan.
+                </p>
+                <p className="text-[11px] text-[var(--ink-subtle)] mt-3 leading-relaxed max-w-[260px] mx-auto">
+                    Search for a class and tap{' '}
+                    <span className="font-bold text-[var(--accent-default)]">Add</span>. It’ll land
+                    here.
+                </p>
             </div>
         );
     }
 
-    const f1WarningTriggered = totalCredits < 12;
+    const f1Triggered = totalCredits < 12;
 
     return (
-        <div className="space-y-3">
-            <Card padding="sm">
-                <div className="flex items-center justify-between gap-2">
+        <div className="utsa-stagger space-y-3">
+            <Card padding="md" className="utsa-anim-fade-up">
+                <div className="flex items-end justify-between">
                     <div>
-                        <p className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-semibold">
-                            Credits
-                        </p>
-                        <p className="utsa-display-black utsa-tabular text-[22px] text-[var(--ink-strong)] leading-tight">
+                        <div className="utsa-eyebrow text-[var(--ink-muted)] mb-0.5">
+                            Total credits
+                        </div>
+                        <p className="utsa-display-black utsa-tabular text-[var(--ink-strong)] text-[40px] leading-none">
                             {totalCredits}
-                            <span className="text-[var(--ink-muted)] text-[12px] font-medium">
-                                {' '}
-                                / 18
+                            <span className="utsa-italic text-[var(--ink-subtle)] text-[18px] font-medium ml-1">
+                                /18
                             </span>
                         </p>
                     </div>
                     <div className="text-right">
-                        <p className="text-[10px] uppercase tracking-wider text-[var(--ink-subtle)] font-semibold">
-                            Sections
-                        </p>
-                        <p className="utsa-display-black utsa-tabular text-[22px] text-[var(--ink-strong)] leading-tight">
+                        <div className="utsa-eyebrow text-[var(--ink-muted)] mb-0.5">Sections</div>
+                        <p className="utsa-display-black utsa-tabular text-[var(--ink-strong)] text-[40px] leading-none">
                             {committed.length}
                         </p>
                     </div>
                 </div>
-                {f1WarningTriggered && (
-                    <div className="mt-2 pt-2 border-t border-[var(--border-default)] flex items-start gap-1.5 text-[10px] text-[var(--status-warn)]">
-                        <AlertTriangle className="w-3 h-3 shrink-0 mt-0.5" />
+                {f1Triggered && (
+                    <div className="mt-3 pt-3 border-t border-[var(--hairline)] flex items-start gap-2 text-[10px] text-[var(--status-warn)]">
+                        <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                         <span>
-                            <strong>F1 alert:</strong> Below 12 credits. International students need
-                            ≥12 in-person hours to maintain CPT/OPT eligibility.
+                            <strong>F1 alert.</strong> Below 12 in-person credits jeopardizes
+                            CPT/OPT eligibility for international students.
                         </span>
                     </div>
                 )}
             </Card>
 
             {committed.map((section) => (
-                <Card key={section.crn} padding="sm" className="flex items-center gap-2">
+                <Card
+                    key={section.crn}
+                    padding="sm"
+                    className="utsa-anim-fade-up flex items-center gap-2"
+                >
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
-                            <span className="text-[12px] font-bold text-[var(--ink-strong)] utsa-tabular">
+                            <span className="utsa-mono text-[12px] font-bold text-[var(--ink-strong)]">
                                 {section.courseId}
                             </span>
                             <Badge tone="brand" size="sm">
                                 §{section.sectionCode}
                             </Badge>
                         </div>
-                        <p className="text-[10px] text-[var(--ink-muted)] truncate">
+                        <p className="utsa-display text-[12px] text-[var(--ink-default)] truncate">
                             {section.title}
                         </p>
-                        <p className="text-[10px] text-[var(--ink-muted)] mt-0.5 utsa-tabular">
+                        <p className="utsa-mono text-[10px] text-[var(--ink-muted)] mt-0.5">
                             {section.meetings[0]
                                 ? `${formatDays(section.meetings[0].days)} · ${formatTimeRange(section.meetings[0].startMin, section.meetings[0].endMin)}`
                                 : 'Online'}
@@ -479,30 +490,38 @@ interface SavedTabProps {
 const SavedTab = ({ saved, onUnsave, onAddToSchedule }: SavedTabProps) => {
     if (saved.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center text-center py-10 space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
-                    <Bookmark className="w-6 h-6 text-[var(--brand-default)]" />
-                </div>
-                <p className="text-[12px] text-[var(--ink-muted)]">
-                    Tap the bookmark on any section to save it for later.
+            <div className="utsa-anim-fade-up text-center py-12 px-4">
+                <div className="utsa-eyebrow text-[var(--ink-muted)] mb-3">No bookmarks</div>
+                <p className="utsa-display text-[var(--ink-strong)] text-[22px] leading-tight max-w-[260px] mx-auto">
+                    Bookmark a section <span className="utsa-italic font-medium">for later.</span>
+                </p>
+                <p className="text-[11px] text-[var(--ink-subtle)] mt-3 leading-relaxed max-w-[260px] mx-auto">
+                    Tap the bookmark icon on any section card and it’ll show up here.
                 </p>
             </div>
         );
     }
 
     return (
-        <div className="space-y-2">
+        <div className="utsa-stagger space-y-2">
             {saved.map((crn) => {
                 const section = sectionByCrn.get(crn);
                 if (!section) return null;
                 return (
-                    <Card key={crn} padding="sm" className="flex items-center gap-2">
+                    <Card
+                        key={crn}
+                        padding="sm"
+                        className="utsa-anim-fade-up flex items-center gap-2"
+                    >
                         <div className="flex-1 min-w-0">
-                            <p className="text-[12px] font-bold text-[var(--ink-strong)] utsa-tabular">
+                            <p className="utsa-mono text-[12px] font-bold text-[var(--ink-strong)]">
                                 {section.courseId} §{section.sectionCode}
                             </p>
-                            <p className="text-[10px] text-[var(--ink-muted)] truncate">
-                                {section.title} · {section.instructorName}
+                            <p className="utsa-display text-[11px] text-[var(--ink-default)] truncate">
+                                {section.title}
+                            </p>
+                            <p className="text-[10px] text-[var(--ink-muted)]">
+                                {section.instructorName}
                             </p>
                         </div>
                         <Button

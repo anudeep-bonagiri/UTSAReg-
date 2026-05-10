@@ -1,20 +1,22 @@
 /* =====================================================================
- * UTSA Reg+ design system — global tokens + base reset.
+ * UTSA Reg+ design system — editorial collegiate.
+ *
+ * Aesthetic direction: a college-magazine spread. Distinctive editorial
+ * typography (Fraunces variable serif with italic + soft axes for display,
+ * Mona Sans for body, JetBrains Mono for tabular data), atmospheric Midnight
+ * with a subtle gradient mesh, paper-grain noise on Limestone canvas, and
+ * UTSA Orange used as an editorial pull-quote — sharp punctuation, never
+ * decoration.
  *
  * Built from the official UT San Antonio Brand Guidelines V1.2 (July 2025).
- * Colors mirror UTSA's published palette; we never use UTSA's logos or
- * wordmarks. Typography uses Manrope (display) + Inter (body) as legible
- * Beausite-spirit alternatives that are free and self-host-friendly.
+ * Colors mirror UTSA's published palette; we never reuse UTSA's logos or
+ * wordmarks.
  *
  * Light mode is the default. data-theme="dark" on <html> flips colors.
  * All component CSS references var(--token) names, never hex codes.
  * ===================================================================== */
 
-/* Self-hosted font would be ideal; for the demo we Google-Fonts-CDN them.
- * Beausite is the official UTSA typeface but is paid; Manrope (variable,
- * geometric, with weight contrast) is the closest free analog for display.
- * Inter is the same family used by countless university-grade products. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,0..100;1,9..144,400..900,0..100&family=Mona+Sans:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root,
 html[data-theme='light'] {
@@ -22,86 +24,93 @@ html[data-theme='light'] {
     --surface-canvas: #f8f4f1; /* UTSA Limestone */
     --surface-default: #ffffff;
     --surface-raised: #ffffff;
-    --surface-muted: #f8f4f1; /* Limestone */
+    --surface-muted: #f3ede7; /* slightly warmer than Limestone for layered tone */
     --surface-sunken: #ebe6e2; /* Concrete */
 
     /* ink */
     --ink-strong: #032044; /* Midnight */
-    --ink-default: #332f21; /* UTSA warm Black */
-    --ink-muted: #5a6480;
-    --ink-subtle: #8a93ab;
+    --ink-default: #1f1b14; /* deeper warm black for editorial body */
+    --ink-muted: #5a5448;
+    --ink-subtle: #8c8475;
     --ink-on-accent: #ffffff;
     --ink-on-brand: #ffffff;
 
-    /* borders — warm grays derived from Smoke */
-    --border-default: #e8e1d8;
+    /* borders */
+    --border-default: #e5ded5;
     --border-strong: #d5cfc8; /* Smoke */
     --border-focus: #f15a22; /* UTSA Orange */
+    --hairline: rgba(31, 27, 20, 0.08); /* editorial hairline rule */
 
     /* accent — UTSA Orange */
     --accent-default: #f15a22;
-    --accent-hover: #d3430d; /* Accessible Orange */
+    --accent-hover: #d3430d;
     --accent-active: #b83e10;
     --accent-soft: #fce5da;
+    --accent-deep: #7a2e15; /* used for editorial pull-quotes on light */
 
     /* brand — Midnight */
     --brand-default: #032044;
     --brand-hover: #06346e;
     --brand-soft: #c8dcff; /* River Mist */
+    --brand-deep: #021632; /* darker midnight for atmospheric gradients */
 
     /* status */
-    --status-open: #0e7c3a;
-    --status-open-soft: #dcf1e2;
+    --status-open: #1d6b3a;
+    --status-open-soft: #d8eedd;
     --status-warn: #a06620; /* Brass */
     --status-warn-soft: #f4e8d6;
     --status-danger: #b91c1c;
     --status-danger-soft: #fbe3e3;
     --status-info: #265bf7; /* Talavera Blue */
-    --status-info-soft: #c8dcff; /* River Mist */
+    --status-info-soft: #c8dcff;
 
-    /* warm accent — Mission Clay for decorative highlights */
+    /* warm accent */
     --warm-accent-default: #dbb485;
     --warm-accent-soft: #f2e1cb;
 
-    /* shadows — tinted with Midnight so they read intentional */
+    /* shadows */
     --shadow-sm: 0 1px 2px 0 rgba(3, 32, 68, 0.04);
     --shadow-md: 0 2px 8px -1px rgba(3, 32, 68, 0.06), 0 1px 3px -1px rgba(3, 32, 68, 0.04);
     --shadow-lg: 0 8px 24px -4px rgba(3, 32, 68, 0.1), 0 4px 8px -2px rgba(3, 32, 68, 0.05);
     --shadow-xl: 0 20px 40px -8px rgba(3, 32, 68, 0.18), 0 8px 16px -4px rgba(3, 32, 68, 0.08);
-    --shadow-focus: 0 0 0 3px rgba(241, 90, 34, 0.35);
+    --shadow-focus: 0 0 0 3px rgba(241, 90, 34, 0.32);
+    --shadow-press: inset 0 1px 0 0 rgba(3, 32, 68, 0.04);
 
-    /* type scale */
-    --font-display:
-        'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* type — editorial pairing */
+    --font-display: 'Fraunces', 'Cambria', 'Cochin', Georgia, serif;
+    --font-body: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
 }
 
 html[data-theme='dark'] {
-    --surface-canvas: #0a0f1f;
-    --surface-default: #0f1729;
+    --surface-canvas: #08101e;
+    --surface-default: #0d182a;
     --surface-raised: #15203a;
-    --surface-muted: #1a2540;
-    --surface-sunken: #06122a;
+    --surface-muted: #11192c;
+    --surface-sunken: #050b18;
 
-    --ink-strong: #f5f7fb;
-    --ink-default: #d8deec;
-    --ink-muted: #9aa4bd;
-    --ink-subtle: #6b7390;
+    --ink-strong: #f6efe5;
+    --ink-default: #d8d2c5;
+    --ink-muted: #968d7c;
+    --ink-subtle: #6a6357;
     --ink-on-accent: #ffffff;
     --ink-on-brand: #ffffff;
 
     --border-default: #1f2a47;
     --border-strong: #33405e;
-    --border-focus: #f15a22;
+    --border-focus: #ff6e36;
+    --hairline: rgba(246, 239, 229, 0.06);
 
     --accent-default: #ff6e36;
     --accent-hover: #f15a22;
     --accent-active: #d3430d;
     --accent-soft: #3a1e14;
+    --accent-deep: #ffa97c;
 
-    --brand-default: #7ba0e0;
-    --brand-hover: #a1beeb;
+    --brand-default: #c8dcff;
+    --brand-hover: #e3edff;
     --brand-soft: #1b2848;
+    --brand-deep: #0a1428;
 
     --status-open: #34c77a;
     --status-open-soft: #0f2a1b;
@@ -120,6 +129,7 @@ html[data-theme='dark'] {
     --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.4);
     --shadow-xl: 0 20px 40px -8px rgba(0, 0, 0, 0.7), 0 8px 16px -4px rgba(0, 0, 0, 0.5);
     --shadow-focus: 0 0 0 3px rgba(255, 110, 54, 0.5);
+    --shadow-press: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -143,10 +153,18 @@ body {
     background: var(--surface-canvas);
     color: var(--ink-default);
     font-family: var(--font-body);
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Editorial paper-grain — barely-there noise so the Limestone canvas
+       feels like recycled paper, not a flat surface. SVG-data-URI to avoid
+       any external asset. */
+    background-image:
+        radial-gradient(at 0% 0%, rgba(241, 90, 34, 0.05) 0%, transparent 40%),
+        radial-gradient(at 100% 100%, rgba(3, 32, 68, 0.05) 0%, transparent 35%),
+        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-attachment: fixed;
 }
 
 button,
@@ -158,38 +176,119 @@ textarea {
     color: inherit;
 }
 
-/* Headings use the display family by default. Letter-spacing pulled in for
- * Manrope's wider tracking at large sizes; matches Beausite Fit's character. */
-h1,
-h2,
-h3,
+/* Display headings — Fraunces with editorial tracking.
+ *
+ * Wrapped in @layer base so Tailwind utility classes (text-white, text-[var(--x)])
+ * win the cascade. Without the layer, our element-level color rules silently
+ * override every text-white on a Midnight surface. */
+@layer base {
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-optical-sizing: auto;
+        letter-spacing: -0.022em;
+        color: var(--ink-strong);
+    }
+}
+
 .utsa-display {
     font-family: var(--font-display);
-    letter-spacing: -0.018em;
     font-weight: 700;
+    font-optical-sizing: auto;
+    letter-spacing: -0.022em;
 }
 
-/* Wordmarks & numeric stat tiles get the heaviest display weight. */
 .utsa-display-black {
     font-family: var(--font-display);
-    letter-spacing: -0.024em;
     font-weight: 800;
+    font-optical-sizing: auto;
+    letter-spacing: -0.028em;
 }
 
-/* Focus ring — accessible, brand-toned, always visible on keyboard nav. */
+.utsa-italic {
+    font-style: italic;
+    font-feature-settings: 'ss01';
+}
+
+/* Tabular numerals for any data — CRNs, ratings, credits. */
+.utsa-tabular {
+    font-feature-settings:
+        'tnum' 1,
+        'cv11' 1;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Mono-tabular — JetBrains for CRNs, codes, hashes. */
+.utsa-mono {
+    font-family: var(--font-mono);
+    font-feature-settings: 'zero', 'ss01';
+}
+
+/* Editorial small-caps eyebrow. */
+.utsa-eyebrow {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-default);
+}
+
+/* Hairline rule — subtle editorial divider. */
+.utsa-hairline {
+    height: 1px;
+    background: var(--hairline);
+    border: 0;
+}
+
+/* Atmospheric Midnight surface — used on popup header, dashboard sidebar
+   header, dialog header. Adds a subtle radial gradient + grain. */
+.utsa-midnight {
+    background-color: var(--brand-default);
+    background-image:
+        radial-gradient(at 88% 0%, rgba(241, 90, 34, 0.18) 0%, transparent 38%),
+        radial-gradient(at 0% 100%, rgba(200, 220, 255, 0.08) 0%, transparent 50%),
+        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    color: var(--ink-on-brand);
+    position: relative;
+}
+
+.utsa-midnight::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--accent-default) 8%,
+        var(--accent-default) 92%,
+        transparent 100%
+    );
+    opacity: 0.9;
+}
+
+/* Editorial pull-quote treatment — short orange rule + Fraunces italic. */
+.utsa-pullquote {
+    border-left: 3px solid var(--accent-default);
+    padding-left: 12px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink-strong);
+    line-height: 1.35;
+}
+
+/* Focus ring — unmistakable. */
 :focus-visible {
     outline: none;
     box-shadow: var(--shadow-focus);
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
-/* Tabular numbers wherever data shows up. */
-.utsa-tabular {
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: 'tnum' 1;
-}
-
-/* Reduced-motion override: instant transitions. */
+/* Reduced-motion override. */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -199,4 +298,59 @@ h3,
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* ---- editorial motion ----------------------------------------------- */
+
+@keyframes utsa-fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes utsa-fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.utsa-anim-fade-up {
+    animation: utsa-fade-up 320ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+.utsa-anim-fade-in {
+    animation: utsa-fade-in 240ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+/* Stagger helpers — assign 0..n to children for a staircased reveal. */
+.utsa-stagger > *:nth-child(1) {
+    animation-delay: 0ms;
+}
+.utsa-stagger > *:nth-child(2) {
+    animation-delay: 60ms;
+}
+.utsa-stagger > *:nth-child(3) {
+    animation-delay: 120ms;
+}
+.utsa-stagger > *:nth-child(4) {
+    animation-delay: 180ms;
+}
+.utsa-stagger > *:nth-child(5) {
+    animation-delay: 240ms;
+}
+.utsa-stagger > *:nth-child(6) {
+    animation-delay: 300ms;
+}
+.utsa-stagger > *:nth-child(7) {
+    animation-delay: 360ms;
+}
+.utsa-stagger > *:nth-child(8) {
+    animation-delay: 420ms;
 }

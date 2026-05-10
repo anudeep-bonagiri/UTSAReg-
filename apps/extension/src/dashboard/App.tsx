@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
     Search,
-    GraduationCap,
     LayoutDashboard,
     BookOpen,
     Calendar,
@@ -113,12 +112,13 @@ export const App = () => {
 
     const visibleResults = useMemo<Section[]>(() => {
         const q = query.trim().toLowerCase();
-        if (q.length === 0) return [];
+        const qStripped = q.replace(/\s+/g, '');
+        if (qStripped.length === 0) return [];
         return sourceSections.filter((s) => {
             const course = courseById.get(s.courseId);
             return (
-                s.crn.includes(q) ||
-                s.courseId.toLowerCase().includes(q) ||
+                s.crn.includes(qStripped) ||
+                s.courseId.toLowerCase().includes(qStripped) ||
                 s.title.toLowerCase().includes(q) ||
                 s.instructorName.toLowerCase().includes(q) ||
                 (course?.title.toLowerCase().includes(q) ?? false)
@@ -149,23 +149,22 @@ export const App = () => {
     return (
         <TooltipProvider delayDuration={250}>
             <div className="flex h-screen w-screen bg-[var(--surface-canvas)] text-[var(--ink-default)] overflow-hidden">
-                <aside className="w-60 border-r border-[var(--border-default)] bg-[var(--surface-default)] flex flex-col">
-                    {/* Midnight wordmark block — strongest UTSA brand cue */}
-                    <div className="p-6 bg-[var(--brand-default)] text-white relative">
-                        <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--accent-default)]" />
-                        <div className="flex items-center gap-3">
-                            <div className="w-11 h-11 rounded-2xl bg-[var(--accent-default)] flex items-center justify-center shadow-[0_4px_14px_rgba(241,90,34,0.45)]">
-                                <GraduationCap className="w-6 h-6 text-white" />
-                            </div>
-                            <div>
-                                <div className="utsa-display-black text-[20px] text-white leading-tight">
-                                    UTSA Reg<span className="text-[var(--accent-default)]">+</span>
-                                </div>
-                                <div className="text-[9px] text-white/55 uppercase tracking-[0.2em] font-semibold mt-0.5">
-                                    {SECTIONS_TERM_LABEL}
-                                </div>
-                            </div>
+                <aside className="w-64 border-r border-[var(--border-default)] bg-[var(--surface-default)] flex flex-col">
+                    {/* Editorial Midnight masthead */}
+                    <div className="utsa-midnight px-6 pt-6 pb-7">
+                        <div className="utsa-eyebrow text-[var(--accent-default)] mb-2">
+                            {SECTIONS_TERM_LABEL} · Issue 01
                         </div>
+                        <div className="utsa-display-black text-[36px] text-white leading-none">
+                            UTSA Reg
+                            <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                                +
+                            </span>
+                        </div>
+                        <p className="text-[11px] text-white/55 mt-2 leading-relaxed">
+                            Registration intelligence,{' '}
+                            <span className="utsa-italic">written for students.</span>
+                        </p>
                     </div>
 
                     <nav className="flex-1 p-3 space-y-1">
@@ -233,19 +232,42 @@ export const App = () => {
                 <main className="flex-1 flex flex-col overflow-hidden">
                     <header className="px-8 py-4 border-b border-[var(--border-default)] bg-[var(--surface-default)] flex items-center gap-4">
                         <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="inline-block h-1 w-6 bg-[var(--accent-default)] rounded-full" />
-                                <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-[var(--accent-default)]">
-                                    UTSA Reg+
-                                </span>
-                            </div>
-                            <h2 className="utsa-display-black text-[24px] text-[var(--ink-strong)] leading-tight">
-                                {activeTab === 'explore' && 'Course Explorer'}
-                                {activeTab === 'schedule' && 'Weekly Schedule'}
-                                {activeTab === 'saved' && 'Saved Courses'}
-                                {activeTab === 'settings' && 'Settings'}
+                            <div className="utsa-eyebrow mb-1">UTSA Reg+ · Studio</div>
+                            <h2 className="utsa-display-black text-[40px] text-[var(--ink-strong)] leading-none -tracking-[0.026em]">
+                                {activeTab === 'explore' && (
+                                    <>
+                                        Course{' '}
+                                        <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                                            Explorer
+                                        </span>
+                                    </>
+                                )}
+                                {activeTab === 'schedule' && (
+                                    <>
+                                        Weekly{' '}
+                                        <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                                            Schedule
+                                        </span>
+                                    </>
+                                )}
+                                {activeTab === 'saved' && (
+                                    <>
+                                        Saved{' '}
+                                        <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                                            Courses
+                                        </span>
+                                    </>
+                                )}
+                                {activeTab === 'settings' && (
+                                    <>
+                                        Settings{' '}
+                                        <span className="utsa-italic font-medium text-[var(--accent-default)]">
+                                            &amp; modes
+                                        </span>
+                                    </>
+                                )}
                             </h2>
-                            <p className="text-[12px] text-[var(--ink-muted)] mt-1">
+                            <p className="text-[13px] text-[var(--ink-muted)] mt-3 max-w-[640px] leading-relaxed">
                                 {activeTab === 'explore' &&
                                     'Search live UTSA sections with RateMyProfessor and grade-history overlays.'}
                                 {activeTab === 'schedule' &&

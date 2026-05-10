@@ -1,20 +1,19 @@
 /**
- * Typography scale.
+ * Typography tokens — editorial collegiate.
  *
- * UTSA's official type system uses Beausite Fit (display) and Beausite
- * Classic (body) — both paid Type Trust faces we don't ship with the
- * extension. We approximate with Manrope (variable, geometric, similar
- * weight contrast in display weights) for headings and Inter (universal
- * neo-grotesque body face) for everything else. Both are free, hosted by
- * Google Fonts, and pre-loaded in styles/index.css.
+ * Display: Fraunces — variable serif with optical-sizing, italic, and SOFT
+ * axes. Used at scale for editorial headlines and stat numbers.
+ * Body: Mona Sans — refined modern sans, full italic and weight ranges,
+ * legible at every size. Github's typeface.
+ * Mono: JetBrains Mono — for CRNs, course codes, hashes; tabular by default.
  *
- * Tabular nums forced on numeric badges (CRN, ratings) so columns align.
+ * UTSA's official typefaces (Beausite Fit / Beausite Classic) are paid;
+ * we ship free SIL-OFL alternatives that hold their own visual character.
  */
 export const typography = {
     fontFamily: {
-        display:
-            '"Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        sans: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        display: '"Fraunces", "Cambria", "Cochin", Georgia, serif',
+        sans: '"Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
         mono: '"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace'
     },
 
@@ -22,13 +21,14 @@ export const typography = {
         '2xs': ['10px', { lineHeight: '14px', letterSpacing: '0.04em' }],
         xs: ['11px', { lineHeight: '16px', letterSpacing: '0.02em' }],
         sm: ['13px', { lineHeight: '18px', letterSpacing: '0' }],
-        base: ['14px', { lineHeight: '20px', letterSpacing: '0' }],
-        md: ['15px', { lineHeight: '22px', letterSpacing: '0' }],
-        lg: ['17px', { lineHeight: '24px', letterSpacing: '-0.005em' }],
+        base: ['14px', { lineHeight: '21px', letterSpacing: '0' }],
+        md: ['15px', { lineHeight: '23px', letterSpacing: '0' }],
+        lg: ['17px', { lineHeight: '26px', letterSpacing: '-0.005em' }],
         xl: ['20px', { lineHeight: '28px', letterSpacing: '-0.012em' }],
-        '2xl': ['24px', { lineHeight: '32px', letterSpacing: '-0.018em' }],
-        '3xl': ['30px', { lineHeight: '38px', letterSpacing: '-0.022em' }],
-        '4xl': ['36px', { lineHeight: '44px', letterSpacing: '-0.026em' }]
+        '2xl': ['28px', { lineHeight: '34px', letterSpacing: '-0.022em' }],
+        '3xl': ['38px', { lineHeight: '42px', letterSpacing: '-0.026em' }],
+        '4xl': ['52px', { lineHeight: '54px', letterSpacing: '-0.030em' }],
+        '5xl': ['72px', { lineHeight: '70px', letterSpacing: '-0.036em' }]
     },
 
     fontWeight: {
