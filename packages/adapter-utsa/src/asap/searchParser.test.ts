@@ -25,11 +25,7 @@ describe('parseAsapSearchResults — real public ASAP CS Fall 2026 page', () => 
     });
 
     it('finds the in-person Najem CS 3343 section with real meeting details', () => {
-        const najem3343 = sections.find(
-            (s) =>
-                s.courseId === 'CS3343' &&
-                s.crn === '10184'
-        );
+        const najem3343 = sections.find((s) => s.courseId === 'CS3343' && s.crn === '10184');
         expect(najem3343).toBeDefined();
         expect(najem3343?.instructorName.toLowerCase()).toContain('najem');
         expect(najem3343?.modality).toBe('in_person');

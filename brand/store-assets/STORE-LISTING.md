@@ -78,6 +78,7 @@ Email: anudeep.bonagiri@gmail.com
 Source: `brand/store-assets/store-icon-128.svg`
 
 Convert to PNG:
+
 1. Open the SVG file in **Preview** (macOS), File → Export, format PNG, resolution 128 px.
 2. Or open in **Figma**, place at 128×128, export as PNG.
 3. Or open in Chrome, right-click → Inspect → in Sources tab right-click the SVG → Save as → "image/png" rendering.
@@ -107,6 +108,7 @@ Take these manually after loading the extension. Suggested shots, in order:
 5. **Search with conflict cross-out** — add CS 2123 to your schedule, search for "CS 2123", screenshot the result that's crossed out due to time conflict.
 
 For each screenshot:
+
 - Use Chrome at exactly 1280×800 viewport (DevTools → device toolbar → "Responsive" → set 1280×800).
 - Save as PNG with no alpha channel (Preview can do this on save).
 
@@ -117,6 +119,7 @@ For each screenshot:
 ### Homepage URL
 
 If you have GitHub Pages or a personal site:
+
 ```
 https://github.com/[your-handle]/UTSARegPlus
 ```

@@ -12,9 +12,7 @@ export interface UseSyllabusContextState {
  * background message; the worker handles the (rare) network fetch and
  * its own per-session cache.
  */
-export const useSyllabusContext = (
-    courseId: string | undefined
-): UseSyllabusContextState => {
+export const useSyllabusContext = (courseId: string | undefined): UseSyllabusContextState => {
     const [state, setState] = useState<UseSyllabusContextState>({
         data: null,
         loading: Boolean(courseId),

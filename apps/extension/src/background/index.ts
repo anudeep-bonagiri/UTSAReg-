@@ -117,9 +117,7 @@ const revalidateInBackground = async (instructorName: string): Promise<void> => 
     }
 };
 
-const lookupSyllabusContext = async (
-    courseId: string
-): Promise<GetSyllabusContextResponse> => {
+const lookupSyllabusContext = async (courseId: string): Promise<GetSyllabusContextResponse> => {
     try {
         const orgs = await ensureOrgs();
         const subject = subjectFromCourseId(courseId);

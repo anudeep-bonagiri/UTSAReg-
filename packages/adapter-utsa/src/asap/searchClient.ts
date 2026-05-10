@@ -65,9 +65,7 @@ const buildSearchBody = (termId: string, subjects: string[]): string => {
         ['end_mi', '0'],
         ['end_ap', 'a']
     ];
-    return params
-        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-        .join('&');
+    return params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
 };
 
 /**

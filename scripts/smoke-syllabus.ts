@@ -37,9 +37,7 @@ const main = async (): Promise<void> => {
     const terms = await fetchUtsaTerms();
     const published = terms.filter((t) => t.is_published).slice(0, 6);
     for (const t of published) {
-        console.info(
-            `   ${t.name.padEnd(15)} ${t.start_date ?? '???'} → ${t.end_date ?? '???'}`
-        );
+        console.info(`   ${t.name.padEnd(15)} ${t.start_date ?? '???'} → ${t.end_date ?? '???'}`);
     }
 };
 

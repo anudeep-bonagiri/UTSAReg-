@@ -110,10 +110,7 @@ const cleanInstructor = (raw: string): string => {
     return cleaned;
 };
 
-const inferModality = (
-    instructionalMethod: string,
-    where: string
-): Section['modality'] => {
+const inferModality = (instructionalMethod: string, where: string): Section['modality'] => {
     const im = instructionalMethod.toLowerCase();
     const w = where.toLowerCase();
     if (im.includes('fully online') || im.includes('asynchronous online')) return 'online_async';

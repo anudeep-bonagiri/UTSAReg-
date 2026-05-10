@@ -56,7 +56,7 @@ const F = {
     bodyBold: join(fontsDir, 'Inter-Bold.ttf')
 } as const;
 
-interface Doc extends PDFKit.PDFDocument {}
+type Doc = PDFKit.PDFDocument;
 
 const newPage = (doc: Doc): void => {
     doc.addPage({ size: 'LETTER', margins: { top: 0, bottom: 0, left: 0, right: 0 } });
@@ -77,7 +77,9 @@ interface TextOpts {
 }
 
 const text = (doc: Doc, t: string, x: number, y: number, opts: TextOpts): void => {
-    doc.font(opts.font).fontSize(opts.size).fillColor(opts.color ?? C.warmBlack);
+    doc.font(opts.font)
+        .fontSize(opts.size)
+        .fillColor(opts.color ?? C.warmBlack);
     const drawOpts: Parameters<Doc['text']>[3] = {};
     if (opts.width !== undefined) drawOpts.width = opts.width;
     if (opts.align) drawOpts.align = opts.align;
@@ -259,7 +261,11 @@ const renderTOC = (doc: Doc, page: number, total: number): void => {
         if (startX < endX) {
             doc.save();
             doc.dash(1, { space: 4 });
-            doc.moveTo(startX, y + 8).lineTo(endX, y + 8).strokeColor(C.smoke).lineWidth(0.6).stroke();
+            doc.moveTo(startX, y + 8)
+                .lineTo(endX, y + 8)
+                .strokeColor(C.smoke)
+                .lineWidth(0.6)
+                .stroke();
             doc.undash();
             doc.restore();
         }
@@ -278,9 +284,18 @@ const renderFoundation = (doc: Doc, page: number, total: number): void => {
 
     const colW = (CONTENT_W - 32) / 3;
     const cols: [string, string][] = [
-        ['Mission', 'Make registration the smallest part of a student’s week. Live data, conflict-aware, F1-aware.'],
-        ['Audience', 'Every UTSA undergrad. Deeper utility for international students and scholarship-protected GPAs.'],
-        ['Promise', 'No mocked data, no telemetry, no logos we don’t own. Trust earned by being verifiable.']
+        [
+            'Mission',
+            'Make registration the smallest part of a student’s week. Live data, conflict-aware, F1-aware.'
+        ],
+        [
+            'Audience',
+            'Every UTSA undergrad. Deeper utility for international students and scholarship-protected GPAs.'
+        ],
+        [
+            'Promise',
+            'No mocked data, no telemetry, no logos we don’t own. Trust earned by being verifiable.'
+        ]
     ];
     cols.forEach(([t, b], i) => {
         const x = MARGIN + (colW + 16) * i;
@@ -340,10 +355,19 @@ const renderVoice = (doc: Doc, page: number, total: number): void => {
 
     const principles: [string, string][] = [
         ['Be specific', '"3 sections of CS 3343 for Fall 2026" — not "your courses".'],
-        ['Show your work', 'Every datum has a freshness chip. Live, cached, snapshot — never ambiguous.'],
-        ['Skip the marketing voice', 'No "empower," "unlock," or "innovative." Plain English wins.'],
+        [
+            'Show your work',
+            'Every datum has a freshness chip. Live, cached, snapshot — never ambiguous.'
+        ],
+        [
+            'Skip the marketing voice',
+            'No "empower," "unlock," or "innovative." Plain English wins.'
+        ],
         ['Speak to one student', '"You" not "users." The student in front of the screen.'],
-        ['Default to technical truth', 'Banner 8 endpoint, RMP GraphQL, F1 12-credit minimum — name the real systems.']
+        [
+            'Default to technical truth',
+            'Banner 8 endpoint, RMP GraphQL, F1 12-credit minimum — name the real systems.'
+        ]
     ];
 
     let y = startY + 6;
@@ -406,7 +430,10 @@ const renderLogoSpacing = (doc: Doc, page: number, total: number): void => {
     fillRect(doc, MARGIN, startY, CONTENT_W, 200, C.limestone);
     doc.save();
     doc.dash(3, { space: 3 });
-    doc.rect(MARGIN + 50, startY + 30, 416, 140).strokeColor(C.orange).lineWidth(0.8).stroke();
+    doc.rect(MARGIN + 50, startY + 30, 416, 140)
+        .strokeColor(C.orange)
+        .lineWidth(0.8)
+        .stroke();
     doc.undash();
     doc.restore();
     drawSvg(doc, 'logo-primary.svg', MARGIN + 80, startY + 65, 360);
@@ -636,7 +663,11 @@ const renderTypeScale = (doc: Doc, page: number, total: number): void => {
     let y = startY + 4;
     rows.forEach(([label, spec, size]) => {
         const isDisplay = spec.startsWith('Manrope');
-        const fontPath = isDisplay ? (spec.includes('ExtraBold') ? F.display : F.displayBold) : F.body;
+        const fontPath = isDisplay
+            ? spec.includes('ExtraBold')
+                ? F.display
+                : F.displayBold
+            : F.body;
         text(doc, label, MARGIN, y, { font: fontPath, size, color: C.midnight });
         text(doc, spec, MARGIN, y + 4, {
             font: F.body,
@@ -660,9 +691,22 @@ const renderIcons = (doc: Doc, page: number, total: number): void => {
     );
 
     const items = [
-        'Calendar', 'Clock', 'Users', 'BookOpen', 'Bookmark', 'Settings',
-        'Search', 'GraduationCap', 'AlertTriangle', 'CheckCircle2', 'Star', 'MapPin',
-        'Trash2', 'Sun', 'Moon', 'LayoutDashboard'
+        'Calendar',
+        'Clock',
+        'Users',
+        'BookOpen',
+        'Bookmark',
+        'Settings',
+        'Search',
+        'GraduationCap',
+        'AlertTriangle',
+        'CheckCircle2',
+        'Star',
+        'MapPin',
+        'Trash2',
+        'Sun',
+        'Moon',
+        'LayoutDashboard'
     ];
     const cols = 4;
     const tileW = (CONTENT_W - 16 * (cols - 1)) / cols;
@@ -941,22 +985,51 @@ const main = (): void => {
     doc.registerFont('body-bold', F.bodyBold);
 
     let n = 1;
-    newPage(doc); renderCover(doc); n++;
-    newPage(doc); renderTOC(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderFoundation(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderVoice(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderLogoPrimary(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderLogoSpacing(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderLogoDoDont(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderColorPage(doc, n, TOTAL_PAGES,
+    newPage(doc);
+    renderCover(doc);
+    n++;
+    newPage(doc);
+    renderTOC(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderFoundation(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderVoice(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderLogoPrimary(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderLogoSpacing(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderLogoDoDont(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderColorPage(
+        doc,
+        n,
+        TOTAL_PAGES,
         '06 / Color: primary',
         'Primary palette.',
         'UT San Antonio Orange and Midnight are the only primary colors. Orange for primary CTAs, focus rings, and the orange-tile mark; never as a background for body copy.',
         [
-            { name: 'UTSA Orange', hex: '#F15A22', role: 'Primary CTA, mark, focus ring', onDark: true },
+            {
+                name: 'UTSA Orange',
+                hex: '#F15A22',
+                role: 'Primary CTA, mark, focus ring',
+                onDark: true
+            },
             { name: 'Midnight', hex: '#032044', role: 'Headers, brand chrome, h1', onDark: true }
-        ]); n++;
-    newPage(doc); renderColorPage(doc, n, TOTAL_PAGES,
+        ]
+    );
+    n++;
+    newPage(doc);
+    renderColorPage(
+        doc,
+        n,
+        TOTAL_PAGES,
         '07 / Color: secondary',
         'Secondary palette.',
         'Reach for these only when a primary would dominate. River Mist softens info; Talavera Blue accents; Mission Clay warms; Brass handles warnings on a brand-safe note.',
@@ -965,8 +1038,14 @@ const main = (): void => {
             { name: 'Talavera Blue', hex: '#265BF7', role: 'Info accent', onDark: true },
             { name: 'Mission Clay', hex: '#DBB485', role: 'Decorative warm accent' },
             { name: 'Brass', hex: '#A06620', role: 'Warning status, on-brand', onDark: true }
-        ]); n++;
-    newPage(doc); renderColorPage(doc, n, TOTAL_PAGES,
+        ]
+    );
+    n++;
+    newPage(doc);
+    renderColorPage(
+        doc,
+        n,
+        TOTAL_PAGES,
         '08 / Color: neutrals',
         'Neutrals.',
         'Warm neutrals from UTSA palette. Limestone is the page canvas. Concrete sinks form fields. Smoke is the strong border. Warm Black replaces pure black for body text.',
@@ -975,23 +1054,53 @@ const main = (): void => {
             { name: 'Concrete', hex: '#EBE6E2', role: 'Sunken surface, input fields' },
             { name: 'Smoke', hex: '#D5CFC8', role: 'Strong border, heavy divider' },
             { name: 'Warm Black', hex: '#332F21', role: 'Body text', onDark: true }
-        ]); n++;
-    newPage(doc); renderColorPage(doc, n, TOTAL_PAGES,
+        ]
+    );
+    n++;
+    newPage(doc);
+    renderColorPage(
+        doc,
+        n,
+        TOTAL_PAGES,
         '09 / Color: status',
         'Status & semantic.',
         'Tone is locked to meaning. Open is healthy green. Closed is danger red. Waitlist is Brass. Info is Talavera Blue.',
         [
-            { name: 'Open', hex: '#0E7C3A', role: 'Available section, healthy seats', onDark: true },
-            { name: 'Waitlist', hex: '#A06620', role: 'Capacity reached, waitlist open', onDark: true },
+            {
+                name: 'Open',
+                hex: '#0E7C3A',
+                role: 'Available section, healthy seats',
+                onDark: true
+            },
+            {
+                name: 'Waitlist',
+                hex: '#A06620',
+                role: 'Capacity reached, waitlist open',
+                onDark: true
+            },
             { name: 'Closed', hex: '#B91C1C', role: 'Unavailable, danger', onDark: true },
             { name: 'Info', hex: '#265BF7', role: 'Hint, link, neutral status', onDark: true }
-        ]); n++;
-    newPage(doc); renderTypeSpec(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderTypeScale(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderIcons(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderAppPopup(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderAppDashboard(doc, n, TOTAL_PAGES); n++;
-    newPage(doc); renderClosing(doc, n, TOTAL_PAGES); n++;
+        ]
+    );
+    n++;
+    newPage(doc);
+    renderTypeSpec(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderTypeScale(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderIcons(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderAppPopup(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderAppDashboard(doc, n, TOTAL_PAGES);
+    n++;
+    newPage(doc);
+    renderClosing(doc, n, TOTAL_PAGES);
+    n++;
 
     doc.end();
     console.info('[brand-book] done.');

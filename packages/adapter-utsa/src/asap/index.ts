@@ -1,7 +1,4 @@
-export {
-    parseAsapSearchResults,
-    type ParseAsapSearchOptions
-} from './searchParser.js';
+export { parseAsapSearchResults, type ParseAsapSearchOptions } from './searchParser.js';
 export {
     fetchAsapSections,
     AsapFetchError,

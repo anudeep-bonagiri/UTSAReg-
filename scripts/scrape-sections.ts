@@ -38,9 +38,7 @@ const SUBJECTS = [
 ];
 
 const main = async (): Promise<void> => {
-    console.info(
-        `[asap] live scrape: ${SUBJECTS.length} subjects, ${TERM_LABEL} (${TERM_ID})`
-    );
+    console.info(`[asap] live scrape: ${SUBJECTS.length} subjects, ${TERM_LABEL} (${TERM_ID})`);
     const start = Date.now();
 
     // Banner doesn't love huge multi-subject queries — we batch in groups of 3
