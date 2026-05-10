@@ -4,17 +4,13 @@ import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
 
 /**
- * Vite config — multi-entry Chrome MV3 extension.
+ * Vite config — popup, dashboard, and MV3 service worker.
  *
  *   popup, dashboard:   regular React entries with chunk-splitting.
- *   background:         service worker (type: module) — can import shared
- *                       chunks from same-origin extension paths.
- *   content:            classical content script — runs in isolated world,
- *                       NO ES module support. Must be one self-contained
- *                       file. We force this via manualChunks below: the
- *                       content entry can never share a chunk with anything
- *                       else, so all of its imports get inlined into
- *                       dist/content.js.
+ *   background:         service worker (type: module) — ES modules OK.
+ *
+ * The content script is built separately by vite.content.config.ts because
+ * MV3 content scripts cannot be ES modules. See that file for details.
  */
 export default defineConfig({
     plugins: [react(), tailwindcss()],
@@ -23,12 +19,11 @@ export default defineConfig({
             input: {
                 popup: resolve(import.meta.dirname, 'index.html'),
                 dashboard: resolve(import.meta.dirname, 'dashboard.html'),
-                background: resolve(import.meta.dirname, 'src/background/index.ts'),
-                content: resolve(import.meta.dirname, 'src/content/index.tsx')
+                background: resolve(import.meta.dirname, 'src/background/index.ts')
             },
             output: {
                 entryFileNames: (chunkInfo) => {
-                    return chunkInfo.name === 'background' || chunkInfo.name === 'content'
+                    return chunkInfo.name === 'background'
                         ? '[name].js'
                         : 'assets/[name]-[hash].js';
                 },
@@ -37,26 +32,6 @@ export default defineConfig({
                         return '[name][extname]';
                     }
                     return 'assets/[name]-[hash][extname]';
-                },
-                manualChunks: (id, { getModuleInfo }) => {
-                    // Force every module reachable from the content entry to
-                    // land in the content chunk. Walk the importer graph.
-                    const info = getModuleInfo(id);
-                    if (!info) return undefined;
-                    const isContentOnly = (mid: string, seen = new Set<string>()): boolean => {
-                        if (seen.has(mid)) return true;
-                        seen.add(mid);
-                        const m = getModuleInfo(mid);
-                        if (!m) return false;
-                        if (m.isEntry) {
-                            return mid.endsWith('content/index.tsx');
-                        }
-                        const importers = m.importers ?? [];
-                        if (importers.length === 0) return false;
-                        return importers.every((imp) => isContentOnly(imp, seen));
-                    };
-                    if (isContentOnly(id)) return 'content';
-                    return undefined;
                 }
             }
         }
