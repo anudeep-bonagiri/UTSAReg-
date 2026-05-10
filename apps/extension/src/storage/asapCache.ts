@@ -13,10 +13,18 @@ const STORAGE_KEY = 'asap:sections:v1';
 
 export interface AsapHarvest {
     schemaVersion: 1;
+    /** Last-write timestamp across the whole cache (any subject). */
     fetchedAt: string;
     termId: string | null;
     sourceUrl: string;
     sections: Section[];
+    /**
+     * Per-subject last-fetch timestamps, e.g. { CS: "2026-05-10T14:33:01Z" }.
+     * Lets the UI tell the user "Live · 8s ago" for the subject they're
+     * looking at instead of falling back to the overall snapshot age.
+     * Optional for back-compat with v0 harvests that pre-date this field.
+     */
+    subjectFetchedAt?: Record<string, string>;
 }
 
 interface RawHarvest {
@@ -25,6 +33,7 @@ interface RawHarvest {
     termId: string | null;
     sourceUrl: string;
     sections: unknown[];
+    subjectFetchedAt?: Record<string, string>;
 }
 
 const isRawHarvest = (v: unknown): v is RawHarvest =>
@@ -50,7 +59,8 @@ export const getAsapHarvest = async (): Promise<AsapHarvest | null> => {
             fetchedAt: raw.fetchedAt,
             termId: raw.termId,
             sourceUrl: raw.sourceUrl,
-            sections
+            sections,
+            ...(raw.subjectFetchedAt ? { subjectFetchedAt: raw.subjectFetchedAt } : {})
         };
     } catch {
         return null;
@@ -90,7 +100,8 @@ export const onAsapHarvestChange = (
                 fetchedAt: next.fetchedAt,
                 termId: next.termId,
                 sourceUrl: next.sourceUrl,
-                sections
+                sections,
+                ...(next.subjectFetchedAt ? { subjectFetchedAt: next.subjectFetchedAt } : {})
             });
         }
     };

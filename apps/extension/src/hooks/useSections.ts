@@ -15,6 +15,13 @@ export interface UseSectionsResult {
     hasLive: boolean;
     /** Term currently displayed (Banner six-digit). */
     termId: string | null;
+    /**
+     * Per-subject last-fetch timestamp from the live harvest, e.g.
+     * { CS: "2026-05-10T14:33:01Z" }. Empty when nothing has been refreshed
+     * live yet. UI uses this to render per-section staleness ("Live · 12s ago"
+     * vs "Snapshot · 16h ago") without falling back to the global timestamp.
+     */
+    subjectFetchedAt: Record<string, string>;
 }
 
 /**
@@ -54,7 +61,8 @@ export const useSections = (): UseSectionsResult => {
                 sections: ALL_SECTIONS,
                 freshness: { source: 'snapshot', fetchedAt: SECTIONS_FETCHED_AT },
                 hasLive: false,
-                termId: null
+                termId: null,
+                subjectFetchedAt: {}
             };
         }
         // Merge: harvest wins on shared CRNs.
@@ -69,7 +77,8 @@ export const useSections = (): UseSectionsResult => {
                 maxAgeMs: 24 * 60 * 60 * 1000
             },
             hasLive: true,
-            termId: harvest.termId
+            termId: harvest.termId,
+            subjectFetchedAt: harvest.subjectFetchedAt ?? {}
         };
     }, [harvest]);
 };

@@ -6,10 +6,18 @@ import {
     Clock,
     Calendar as CalIcon,
     Bookmark,
-    ExternalLink
+    ExternalLink,
+    Loader2,
+    Radio
 } from 'lucide-react';
 import { Badge, Button, Card, FreshnessChip, Tooltip, cn } from '@utsaregplus/ui';
-import { formatDays, formatTimeRange, type Course, type Section } from '@utsaregplus/core';
+import {
+    formatDays,
+    formatRelativeFreshness,
+    formatTimeRange,
+    type Course,
+    type Section
+} from '@utsaregplus/core';
 import { useRmpRating } from '../hooks/useRmpRating.js';
 
 interface SectionCardProps {
@@ -17,10 +25,20 @@ interface SectionCardProps {
     course: Course | undefined;
     saved: boolean;
     inConflict: boolean;
+    /**
+     * ISO timestamp of the last live ASAP refresh for this section's subject.
+     * undefined = no live data yet (showing snapshot).
+     */
+    subjectFetchedAt?: string;
+    /** True while a refresh for this subject is in flight. */
+    refreshing?: boolean;
     onAdd: (section: Section) => void;
     onSave: (section: Section) => void;
     onOpen: (section: Section) => void;
 }
+
+/** Seat counts older than 5 minutes are flagged stale during peak windows. */
+const SEAT_STALE_THRESHOLD_MS = 5 * 60 * 1000;
 
 const STATUS_TONE: Record<Section['status'], 'open' | 'warn' | 'danger' | 'neutral'> = {
     open: 'open',
@@ -49,6 +67,8 @@ export const SectionCard = ({
     course,
     saved,
     inConflict,
+    subjectFetchedAt,
+    refreshing,
     onAdd,
     onSave,
     onOpen
@@ -60,6 +80,18 @@ export const SectionCard = ({
         if (!section.capacity || !section.enrolled) return null;
         return Math.min(100, Math.round((section.enrolled / section.capacity) * 100));
     }, [section.capacity, section.enrolled]);
+
+    const seatFreshness = useMemo(() => {
+        if (!subjectFetchedAt) {
+            return { live: false, ageMs: Infinity, isStale: true } as const;
+        }
+        const ageMs = Date.now() - new Date(subjectFetchedAt).getTime();
+        return {
+            live: true,
+            ageMs,
+            isStale: ageMs > SEAT_STALE_THRESHOLD_MS
+        } as const;
+    }, [subjectFetchedAt]);
 
     const ratingBadge = (() => {
         if (rmp.loading) {
@@ -206,7 +238,12 @@ export const SectionCard = ({
 
             {/* Seats + actions */}
             <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5 text-[11px] text-[var(--ink-muted)] utsa-tabular min-w-0">
+                <div
+                    className={cn(
+                        'flex items-center gap-1.5 text-[11px] text-[var(--ink-muted)] utsa-tabular min-w-0',
+                        seatFreshness.isStale && 'opacity-70'
+                    )}
+                >
                     <Users className="w-3 h-3 shrink-0" />
                     {section.enrolled !== undefined && section.capacity !== undefined ? (
                         <>
@@ -231,6 +268,36 @@ export const SectionCard = ({
                                     />
                                 </div>
                             )}
+                            {/* Per-section live/stale indicator. The seat
+                                counts above are only as fresh as this chip. */}
+                            {refreshing ? (
+                                <Tooltip content="Re-checking ASAP for live seat counts…">
+                                    <span className="inline-flex items-center gap-1 text-[var(--status-info)]">
+                                        <Loader2 className="w-3 h-3 animate-spin" />
+                                        <span className="text-[10px]">Refreshing</span>
+                                    </span>
+                                </Tooltip>
+                            ) : seatFreshness.live ? (
+                                <Tooltip
+                                    content={
+                                        seatFreshness.isStale
+                                            ? `Seat data verified ${formatRelativeFreshness(subjectFetchedAt!)} — open ASAP for instant live counts.`
+                                            : `Seat data verified ${formatRelativeFreshness(subjectFetchedAt!)}.`
+                                    }
+                                >
+                                    <span
+                                        className={cn(
+                                            'inline-flex items-center gap-1 text-[10px] font-bold tracking-wide',
+                                            seatFreshness.isStale
+                                                ? 'text-[var(--status-warn)]'
+                                                : 'text-[var(--status-open)]'
+                                        )}
+                                    >
+                                        <Radio className="w-3 h-3" />
+                                        {seatFreshness.isStale ? 'CHECK ASAP' : 'LIVE'}
+                                    </span>
+                                </Tooltip>
+                            ) : null}
                         </>
                     ) : (
                         <span className="text-[var(--ink-subtle)]">No seat data</span>

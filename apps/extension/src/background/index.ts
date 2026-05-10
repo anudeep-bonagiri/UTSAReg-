@@ -17,6 +17,7 @@ import {
     fetchRatingForInstructor,
     resolveUtsaSchoolId
 } from '@utsaregplus/adapter-utsa/rmp';
+import { fetchAsapSections } from '@utsaregplus/adapter-utsa/asap';
 import {
     buildLibrarySearchUrl,
     fetchUtsaOrganizations,
@@ -24,6 +25,7 @@ import {
     subjectFromCourseId
 } from '@utsaregplus/adapter-utsa/syllabus';
 import type { SyllabusOrganization } from '@utsaregplus/adapter-utsa/syllabus';
+import type { Section } from '@utsaregplus/core';
 import {
     getCachedRating,
     getCachedSchoolId,
@@ -35,6 +37,8 @@ import type {
     GetRmpRatingResponse,
     GetSyllabusContextRequest,
     GetSyllabusContextResponse,
+    RefreshAsapSubjectsRequest,
+    RefreshAsapSubjectsResponse,
     SyllabusContext,
     WorkerRequest
 } from '../messaging/protocol.js';
@@ -188,6 +192,164 @@ const isSyllabusRequest = (msg: unknown): msg is GetSyllabusContextRequest =>
     msg !== null &&
     (msg as { type?: string }).type === 'getSyllabusContext';
 
+const isRefreshAsapRequest = (msg: unknown): msg is RefreshAsapSubjectsRequest =>
+    typeof msg === 'object' &&
+    msg !== null &&
+    (msg as { type?: string }).type === 'refreshAsapSubjects';
+
+/**
+ * Just-in-time live ASAP refresh.
+ *
+ * Per-subject 60s rate limit + in-flight dedupe. Rate-limit prevents
+ * pounding ASAP if the popup re-mounts repeatedly; dedupe collapses
+ * concurrent requests for the same subject into one fetch.
+ *
+ * Triggered from the UI when the user is about to act on a section
+ * (Save / Add / open detail), and on popup/dashboard mount for any
+ * subjects already in the saved or scheduled lists.
+ */
+const ASAP_HARVEST_KEY = 'asap:sections:v1';
+const ASAP_REFRESH_COOLDOWN_MS = 60_000;
+const ASAP_PARALLEL_LIMIT = 4;
+
+const lastRefreshBySubject = new Map<string, number>();
+const inflightBySubject = new Map<string, Promise<Section[]>>();
+
+interface AsapHarvestPayload {
+    schemaVersion: 1;
+    fetchedAt: string;
+    termId: string | null;
+    sourceUrl: string;
+    sections: Section[];
+    subjectFetchedAt?: Record<string, string>;
+}
+
+const fetchSubjectOnce = (termId: string, subject: string): Promise<Section[]> => {
+    const key = `${termId}:${subject}`;
+    const existing = inflightBySubject.get(key);
+    if (existing) return existing;
+    const p = fetchAsapSections({
+        termId,
+        subjects: [subject],
+        timeoutMs: 15_000,
+        warn: (m) => {
+            log(`[asap-refresh ${subject}] ${m}`);
+        }
+    }).finally(() => {
+        inflightBySubject.delete(key);
+    });
+    inflightBySubject.set(key, p);
+    return p;
+};
+
+const mergeRefreshIntoHarvest = async (
+    termId: string,
+    subjectResults: { subject: string; sections: Section[]; fetchedAt: string }[]
+): Promise<void> => {
+    if (subjectResults.length === 0) return;
+    const got = await chrome.storage.local.get(ASAP_HARVEST_KEY);
+    const existing = (got[ASAP_HARVEST_KEY] as AsapHarvestPayload | undefined) ?? null;
+
+    const byCrn = new Map<string, Section>();
+    if (existing?.termId === termId) {
+        for (const s of existing.sections) byCrn.set(s.crn, s);
+    }
+    for (const { sections } of subjectResults) {
+        for (const s of sections) byCrn.set(s.crn, s);
+    }
+
+    const subjectFetchedAt: Record<string, string> = {
+        ...(existing?.subjectFetchedAt ?? {})
+    };
+    for (const { subject, fetchedAt } of subjectResults) {
+        subjectFetchedAt[subject] = fetchedAt;
+    }
+
+    const payload: AsapHarvestPayload = {
+        schemaVersion: 1,
+        fetchedAt: new Date().toISOString(),
+        termId,
+        sourceUrl: existing?.sourceUrl ?? 'background:refresh',
+        sections: Array.from(byCrn.values()),
+        subjectFetchedAt
+    };
+    await chrome.storage.local.set({ [ASAP_HARVEST_KEY]: payload });
+};
+
+const refreshAsapSubjects = async (
+    req: RefreshAsapSubjectsRequest
+): Promise<RefreshAsapSubjectsResponse> => {
+    const termId = req.termId;
+    const force = req.force === true;
+    const now = Date.now();
+
+    const uniq = Array.from(new Set(req.subjects.map((s) => s.toUpperCase()))).filter(
+        (s) => /^[A-Z]{2,4}$/.test(s)
+    );
+    if (uniq.length === 0) {
+        return { ok: true, refreshed: [], skipped: [], errors: [] };
+    }
+
+    const targets: string[] = [];
+    const skipped: string[] = [];
+    for (const s of uniq) {
+        const last = lastRefreshBySubject.get(`${termId}:${s}`) ?? 0;
+        if (!force && now - last < ASAP_REFRESH_COOLDOWN_MS) {
+            skipped.push(s);
+        } else {
+            targets.push(s);
+        }
+    }
+
+    if (targets.length === 0) {
+        return { ok: true, refreshed: [], skipped, errors: [] };
+    }
+
+    const errors: { subject: string; message: string }[] = [];
+    const ok: { subject: string; sections: Section[]; fetchedAt: string }[] = [];
+
+    // Run with a small concurrency cap so we don't hammer ASAP.
+    let cursor = 0;
+    const worker = async (): Promise<void> => {
+        while (cursor < targets.length) {
+            const idx = cursor++;
+            const subject = targets[idx];
+            if (!subject) break;
+            try {
+                const sections = await fetchSubjectOnce(termId, subject);
+                const fetchedAt = new Date().toISOString();
+                ok.push({ subject, sections, fetchedAt });
+                lastRefreshBySubject.set(`${termId}:${subject}`, Date.now());
+            } catch (err) {
+                const message = err instanceof Error ? err.message : String(err);
+                errors.push({ subject, message });
+                log(`refresh failed for ${subject}:`, message);
+            }
+        }
+    };
+    await Promise.all(
+        Array.from({ length: Math.min(ASAP_PARALLEL_LIMIT, targets.length) }, () => worker())
+    );
+
+    if (ok.length > 0) {
+        try {
+            await mergeRefreshIntoHarvest(termId, ok);
+            log(`refreshed ${ok.length} subjects: ${ok.map((o) => o.subject).join(', ')}`);
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            log('merge failed:', message);
+            return { ok: false, error: `merge failed: ${message}` };
+        }
+    }
+
+    return {
+        ok: true,
+        refreshed: ok.map((o) => o.subject),
+        skipped,
+        errors
+    };
+};
+
 chrome.runtime.onMessage.addListener((message: WorkerRequest, _sender, sendResponse) => {
     if (isRatingRequest(message)) {
         lookupRating(message.instructorName)
@@ -212,6 +374,19 @@ chrome.runtime.onMessage.addListener((message: WorkerRequest, _sender, sendRespo
                     ok: false,
                     error: err instanceof Error ? err.message : String(err)
                 } satisfies GetSyllabusContextResponse);
+            });
+        return true;
+    }
+    if (isRefreshAsapRequest(message)) {
+        refreshAsapSubjects(message)
+            .then((response) => {
+                sendResponse(response);
+            })
+            .catch((err: unknown) => {
+                sendResponse({
+                    ok: false,
+                    error: err instanceof Error ? err.message : String(err)
+                } satisfies RefreshAsapSubjectsResponse);
             });
         return true;
     }

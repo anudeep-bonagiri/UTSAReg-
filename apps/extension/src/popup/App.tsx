@@ -18,10 +18,12 @@ import {
     totalCreditHours,
     type Section
 } from '@utsaregplus/core';
-import { ALL_COURSES, SECTIONS_TERM_LABEL } from '../data/index.js';
+import { ALL_COURSES, SECTIONS_TERM_ID, SECTIONS_TERM_LABEL } from '../data/index.js';
 import { SectionCard } from './SectionCard.js';
 import { usePersistedSchedule } from '../hooks/usePersistedSchedule.js';
 import { useSections } from '../hooks/useSections.js';
+import { useAsapAutoRefresh, useAsapRefresh } from '../hooks/useAsapRefresh.js';
+import { subjectFromCourseId } from '@utsaregplus/adapter-utsa/syllabus';
 
 type Tab = 'explore' | 'schedule' | 'saved';
 
@@ -51,13 +53,34 @@ export const App = () => {
     const { theme, toggle: toggleTheme } = useTheme();
 
     // Live-merged sections (live ASAP harvest > bundled snapshot).
-    const { sections, freshness: sectionsFreshness } = useSections();
+    const {
+        sections,
+        freshness: sectionsFreshness,
+        termId: liveTermId,
+        subjectFetchedAt
+    } = useSections();
     const sectionByCrn = useMemo(() => new Map(sections.map((s) => [s.crn, s])), [sections]);
 
     const committed = useMemo<Section[]>(
         () => crns.map((c) => sectionByCrn.get(c)).filter((s): s is Section => Boolean(s)),
         [crns, sectionByCrn]
     );
+
+    // JIT live refresh.
+    //   - termId: live harvest > bundled snapshot fallback.
+    //   - autoRefreshSubjects: every subject the user has put in saved/schedule.
+    //     The SW rate-limit makes re-mounts cheap.
+    const refreshTermId = liveTermId ?? SECTIONS_TERM_ID;
+    const { refresh: refreshAsap, refreshing: refreshingSubjects } = useAsapRefresh(refreshTermId);
+    const autoRefreshSubjects = useMemo<string[]>(() => {
+        const set = new Set<string>();
+        for (const crn of [...crns, ...saved]) {
+            const section = sectionByCrn.get(crn);
+            if (section) set.add(subjectFromCourseId(section.courseId));
+        }
+        return Array.from(set);
+    }, [crns, saved, sectionByCrn]);
+    useAsapAutoRefresh(refreshAsap, refreshTermId, autoRefreshSubjects);
 
     const visibleResults = useMemo<Section[]>(() => {
         // Normalize: lowercase, strip all whitespace. So "CS 3343" matches "CS3343".
@@ -89,10 +112,15 @@ export const App = () => {
     );
 
     const handleAdd = (section: Section): void => {
+        // JIT refresh that subject so the next render shows live seat counts —
+        // critical during peak registration when a 16h-old "open" badge can be
+        // a lie. Don't block the UI; storage.onChanged will trigger a re-render.
+        void refreshAsap([subjectFromCourseId(section.courseId)]);
         addSection(section.crn);
         setActiveTab('schedule');
     };
     const handleSave = (section: Section): void => {
+        void refreshAsap([subjectFromCourseId(section.courseId)]);
         toggleSaved(section.crn);
     };
     const handleOpenDashboard = (): void => {
@@ -239,6 +267,8 @@ export const App = () => {
                             committedCrns={crns}
                             savedSet={new Set(saved)}
                             query={query}
+                            subjectFetchedAt={subjectFetchedAt}
+                            refreshingSubjects={refreshingSubjects}
                             onAdd={handleAdd}
                             onSave={handleSave}
                             onOpen={handleOpenDetails}
@@ -285,6 +315,8 @@ interface ExploreProps {
     committedCrns: string[];
     savedSet: Set<string>;
     query: string;
+    subjectFetchedAt: Record<string, string>;
+    refreshingSubjects: Set<string>;
     onAdd: (s: Section) => void;
     onSave: (s: Section) => void;
     onOpen: (s: Section) => void;
@@ -299,6 +331,8 @@ const ExploreTab = ({
     committedCrns,
     savedSet,
     query,
+    subjectFetchedAt,
+    refreshingSubjects,
     onAdd,
     onSave,
     onOpen,
@@ -355,21 +389,27 @@ const ExploreTab = ({
 
     return (
         <div className="utsa-stagger space-y-2.5">
-            {visibleResults.map((section) => (
-                <div key={section.crn} className="utsa-anim-fade-up">
-                    <SectionCard
-                        section={section}
-                        course={courseById.get(section.courseId)}
-                        saved={savedSet.has(section.crn)}
-                        inConflict={
-                            conflictSet.has(section.crn) && !committedCrns.includes(section.crn)
-                        }
-                        onAdd={onAdd}
-                        onSave={onSave}
-                        onOpen={onOpen}
-                    />
-                </div>
-            ))}
+            {visibleResults.map((section) => {
+                const subject = subjectFromCourseId(section.courseId);
+                return (
+                    <div key={section.crn} className="utsa-anim-fade-up">
+                        <SectionCard
+                            section={section}
+                            course={courseById.get(section.courseId)}
+                            saved={savedSet.has(section.crn)}
+                            inConflict={
+                                conflictSet.has(section.crn) &&
+                                !committedCrns.includes(section.crn)
+                            }
+                            subjectFetchedAt={subjectFetchedAt[subject]}
+                            refreshing={refreshingSubjects.has(subject)}
+                            onAdd={onAdd}
+                            onSave={onSave}
+                            onOpen={onOpen}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };
