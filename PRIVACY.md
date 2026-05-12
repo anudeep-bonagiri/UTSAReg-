@@ -64,7 +64,7 @@ From `manifest.json`:
 |---|---|
 | `storage` | To save your schedule and prefs locally |
 | `activeTab` | So we can inject the content script when **you** are on `asap.utsa.edu` |
-| `alarms` | (Reserved for v1.2 waitlist watcher — not active yet) |
+| `alarms` | Schedules a 12-hour background job to evict stale RMP cache entries and refresh the Simple Syllabus org tree |
 | `scripting` | Same purpose as activeTab; required for MV3 content scripts |
 
 Host permissions:
