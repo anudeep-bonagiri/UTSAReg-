@@ -18,6 +18,7 @@ export default tseslint.config(
             'apps/extension/src/scripts/**',
             'eslint.config.js',
             '**/vite.config.ts',
+            '**/vite.content.config.ts',
             '**/vitest.config.ts'
         ]
     },
@@ -81,6 +82,7 @@ export default tseslint.config(
         files: [
             '**/*.config.{js,ts,mjs,cjs}',
             '**/vite.config.ts',
+            '**/vite.content.config.ts',
             '**/vitest.config.ts',
             '**/scripts/**/*.{js,ts}'
         ],

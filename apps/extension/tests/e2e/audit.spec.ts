@@ -75,5 +75,35 @@ test('visual audit', async () => {
         fullPage: false
     });
 
-    console.log(`screenshots written to ${SHOTS}`);
+    // 9. Dark mode — flip data-theme on <html> and re-shoot the headline surfaces.
+    await page.evaluate(() => {
+        document.documentElement.dataset.theme = 'dark';
+    });
+    await page.waitForTimeout(200);
+    await page.click('text=Course Explorer');
+    await page.waitForTimeout(300);
+    await page.screenshot({
+        path: join(SHOTS, '09-dashboard-explore-dark.png'),
+        fullPage: false
+    });
+
+    const popup = await ext.context.newPage();
+    await popup.setViewportSize({ width: 420, height: 600 });
+    await popup.goto(`chrome-extension://${ext.extensionId}/index.html`);
+    await popup.evaluate(() => {
+        document.documentElement.dataset.theme = 'dark';
+    });
+    await popup.waitForTimeout(400);
+    await popup.screenshot({ path: join(SHOTS, '10-popup-empty-dark.png'), fullPage: true });
+
+    // 11. Chrome Web Store hero (1280×800) — main store screenshot.
+    const hero = await ext.context.newPage();
+    await hero.setViewportSize({ width: 1280, height: 800 });
+    await hero.goto(`chrome-extension://${ext.extensionId}/dashboard.html`);
+    await hero.waitForTimeout(800);
+    await hero.fill('input[placeholder*="Search"]', 'CS 3343');
+    await hero.waitForTimeout(500);
+    await hero.screenshot({ path: join(SHOTS, 'store-hero-1280x800.png'), fullPage: false });
+
+    console.info(`screenshots written to ${SHOTS}`);
 });

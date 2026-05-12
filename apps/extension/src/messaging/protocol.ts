@@ -38,12 +38,44 @@ export type GetSyllabusContextResponse =
     | { ok: true; result: SyllabusContext | null }
     | { ok: false; error: string };
 
-export type WorkerRequest = GetRmpRatingRequest | GetSyllabusContextRequest;
+/**
+ * Just-in-time live refresh: ask the service worker to fetch the current
+ * ASAP page for one or more subjects (e.g. "CS", "MAT") under a given term
+ * and merge the result into the harvest cache. The popup/dashboard fires
+ * this when the user is about to act on a section (clicking Save or Add)
+ * so seat counts are <60 seconds old at the moment of decision, not 16h.
+ *
+ * Per-subject rate limit + in-flight dedupe live in the SW. The response
+ * tells the caller which subjects were actually re-fetched vs skipped.
+ */
+export interface RefreshAsapSubjectsRequest {
+    type: 'refreshAsapSubjects';
+    termId: string;
+    subjects: string[];
+    /** When true, ignore the rate limit (manual refresh button). */
+    force?: boolean;
+}
+
+export type RefreshAsapSubjectsResponse =
+    | {
+          ok: true;
+          refreshed: string[];
+          skipped: string[];
+          errors: { subject: string; message: string }[];
+      }
+    | { ok: false; error: string };
+
+export type WorkerRequest =
+    | GetRmpRatingRequest
+    | GetSyllabusContextRequest
+    | RefreshAsapSubjectsRequest;
 export type WorkerResponse<R extends WorkerRequest> = R extends GetRmpRatingRequest
     ? GetRmpRatingResponse
     : R extends GetSyllabusContextRequest
       ? GetSyllabusContextResponse
-      : never;
+      : R extends RefreshAsapSubjectsRequest
+        ? RefreshAsapSubjectsResponse
+        : never;
 
 /**
  * Typed sendMessage wrapper. Returns the structured response or throws on

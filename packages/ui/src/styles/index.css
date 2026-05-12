@@ -246,12 +246,14 @@ textarea {
 /* Atmospheric Midnight surface — used on popup header, dashboard sidebar
    header, dialog header. Adds a subtle radial gradient + grain. */
 .utsa-midnight {
-    background-color: var(--brand-default);
+    /* Midnight is fixed regardless of theme — this is the editorial accent
+       that contrasts with both light and dark canvases. Don't tokenize it. */
+    background-color: #032044;
     background-image:
         radial-gradient(at 88% 0%, rgba(241, 90, 34, 0.18) 0%, transparent 38%),
         radial-gradient(at 0% 100%, rgba(200, 220, 255, 0.08) 0%, transparent 50%),
         url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
-    color: var(--ink-on-brand);
+    color: #ffffff;
     position: relative;
 }
 

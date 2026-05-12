@@ -12,9 +12,10 @@ import {
     PlaneTakeoff,
     Shield,
     Trash2,
-    AlertTriangle
+    AlertTriangle,
+    RefreshCw
 } from 'lucide-react';
-import { Button, Card, FreshnessChip, Input, TooltipProvider, cn } from '@utsaregplus/ui';
+import { Button, Card, FreshnessChip, Input, Tooltip, TooltipProvider, cn } from '@utsaregplus/ui';
 import {
     findConflictsAgainst,
     formatDays,
@@ -22,26 +23,18 @@ import {
     totalCreditHours,
     type Section
 } from '@utsaregplus/core';
-import {
-    ALL_COURSES,
-    ALL_SECTIONS,
-    SECTIONS_FETCHED_AT,
-    SECTIONS_TERM_LABEL
-} from '../data/index.js';
+import { ALL_COURSES, SECTIONS_TERM_ID, SECTIONS_TERM_LABEL } from '../data/index.js';
 import { SectionCard } from '../popup/SectionCard.js';
 import { usePersistedSchedule } from '../hooks/usePersistedSchedule.js';
+import { useSections } from '../hooks/useSections.js';
+import { useAsapAutoRefresh, useAsapRefresh } from '../hooks/useAsapRefresh.js';
+import { subjectFromCourseId } from '@utsaregplus/adapter-utsa/syllabus';
 import { WeeklyScheduleGrid } from './WeeklyScheduleGrid.js';
 import { CourseDetailDialog } from './CourseDetailDialog.js';
 
 type Tab = 'explore' | 'schedule' | 'saved' | 'settings';
 
 const courseById = new Map(ALL_COURSES.map((c) => [c.id, c]));
-const sectionByCrn = new Map(ALL_SECTIONS.map((s) => [s.crn, s]));
-
-const sectionsFreshness = {
-    source: 'snapshot' as const,
-    fetchedAt: SECTIONS_FETCHED_AT
-};
 
 interface UserPrefs {
     theme: 'light' | 'dark';
@@ -89,26 +82,64 @@ export const App = () => {
     const { crns, saved, addSection, removeSection, toggleSaved, hydrated } =
         usePersistedSchedule();
 
+    // Live-merged sections (live ASAP harvest > bundled snapshot).
+    const {
+        sections: allSections,
+        freshness: sectionsFreshness,
+        termId: liveTermId,
+        subjectFetchedAt
+    } = useSections();
+    const sectionByCrn = useMemo(
+        () => new Map(allSections.map((s) => [s.crn, s])),
+        [allSections]
+    );
+
+    // Just-in-time live refresh.
+    const refreshTermId = liveTermId ?? SECTIONS_TERM_ID;
+    const { refresh: refreshAsap, refreshing: refreshingSubjects } = useAsapRefresh(refreshTermId);
+    const personalSubjects = useMemo<string[]>(() => {
+        const set = new Set<string>();
+        for (const crn of [...crns, ...saved]) {
+            const section = sectionByCrn.get(crn);
+            if (section) set.add(subjectFromCourseId(section.courseId));
+        }
+        return Array.from(set);
+    }, [crns, saved, sectionByCrn]);
+    useAsapAutoRefresh(refreshAsap, refreshTermId, personalSubjects);
+
+    const visibleSubjectsForRefresh = useMemo<string[]>(() => {
+        // For the manual refresh button: refresh whatever the user is
+        // looking at — current visible results plus their saved/scheduled.
+        const set = new Set(personalSubjects);
+        return Array.from(set);
+    }, [personalSubjects]);
+
+    const handleManualRefresh = (): void => {
+        const targets =
+            visibleSubjectsForRefresh.length > 0 ? visibleSubjectsForRefresh : ['CS'];
+        void refreshAsap(targets, { force: true });
+    };
+
     useEffect(() => {
         const m = /#course=([A-Z0-9]+)/.exec(window.location.hash);
         if (m?.[1]) {
-            const first = ALL_SECTIONS.find((s) => s.courseId === m[1]);
+            const first = allSections.find((s) => s.courseId === m[1]);
             if (first) setOpenDialogCrn(first.crn);
         }
-    }, []);
+    }, [allSections]);
 
     const committed = useMemo<Section[]>(
         () => crns.map((c) => sectionByCrn.get(c)).filter((s): s is Section => Boolean(s)),
-        [crns]
+        [crns, sectionByCrn]
     );
 
     const sourceSections = useMemo<Section[]>(() => {
-        let pool = ALL_SECTIONS;
+        let pool = allSections;
         if (prefs.f1Mode) {
             pool = pool.filter((s) => s.modality !== 'online_async');
         }
         return pool;
-    }, [prefs.f1Mode]);
+    }, [prefs.f1Mode, allSections]);
 
     const visibleResults = useMemo<Section[]>(() => {
         const q = query.trim().toLowerCase();
@@ -137,11 +168,19 @@ export const App = () => {
     );
 
     const handleAdd = (section: Section): void => {
+        // JIT refresh that subject so we don't add against 16h-old seat data.
+        void refreshAsap([subjectFromCourseId(section.courseId)]);
         addSection(section.crn);
     };
 
     const handleSave = (section: Section): void => {
+        void refreshAsap([subjectFromCourseId(section.courseId)]);
         toggleSaved(section.crn);
+    };
+
+    const handleOpenDialog = (section: Section): void => {
+        void refreshAsap([subjectFromCourseId(section.courseId)]);
+        setOpenDialogCrn(section.crn);
     };
 
     const dialogSection = openDialogCrn ? (sectionByCrn.get(openDialogCrn) ?? null) : null;
@@ -226,6 +265,33 @@ export const App = () => {
                             </Button>
                         </div>
                         <FreshnessChip freshness={sectionsFreshness} />
+                        <Tooltip
+                            content={
+                                refreshingSubjects.size > 0
+                                    ? 'Re-checking ASAP for live seat counts…'
+                                    : 'Pull live seat counts for your saved + scheduled sections.'
+                            }
+                        >
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={handleManualRefresh}
+                                disabled={refreshingSubjects.size > 0}
+                                className="w-full justify-start gap-2"
+                            >
+                                <RefreshCw
+                                    className={cn(
+                                        'w-3.5 h-3.5',
+                                        refreshingSubjects.size > 0 && 'animate-spin'
+                                    )}
+                                />
+                                <span className="text-[11px] font-bold tracking-wide">
+                                    {refreshingSubjects.size > 0
+                                        ? 'Refreshing…'
+                                        : 'Refresh seats'}
+                                </span>
+                            </Button>
+                        </Tooltip>
                     </div>
                 </aside>
 
@@ -302,11 +368,11 @@ export const App = () => {
                                 committedCrns={crns}
                                 savedSet={new Set(saved)}
                                 query={query}
+                                subjectFetchedAt={subjectFetchedAt}
+                                refreshingSubjects={refreshingSubjects}
                                 onAdd={handleAdd}
                                 onSave={handleSave}
-                                onOpen={(s) => {
-                                    setOpenDialogCrn(s.crn);
-                                }}
+                                onOpen={handleOpenDialog}
                                 f1Mode={prefs.f1Mode}
                             />
                         )}
@@ -326,6 +392,7 @@ export const App = () => {
                         {activeTab === 'saved' && (
                             <SavedPane
                                 saved={saved}
+                                sectionByCrn={sectionByCrn}
                                 onUnsave={toggleSaved}
                                 onAdd={addSection}
                                 onOpen={(s) => {
@@ -361,6 +428,8 @@ interface ExplorePaneProps {
     committedCrns: string[];
     savedSet: Set<string>;
     query: string;
+    subjectFetchedAt: Record<string, string>;
+    refreshingSubjects: Set<string>;
     onAdd: (s: Section) => void;
     onSave: (s: Section) => void;
     onOpen: (s: Section) => void;
@@ -373,6 +442,8 @@ const ExplorePane = ({
     committedCrns,
     savedSet,
     query,
+    subjectFetchedAt,
+    refreshingSubjects,
     onAdd,
     onSave,
     onOpen,
@@ -418,20 +489,25 @@ const ExplorePane = ({
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {results.map((section) => (
-                <SectionCard
-                    key={section.crn}
-                    section={section}
-                    course={courseById.get(section.courseId)}
-                    saved={savedSet.has(section.crn)}
-                    inConflict={
-                        conflictCrns.has(section.crn) && !committedCrns.includes(section.crn)
-                    }
-                    onAdd={onAdd}
-                    onSave={onSave}
-                    onOpen={onOpen}
-                />
-            ))}
+            {results.map((section) => {
+                const subject = subjectFromCourseId(section.courseId);
+                return (
+                    <SectionCard
+                        key={section.crn}
+                        section={section}
+                        course={courseById.get(section.courseId)}
+                        saved={savedSet.has(section.crn)}
+                        inConflict={
+                            conflictCrns.has(section.crn) && !committedCrns.includes(section.crn)
+                        }
+                        subjectFetchedAt={subjectFetchedAt[subject]}
+                        refreshing={refreshingSubjects.has(subject)}
+                        onAdd={onAdd}
+                        onSave={onSave}
+                        onOpen={onOpen}
+                    />
+                );
+            })}
         </div>
     );
 };
@@ -617,11 +693,12 @@ const StatBlock = ({ label, value, suffix, tone = 'default' }: StatBlockProps) =
 
 interface SavedPaneProps {
     saved: string[];
+    sectionByCrn: Map<string, Section>;
     onUnsave: (crn: string) => void;
     onAdd: (crn: string) => void;
     onOpen: (s: Section) => void;
 }
-const SavedPane = ({ saved, onUnsave, onAdd, onOpen }: SavedPaneProps) => {
+const SavedPane = ({ saved, sectionByCrn, onUnsave, onAdd, onOpen }: SavedPaneProps) => {
     if (saved.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-20 space-y-3">
