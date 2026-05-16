@@ -114,7 +114,7 @@ _Toggle F1 mode off. Search again._
 >   Every adapter has a smoke-test command that proves it still works.
 > - **Privacy by construction.** Zero telemetry. All processing happens in
 >   the user's browser. No server.
-> - **192 tests, 5 quality gates green on every commit.** Strict TypeScript,
+> - **210 tests, 5 quality gates green on every commit.** Strict TypeScript,
 >   ESLint, Prettier, Vitest — no shortcuts.
 > - **Designed for scale.** Monorepo with `packages/adapter-utsa` isolated.
 >   When other Texas universities ask for it, swapping the adapter is a

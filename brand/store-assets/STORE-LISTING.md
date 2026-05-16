@@ -13,43 +13,43 @@ UTSA Reg+ — Live Course Registration Tools
 ## Summary (132 char max — appears under the title in search)
 
 ```
-Live UTSA section data, real-time RateMyProfessor ratings, conflict-aware schedule building, and F1-aware credit tracking.
+UTSA section search with RateMyProfessor ratings, conflict-aware schedule building, and F1 credit-hour tracking.
 ```
 
 ## Description (16,000 char max — paste this whole block)
 
 ```
-UTSA Reg+ replaces the six-tab registration shuffle — ASAP, RateMyProfessors, Bluebook, the catalog, Simple Syllabus, and a spreadsheet — with a single live surface, built by a UTSA student for UTSA students.
+UTSA Reg+ pulls together the surfaces a UTSA student already uses for registration — ASAP, RateMyProfessors, the course catalog, and Simple Syllabus — into one workspace. Built by a UTSA student for UTSA students.
 
-WHAT'S LIVE
-• 2,400+ Fall 2026 UTSA sections fetched live from asap.utsa.edu/pls/prod/bwckschd. Real CRNs, real instructors, real meeting times, real classrooms.
-• RateMyProfessors ratings, difficulty, and would-take-again percentage on every section card. Live GraphQL fetches, SWR-cached for instant repaint.
-• 1,416 catalog course descriptions and prerequisites scraped live from catalog.utsa.edu.
-• Department + course counts from utsa.simplesyllabus.com.
-• Every piece of data carries a freshness chip showing when it was last fetched. We never lie about whether something is live, cached, or stale.
+WHAT IT DOES
+• Searches Fall 2026 UTSA sections fetched from asap.utsa.edu/pls/prod/bwckschd, with CRN, instructor, meeting time, and classroom.
+• Displays RateMyProfessors rating, difficulty, and would-take-again percentage on each section card via GraphQL, cached locally.
+• Surfaces catalog course descriptions and prerequisites pulled from catalog.utsa.edu.
+• Shows department and course counts from utsa.simplesyllabus.com.
+• Each piece of data carries a freshness label showing when it was last fetched, so you can tell cached values from a network result.
 
-WHAT'S DIFFERENT
-• F1 mode — international students must keep ≥12 in-person credit hours to maintain CPT/OPT eligibility. UTSA Reg+ filters online-async sections out of search results and warns when in-person credit count drops below 12. No other tool at UTSA does this.
-• Conflict-aware search — add a section to your schedule and any overlapping result crosses out automatically. No more registration-day "section conflicts another class" surprises.
-• Visual weekly schedule grid color-coded by course, with click-to-detail.
-• Saved schedules persist across the popup and the full dashboard, synced via chrome.storage.
+FEATURES
+• F1 mode — for international students who must keep at least 12 in-person credit hours to maintain CPT/OPT eligibility. The extension filters online-async sections out of search results and shows a warning when the in-person credit count drops below 12.
+• Conflict-aware search — when you add a section to your schedule, overlapping sections in the results list are visually crossed out so you can see at a glance which ones still fit.
+• Weekly schedule grid color-coded by course, with click-to-detail.
+• Saved schedules persist across the popup and the full dashboard via chrome.storage.
 
-PRIVACY BY CONSTRUCTION
-• Zero telemetry. No analytics. No remote logging. Ever.
-• All processing happens locally in your browser. RMP, ASAP, and Simple Syllabus fetches go through the extension's own service worker — never an intermediate server.
-• No PII stored. Your saved schedule lives in chrome.storage.local — same tier as a browser bookmark.
-• Open-source. Verify the claims at the source.
+PRIVACY
+• No analytics. No remote logging.
+• Processing happens locally in your browser. RateMyProfessors, ASAP, and Simple Syllabus requests go through the extension's own service worker — no intermediate server.
+• Your saved schedule lives in chrome.storage.local.
+• Source code is available for review.
 
-WHAT'S COMING
-v1.1 — Schedule optimizer (best valid combination of your wanted courses, ranked by RMP + grade history + compactness).
-v1.2 — Waitlist watcher with desktop notifications when a closed section opens up.
-v2.0 — Multi-university support (Texas A&M, UNT, Texas State).
+ROADMAP
+v1.1 — Schedule optimizer that ranks valid combinations of your wanted courses by RMP rating, grade history, and compactness.
+v1.2 — Waitlist watcher with desktop notifications when a closed section opens.
+v2.0 — Adapters for additional Texas universities.
 
-BUILT FOR UTSA, NOT IMPERSONATING UTSA
-UTSA Reg+ is faithful to UTSA's brand identity (Orange #F15A22, Midnight #032044, Limestone canvas, Manrope/Inter typography) but never reuses UTSA's official logos, wordmarks, or trademarks. This is a student-built independent product. Not affiliated with the registrar.
+BRAND NOTE
+UTSA Reg+ uses a color palette inspired by UTSA's published brand identity but does not reuse UTSA's official logos, wordmarks, or trademarks. This is an independent student-built product. Not affiliated with UTSA or the registrar.
 
-QUESTIONS, BUGS, SUGGESTIONS
-GitHub Issues: github.com/[your-handle]/UTSARegPlus/issues
+CONTACT
+GitHub Issues: github.com/anudeep-bonagiri/UTSARegPlus/issues
 Email: anudeep.bonagiri@gmail.com
 ```
 

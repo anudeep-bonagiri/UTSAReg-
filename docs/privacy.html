@@ -1,366 +1,480 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy — UTSA Reg+</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Privacy Policy — UTSA Reg+</title>
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-    :root {
-      --orange: #F15A22;
-      --midnight: #032044;
-      --limestone: #F8F4F1;
-      --concrete: #EBE6E2;
-      --smoke: #D5CFC8;
-      --black: #332F21;
-      --muted: #5A5448;
-      --subtle: #8C8475;
-    }
+            :root {
+                --orange: #f15a22;
+                --midnight: #032044;
+                --limestone: #f8f4f1;
+                --concrete: #ebe6e2;
+                --smoke: #d5cfc8;
+                --black: #332f21;
+                --muted: #5a5448;
+                --subtle: #8c8475;
+            }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      background: var(--limestone);
-      color: var(--black);
-      line-height: 1.7;
-      padding: 0 1rem;
-    }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+                background: var(--limestone);
+                color: var(--black);
+                line-height: 1.7;
+                padding: 0 1rem;
+            }
 
-    header {
-      background: var(--midnight);
-      color: #fff;
-      padding: 2rem 0;
-      margin: 0 -1rem 3rem;
-    }
+            header {
+                background: var(--midnight);
+                color: #fff;
+                padding: 2rem 0;
+                margin: 0 -1rem 3rem;
+            }
 
-    header .inner {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
+            header .inner {
+                max-width: 720px;
+                margin: 0 auto;
+                padding: 0 1rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
 
-    .logo {
-      width: 44px;
-      height: 44px;
-      background: var(--orange);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+            .logo {
+                width: 44px;
+                height: 44px;
+                background: var(--orange);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
 
-    .logo svg { display: block; }
+            .logo svg {
+                display: block;
+            }
 
-    header h1 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
+            header h1 {
+                font-size: 1.25rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+            }
 
-    header h1 span { color: var(--orange); }
+            header h1 span {
+                color: var(--orange);
+            }
 
-    header p {
-      font-size: 0.8rem;
-      color: #C8DCFF;
-      margin-top: 0.2rem;
-    }
+            header p {
+                font-size: 0.8rem;
+                color: #c8dcff;
+                margin-top: 0.2rem;
+            }
 
-    main {
-      max-width: 720px;
-      margin: 0 auto;
-      padding-bottom: 6rem;
-    }
+            main {
+                max-width: 720px;
+                margin: 0 auto;
+                padding-bottom: 6rem;
+            }
 
-    .tldr {
-      background: #fff;
-      border: 1px solid var(--concrete);
-      border-left: 4px solid var(--orange);
-      border-radius: 8px;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 3rem;
-    }
+            .tldr {
+                background: #fff;
+                border: 1px solid var(--concrete);
+                border-left: 4px solid var(--orange);
+                border-radius: 8px;
+                padding: 1.25rem 1.5rem;
+                margin-bottom: 3rem;
+            }
 
-    .tldr h2 {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 0.75rem;
-    }
+            .tldr h2 {
+                font-size: 0.7rem;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--orange);
+                margin-bottom: 0.75rem;
+            }
 
-    .tldr ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
+            .tldr ul {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+            }
 
-    .tldr li::before { content: "✓ "; color: var(--orange); font-weight: 700; }
+            .tldr li::before {
+                content: '✓ ';
+                color: var(--orange);
+                font-weight: 700;
+            }
 
-    section { margin-bottom: 2.5rem; }
+            section {
+                margin-bottom: 2.5rem;
+            }
 
-    h2 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--midnight);
-      letter-spacing: -0.01em;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--concrete);
-    }
+            h2 {
+                font-size: 1.05rem;
+                font-weight: 700;
+                color: var(--midnight);
+                letter-spacing: -0.01em;
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--concrete);
+            }
 
-    p { margin-bottom: 0.9rem; color: var(--black); }
+            p {
+                margin-bottom: 0.9rem;
+                color: var(--black);
+            }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-      margin: 1rem 0;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--concrete);
-    }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.875rem;
+                margin: 1rem 0;
+                background: #fff;
+                border-radius: 8px;
+                overflow: hidden;
+                border: 1px solid var(--concrete);
+            }
 
-    th {
-      background: var(--midnight);
-      color: #C8DCFF;
-      text-align: left;
-      padding: 0.6rem 0.9rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
+            th {
+                background: var(--midnight);
+                color: #c8dcff;
+                text-align: left;
+                padding: 0.6rem 0.9rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+            }
 
-    td {
-      padding: 0.65rem 0.9rem;
-      border-top: 1px solid var(--concrete);
-      vertical-align: top;
-    }
+            td {
+                padding: 0.65rem 0.9rem;
+                border-top: 1px solid var(--concrete);
+                vertical-align: top;
+            }
 
-    td code {
-      font-family: "SF Mono", Menlo, Consolas, monospace;
-      font-size: 0.8rem;
-      background: var(--limestone);
-      padding: 0.15rem 0.35rem;
-      border-radius: 4px;
-      color: var(--midnight);
-    }
+            td code {
+                font-family: 'SF Mono', Menlo, Consolas, monospace;
+                font-size: 0.8rem;
+                background: var(--limestone);
+                padding: 0.15rem 0.35rem;
+                border-radius: 4px;
+                color: var(--midnight);
+            }
 
-    tr:hover td { background: var(--limestone); }
+            tr:hover td {
+                background: var(--limestone);
+            }
 
-    .nope {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      margin: 0.75rem 0;
-    }
+            .nope {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+                margin: 0.75rem 0;
+            }
 
-    .nope li::before { content: "✕ "; color: #B91C1C; font-weight: 700; }
+            .nope li::before {
+                content: '✕ ';
+                color: #b91c1c;
+                font-weight: 700;
+            }
 
-    .nope li { color: var(--black); font-size: 0.9rem; }
+            .nope li {
+                color: var(--black);
+                font-size: 0.9rem;
+            }
 
-    .note {
-      font-size: 0.8rem;
-      color: var(--muted);
-      background: var(--limestone);
-      border: 1px solid var(--concrete);
-      border-radius: 6px;
-      padding: 0.75rem 1rem;
-      margin-top: 1rem;
-    }
+            .note {
+                font-size: 0.8rem;
+                color: var(--muted);
+                background: var(--limestone);
+                border: 1px solid var(--concrete);
+                border-radius: 6px;
+                padding: 0.75rem 1rem;
+                margin-top: 1rem;
+            }
 
-    footer {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 2rem 0;
-      border-top: 1px solid var(--smoke);
-      font-size: 0.8rem;
-      color: var(--subtle);
-    }
+            footer {
+                max-width: 720px;
+                margin: 0 auto;
+                padding: 2rem 0;
+                border-top: 1px solid var(--smoke);
+                font-size: 0.8rem;
+                color: var(--subtle);
+            }
 
-    a { color: var(--orange); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
+            a {
+                color: var(--orange);
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="inner">
+                <div class="logo">
+                    <svg
+                        width="28"
+                        height="28"
+                        viewBox="0 0 28 28"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <rect x="3" y="4" width="4" height="20" rx="1" fill="white" />
+                        <path
+                            d="M7 4H13a5 5 0 0 1 5 5v0a5 5 0 0 1-5 5H7z"
+                            stroke="white"
+                            stroke-width="4"
+                            stroke-linejoin="round"
+                            fill="none"
+                        />
+                        <path
+                            d="M13 14L20 24"
+                            stroke="white"
+                            stroke-width="4"
+                            stroke-linecap="round"
+                        />
+                        <rect x="20" y="2" width="2" height="8" rx="1" fill="white" />
+                        <rect x="17" y="5" width="8" height="2" rx="1" fill="white" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>UTSA Reg<span>+</span> Privacy Policy</h1>
+                    <p>Effective May 2026 · v1.0 · Built by a UTSA student, for UTSA students</p>
+                </div>
+            </div>
+        </header>
 
-<header>
-  <div class="inner">
-    <div class="logo">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="4" width="4" height="20" rx="1" fill="white"/>
-        <path d="M7 4H13a5 5 0 0 1 5 5v0a5 5 0 0 1-5 5H7z" stroke="white" stroke-width="4" stroke-linejoin="round" fill="none"/>
-        <path d="M13 14L20 24" stroke="white" stroke-width="4" stroke-linecap="round"/>
-        <rect x="20" y="2" width="2" height="8" rx="1" fill="white"/>
-        <rect x="17" y="5" width="8" height="2" rx="1" fill="white"/>
-      </svg>
-    </div>
-    <div>
-      <h1>UTSA Reg<span>+</span> Privacy Policy</h1>
-      <p>Effective May 2026 · v1.0 · Built by a UTSA student, for UTSA students</p>
-    </div>
-  </div>
-</header>
+        <main>
+            <div class="tldr">
+                <h2>Short version</h2>
+                <ul>
+                    <li>We collect nothing about you.</li>
+                    <li>There is no server we operate. All data stays in your browser.</li>
+                    <li>Your saved schedule lives in Chrome storage — same tier as a bookmark.</li>
+                    <li>
+                        Network requests go only to public UTSA, RateMyProfessors, and Simple
+                        Syllabus endpoints.
+                    </li>
+                    <li>The source code is public. Every claim here is verifiable.</li>
+                </ul>
+            </div>
 
-<main>
+            <section>
+                <h2>What the extension stores locally</h2>
+                <p>
+                    All data is stored in <code>chrome.storage</code> — your browser, never
+                    transmitted to any server we control.
+                </p>
 
-  <div class="tldr">
-    <h2>Short version</h2>
-    <ul>
-      <li>We collect nothing about you.</li>
-      <li>There is no server we operate. All data stays in your browser.</li>
-      <li>Your saved schedule lives in Chrome storage — same tier as a bookmark.</li>
-      <li>Network requests go only to public UTSA, RateMyProfessors, and Simple Syllabus endpoints.</li>
-      <li>The source code is public. Every claim here is verifiable.</li>
-    </ul>
-  </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>What it holds</th>
+                            <th>Why</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>schedule:v1</code></td>
+                            <td>CRNs of sections you've added or saved</td>
+                            <td>So your schedule survives restarts</td>
+                        </tr>
+                        <tr>
+                            <td><code>prefs:v1</code></td>
+                            <td>Theme (light/dark), F1 mode, GPA-protect mode</td>
+                            <td>Your settings</td>
+                        </tr>
+                        <tr>
+                            <td><code>rmp:v1:*</code></td>
+                            <td>RateMyProfessor ratings keyed by instructor name</td>
+                            <td>Cache — avoids re-fetching on every popup open</td>
+                        </tr>
+                        <tr>
+                            <td><code>syllabus:orgs:v1</code></td>
+                            <td>UTSA org tree from Simple Syllabus (6-hour TTL)</td>
+                            <td>Cache only</td>
+                        </tr>
+                        <tr>
+                            <td><code>asap:sections:v1</code></td>
+                            <td>Sections seen on asap.utsa.edu while the extension was active</td>
+                            <td>Powers live seat count and section data on cards</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-  <section>
-    <h2>What the extension stores locally</h2>
-    <p>All data is stored in <code>chrome.storage</code> — your browser, never transmitted to any server we control.</p>
+                <p>
+                    <code>chrome.storage.sync</code> holds your theme preference so it follows you
+                    across Chrome profiles. No PII, no UTSA student ID, no transcript data, no
+                    email, no name.
+                </p>
+            </section>
 
-    <table>
-      <thead><tr><th>Key</th><th>What it holds</th><th>Why</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><code>schedule:v1</code></td>
-          <td>CRNs of sections you've added or saved</td>
-          <td>So your schedule survives restarts</td>
-        </tr>
-        <tr>
-          <td><code>prefs:v1</code></td>
-          <td>Theme (light/dark), F1 mode, GPA-protect mode</td>
-          <td>Your settings</td>
-        </tr>
-        <tr>
-          <td><code>rmp:v1:*</code></td>
-          <td>RateMyProfessor ratings keyed by instructor name</td>
-          <td>Cache — avoids re-fetching on every popup open</td>
-        </tr>
-        <tr>
-          <td><code>syllabus:orgs:v1</code></td>
-          <td>UTSA org tree from Simple Syllabus (6-hour TTL)</td>
-          <td>Cache only</td>
-        </tr>
-        <tr>
-          <td><code>asap:sections:v1</code></td>
-          <td>Sections seen on asap.utsa.edu while the extension was active</td>
-          <td>Powers live seat count and section data on cards</td>
-        </tr>
-      </tbody>
-    </table>
+            <section>
+                <h2>What network requests the extension makes</h2>
+                <p>
+                    All requests go from your browser directly to the endpoints below. Nothing is
+                    proxied through any server we operate — we don't have one.
+                </p>
 
-    <p><code>chrome.storage.sync</code> holds your theme preference so it follows you across Chrome profiles. No PII, no UTSA student ID, no transcript data, no email, no name.</p>
-  </section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Endpoint</th>
+                            <th>When</th>
+                            <th>What's sent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ratemyprofessors.com/graphql</td>
+                            <td>When you view a section card with an instructor</td>
+                            <td>The instructor's name as a search string</td>
+                        </tr>
+                        <tr>
+                            <td>asap.utsa.edu</td>
+                            <td>Only when you navigate there yourself</td>
+                            <td>
+                                Your normal browser request — the extension reads the page you
+                                already loaded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>utsa.simplesyllabus.com</td>
+                            <td>Once per 6 hours when a course detail dialog opens</td>
+                            <td>Public read-only API, no auth</td>
+                        </tr>
+                        <tr>
+                            <td>catalog.utsa.edu</td>
+                            <td>
+                                At build time only (developer-side scrape baked into the bundle)
+                            </td>
+                            <td>Public catalog — not fetched at runtime</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-  <section>
-    <h2>What network requests the extension makes</h2>
-    <p>All requests go from your browser directly to the endpoints below. Nothing is proxied through any server we operate — we don't have one.</p>
+                <p>
+                    The extension never sends your saved schedule, CRNs, preferences, or any
+                    UTSA-specific data to any third party.
+                </p>
+            </section>
 
-    <table>
-      <thead><tr><th>Endpoint</th><th>When</th><th>What's sent</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>ratemyprofessors.com/graphql</td>
-          <td>When you view a section card with an instructor</td>
-          <td>The instructor's name as a search string</td>
-        </tr>
-        <tr>
-          <td>asap.utsa.edu</td>
-          <td>Only when you navigate there yourself</td>
-          <td>Your normal browser request — the extension reads the page you already loaded</td>
-        </tr>
-        <tr>
-          <td>utsa.simplesyllabus.com</td>
-          <td>Once per 6 hours when a course detail dialog opens</td>
-          <td>Public read-only API, no auth</td>
-        </tr>
-        <tr>
-          <td>catalog.utsa.edu</td>
-          <td>At build time only (developer-side scrape baked into the bundle)</td>
-          <td>Public catalog — not fetched at runtime</td>
-        </tr>
-      </tbody>
-    </table>
+            <section>
+                <h2>What we do not do</h2>
+                <ul class="nope">
+                    <li>
+                        No analytics — no Google Analytics, Mixpanel, Amplitude, or anything else.
+                    </li>
+                    <li>No remote error tracking — no Sentry, no Bugsnag.</li>
+                    <li>No advertising or tracking pixels.</li>
+                    <li>No A/B testing framework.</li>
+                    <li>No telemetry of any kind, anonymous or otherwise.</li>
+                    <li>No login, no account, no password. We never ask.</li>
+                    <li>No remote logging. Errors stay in your browser console.</li>
+                </ul>
+            </section>
 
-    <p>The extension never sends your saved schedule, CRNs, preferences, or any UTSA-specific data to any third party.</p>
-  </section>
+            <section>
+                <h2>Permissions the extension requests</h2>
 
-  <section>
-    <h2>What we do not do</h2>
-    <ul class="nope">
-      <li>No analytics — no Google Analytics, Mixpanel, Amplitude, or anything else.</li>
-      <li>No remote error tracking — no Sentry, no Bugsnag.</li>
-      <li>No advertising or tracking pixels.</li>
-      <li>No A/B testing framework.</li>
-      <li>No telemetry of any kind, anonymous or otherwise.</li>
-      <li>No login, no account, no password. We never ask.</li>
-      <li>No remote logging. Errors stay in your browser console.</li>
-    </ul>
-  </section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Permission</th>
+                            <th>Why</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>storage</code></td>
+                            <td>Saves your schedule and preferences locally in Chrome</td>
+                        </tr>
+                        <tr>
+                            <td><code>alarms</code></td>
+                            <td>
+                                Schedules a 12-hour background job to evict stale RMP cache entries
+                                and refresh the Simple Syllabus org tree — keeps data fresh without
+                                requiring you to reopen the extension
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-  <section>
-    <h2>Permissions the extension requests</h2>
+                <p>
+                    Host permissions are limited to: asap.utsa.edu, catalog.utsa.edu,
+                    utsa.simplesyllabus.com, and www.ratemyprofessors.com. We do not request
+                    &lt;all_urls&gt;.
+                </p>
+            </section>
 
-    <table>
-      <thead><tr><th>Permission</th><th>Why</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><code>storage</code></td>
-          <td>Saves your schedule and preferences locally in Chrome</td>
-        </tr>
-        <tr>
-          <td><code>activeTab</code></td>
-          <td>Allows the content script to run when you are on asap.utsa.edu</td>
-        </tr>
-        <tr>
-          <td><code>scripting</code></td>
-          <td>Required by Manifest V3 for injecting the content script into ASAP pages</td>
-        </tr>
-        <tr>
-          <td><code>alarms</code></td>
-          <td>Schedules a 12-hour background job to evict stale RMP cache entries and refresh the Simple Syllabus org tree — keeps data fresh without requiring you to reopen the extension</td>
-        </tr>
-      </tbody>
-    </table>
+            <section>
+                <h2>Open source</h2>
+                <p>
+                    The full source code is at
+                    <a
+                        href="https://github.com/anudeep-bonagiri/UTSAReg-"
+                        target="_blank"
+                        rel="noopener"
+                        >github.com/anudeep-bonagiri/UTSAReg-</a
+                    >. Every claim in this policy is verifiable against the code.
+                </p>
+            </section>
 
-    <p>Host permissions are limited to: asap.utsa.edu, catalog.utsa.edu, utsa.simplesyllabus.com, and www.ratemyprofessors.com. We do not request &lt;all_urls&gt;.</p>
-  </section>
+            <section>
+                <h2>Not affiliated with UTSA</h2>
+                <p>
+                    UTSA Reg+ is built independently by a UTSA student. It is not affiliated with,
+                    endorsed by, or sponsored by The University of Texas at San Antonio or any UTSA
+                    department. UTSA and the Roadrunners mark are property of their respective
+                    owners.
+                </p>
+            </section>
 
-  <section>
-    <h2>Open source</h2>
-    <p>The full source code is at <a href="https://github.com/anudeep-bonagiri/UTSAReg-" target="_blank" rel="noopener">github.com/anudeep-bonagiri/UTSAReg-</a>. Every claim in this policy is verifiable against the code.</p>
-  </section>
+            <section>
+                <h2>Changes to this policy</h2>
+                <p>
+                    Any change will be committed to the public Git history at the repo above. If a
+                    change reduces user privacy, we'll bump the version number and call it out in
+                    release notes.
+                </p>
+            </section>
 
-  <section>
-    <h2>Not affiliated with UTSA</h2>
-    <p>UTSA Reg+ is built independently by a UTSA student. It is not affiliated with, endorsed by, or sponsored by The University of Texas at San Antonio or any UTSA department. UTSA and the Roadrunners mark are property of their respective owners.</p>
-  </section>
+            <section>
+                <h2>Contact</h2>
+                <p>
+                    Anudeep Bonagiri ·
+                    <a href="mailto:anudeep.bonagiri@gmail.com">anudeep.bonagiri@gmail.com</a>
+                </p>
+                <p>
+                    For bugs or privacy concerns:
+                    <a
+                        href="https://github.com/anudeep-bonagiri/UTSAReg-/issues"
+                        target="_blank"
+                        rel="noopener"
+                        >github.com/anudeep-bonagiri/UTSAReg-/issues</a
+                    >
+                </p>
+            </section>
+        </main>
 
-  <section>
-    <h2>Changes to this policy</h2>
-    <p>Any change will be committed to the public Git history at the repo above. If a change reduces user privacy, we'll bump the version number and call it out in release notes.</p>
-  </section>
-
-  <section>
-    <h2>Contact</h2>
-    <p>Anudeep Bonagiri · <a href="mailto:anudeep.bonagiri@gmail.com">anudeep.bonagiri@gmail.com</a></p>
-    <p>For bugs or privacy concerns: <a href="https://github.com/anudeep-bonagiri/UTSAReg-/issues" target="_blank" rel="noopener">github.com/anudeep-bonagiri/UTSAReg-/issues</a></p>
-  </section>
-
-</main>
-
-<footer>
-  <p>UTSA Reg+ · Privacy Policy · Effective May 2026</p>
-</footer>
-
-</body>
+        <footer>
+            <p>UTSA Reg+ · Privacy Policy · Effective May 2026</p>
+        </footer>
+    </body>
 </html>

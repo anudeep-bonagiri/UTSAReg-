@@ -18,12 +18,9 @@
     </g>
 
     <text x="108" y="64" font-family="Manrope, Inter, sans-serif" font-weight="800" font-size="34" fill="#FFFFFF" letter-spacing="-1">UTSA Reg<tspan fill="#F15A22">+</tspan></text>
-    <text x="108" y="92" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#C8DCFF" letter-spacing="2">FALL 2026 · LIVE</text>
+    <text x="108" y="92" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#C8DCFF" letter-spacing="2">REGISTRATION TOOLS FOR UTSA STUDENTS</text>
 
-    <text x="28" y="160" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#FFFFFF">Real-time RateMyProfessor on every section.</text>
-    <text x="28" y="184" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#FFFFFF">2,401 live UTSA Fall 2026 sections.</text>
-    <text x="28" y="208" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#FFFFFF">F1 mode for international students.</text>
-
-    <rect x="28" y="234" width="120" height="32" rx="6" fill="#F15A22" />
-    <text x="88" y="255" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF" text-anchor="middle">ADD TO CHROME</text>
+    <text x="28" y="168" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#FFFFFF">RateMyProfessor data on every section.</text>
+    <text x="28" y="196" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#FFFFFF">Conflict-aware schedule building.</text>
+    <text x="28" y="224" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#FFFFFF">F1 credit-hour tracking for international students.</text>
 </svg>

@@ -12,6 +12,7 @@ export default tseslint.config(
             '**/node_modules/**',
             '**/storybook-static/**',
             '**/coverage/**',
+            '**/.claude/**',
             '**/*.zip',
             '**/build_log.txt',
             'apps/extension/test/**',

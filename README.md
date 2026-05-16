@@ -11,7 +11,7 @@ Built by a UTSA student, for UTSA students.
 
 ```
 v0.1 — May 2026
-6 packages, 11 commits, 192 tests, all five quality gates green
+6 packages, 210 tests, all five quality gates green
 ```
 
 | Surface                       | What it does                                                          |
@@ -32,7 +32,8 @@ packages/ui/            Design system: tokens + Radix-backed primitives (Button,
                         Input, Badge, Tooltip, Dialog, Select, Toast, FreshnessChip)
 packages/adapter-utsa/  UTSA-specific data adapters: live RMP GraphQL client,
                         catalog.utsa.edu scraper, ASAP parser scaffolding
-data/                   Live-scraped catalog (1416 courses) + curated demo sections
+data/                   Scraped catalog (1,416 courses; extension bundles a
+                        644-course major-subjects subset) + curated demo sections
 scripts/                Build-time scrapers: `npm run data:catalog`, `npm run smoke:rmp`
 ```
 
@@ -49,7 +50,7 @@ Every commit must pass five gates:
 ```
 $ npm run typecheck   # strict TS, noUncheckedIndexedAccess, no any
 $ npm run lint         # ESLint flat config, type-aware rules, jsx-a11y
-$ npm test             # Vitest, 192 tests, ~70-90% per package
+$ npm test             # Vitest, 210 tests, ~70-90% per package
 $ npm run build        # Vite build, MV3-valid output
 $ npm run format:check # Prettier
 ```

@@ -2,7 +2,7 @@
     "name": "utsaregplus",
     "private": true,
     "version": "0.0.0",
-    "description": "UTSA Registration Plus — the canonical UTSA student registration tool.",
+    "description": "UTSA Registration Plus — a Chrome extension that adds RateMyProfessor data and conflict-aware scheduling to UTSA course registration.",
     "type": "module",
     "workspaces": [
         "apps/*",

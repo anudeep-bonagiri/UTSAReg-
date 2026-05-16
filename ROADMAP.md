@@ -17,7 +17,7 @@ The slice you see today.
 | Weekly schedule grid with click-to-detail               | ✅     |
 | F1 mode (filter online-async, in-person credit counter) | ✅     |
 | Theme toggle (light / dark) with sync                   | ✅     |
-| 192 tests, 5 quality gates green                        | ✅     |
+| 210 tests, 5 quality gates green                        | ✅     |
 
 ---
 

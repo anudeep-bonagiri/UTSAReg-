@@ -26,24 +26,24 @@
 
     <!-- headline -->
     <text x="240" y="200" font-family="Manrope, Inter, system-ui, sans-serif" font-weight="800" font-size="76" fill="#FFFFFF" letter-spacing="-2.5">UTSA Reg<tspan fill="#F15A22">+</tspan></text>
-    <text x="240" y="252" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" fill="#C8DCFF" letter-spacing="-0.2">Live UTSA registration intelligence on every section.</text>
+    <text x="240" y="252" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" fill="#C8DCFF" letter-spacing="-0.2">Registration tools for UTSA students — built by a UTSA student.</text>
 
-    <!-- right composition: stat row -->
+    <!-- feature row -->
     <g transform="translate(80,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
-        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">2,401</text>
-        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">LIVE FALL 2026 SECTIONS</text>
+        <text font-family="Manrope" font-weight="800" font-size="28" letter-spacing="-0.5">RateMyProfessor</text>
+        <text y="36" font-weight="600" font-size="14" fill="#C8DCFF">on every section card</text>
     </g>
-    <g transform="translate(420,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
-        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">825</text>
-        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">SYLLABI TRACKED · CS</text>
+    <g transform="translate(440,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+        <text font-family="Manrope" font-weight="800" font-size="28" letter-spacing="-0.5">Conflict-aware</text>
+        <text y="36" font-weight="600" font-size="14" fill="#C8DCFF">schedule building</text>
     </g>
-    <g transform="translate(700,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
-        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">F1</text>
-        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">CPT/OPT-AWARE MODE</text>
+    <g transform="translate(760,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+        <text font-family="Manrope" font-weight="800" font-size="28" letter-spacing="-0.5">F1 mode</text>
+        <text y="36" font-weight="600" font-size="14" fill="#C8DCFF">CPT/OPT credit-hour tracking</text>
     </g>
-    <g transform="translate(940,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
-        <text font-family="Manrope" font-weight="800" font-size="56" letter-spacing="-1.5">0</text>
-        <text y="76" font-weight="700" font-size="13" fill="#C8DCFF" letter-spacing="2.4">TELEMETRY · ALL LOCAL</text>
+    <g transform="translate(1040,360)" font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+        <text font-family="Manrope" font-weight="800" font-size="28" letter-spacing="-0.5">Local-only</text>
+        <text y="36" font-weight="600" font-size="14" fill="#C8DCFF">no analytics, no remote logging</text>
     </g>
 
     <!-- right edge accent block -->

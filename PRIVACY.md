@@ -17,18 +17,18 @@ If you ever find a network request the extension makes that isn't covered below,
 
 In `chrome.storage.local` (your browser, never leaves):
 
-| Key | What it holds | Why |
-|---|---|---|
-| `schedule:v1` | CRNs of sections you've added or saved | So your schedule survives restarts |
-| `prefs:v1` | Theme (light/dark), F1 mode, GPA-protect mode | Your settings |
-| `rmp:v1:*` | RateMyProfessor ratings keyed by instructor name | Cache so we don't re-fetch on every popup open |
-| `syllabus:orgs:v1` | Cached UTSA org tree from Simple Syllabus | Same — cache only |
-| `asap:sections:v1` | Sections you saw on `asap.utsa.edu` while the extension was active | Powers the "Live · just now" data on cards |
+| Key                | What it holds                                                      | Why                                            |
+| ------------------ | ------------------------------------------------------------------ | ---------------------------------------------- |
+| `schedule:v1`      | CRNs of sections you've added or saved                             | So your schedule survives restarts             |
+| `prefs:v1`         | Theme (light/dark), F1 mode, GPA-protect mode                      | Your settings                                  |
+| `rmp:v1:*`         | RateMyProfessor ratings keyed by instructor name                   | Cache so we don't re-fetch on every popup open |
+| `syllabus:orgs:v1` | Cached UTSA org tree from Simple Syllabus                          | Same — cache only                              |
+| `asap:sections:v1` | Sections you saw on `asap.utsa.edu` while the extension was active | Powers the "Live · just now" data on cards     |
 
 In `chrome.storage.sync` (synced between your Chromes if you're signed in):
 
-| Key | What it holds |
-|---|---|
+| Key        | What it holds                                                        |
+| ---------- | -------------------------------------------------------------------- |
 | `prefs:v1` | Same prefs as above, synced so your dark mode preference follows you |
 
 **No PII, no UTSA student ID, no transcript data, no email, no name.** The extension never asks you for any of those.
@@ -37,12 +37,12 @@ In `chrome.storage.sync` (synced between your Chromes if you're signed in):
 
 All requests are made from your browser, to publicly accessible endpoints. Nothing is proxied through a server we operate (we don't operate one).
 
-| Endpoint | When | What's sent |
-|---|---|---|
-| `ratemyprofessors.com/graphql` | When you view a section card with an instructor | The instructor's name as a search query |
-| `asap.utsa.edu/pls/prod/bwckschd...` | Only when **you** navigate there yourself | Your normal browser request — the extension just reads the page you loaded |
-| `catalog.utsa.edu` | Only at extension build time (developer-side) | Public catalog scrape, baked into the bundled snapshot |
-| `utsa.simplesyllabus.com/api/organization` and `/api/term` | Once per 6 hours when a course detail dialog opens | Public read-only endpoints, no auth |
+| Endpoint                                                   | When                                               | What's sent                                                                |
+| ---------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------- |
+| `ratemyprofessors.com/graphql`                             | When you view a section card with an instructor    | The instructor's name as a search query                                    |
+| `asap.utsa.edu/pls/prod/bwckschd...`                       | Only when **you** navigate there yourself          | Your normal browser request — the extension just reads the page you loaded |
+| `catalog.utsa.edu`                                         | Only at extension build time (developer-side)      | Public catalog scrape, baked into the bundled snapshot                     |
+| `utsa.simplesyllabus.com/api/organization` and `/api/term` | Once per 6 hours when a course detail dialog opens | Public read-only endpoints, no auth                                        |
 
 **The extension never sends your saved schedule, your CRNs, your prefs, or any UTSA-specific data to any third party.** Those stay in your browser.
 
@@ -60,14 +60,13 @@ All requests are made from your browser, to publicly accessible endpoints. Nothi
 
 From `manifest.json`:
 
-| Permission | Why |
-|---|---|
-| `storage` | To save your schedule and prefs locally |
-| `activeTab` | So we can inject the content script when **you** are on `asap.utsa.edu` |
-| `alarms` | Schedules a 12-hour background job to evict stale RMP cache entries and refresh the Simple Syllabus org tree |
-| `scripting` | Same purpose as activeTab; required for MV3 content scripts |
+| Permission | Why                                                                                                          |
+| ---------- | ------------------------------------------------------------------------------------------------------------ |
+| `storage`  | To save your schedule and prefs locally                                                                      |
+| `alarms`   | Schedules a 12-hour background job to evict stale RMP cache entries and refresh the Simple Syllabus org tree |
 
 Host permissions:
+
 - `https://asap.utsa.edu/*` — to read the page you're already viewing
 - `https://catalog.utsa.edu/*` — to potentially refresh course descriptions
 - `https://utsa.simplesyllabus.com/*` — to fetch public org/term data

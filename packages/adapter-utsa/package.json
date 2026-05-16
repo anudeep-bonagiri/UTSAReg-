@@ -2,7 +2,7 @@
     "name": "@utsaregplus/adapter-utsa",
     "private": true,
     "version": "0.1.0",
-    "description": "UTSA-specific data adapters: ASAP HTML parser, catalog scraper, Bluebook grades, RMP, Simple Syllabus.",
+    "description": "UTSA-specific data adapters: ASAP HTML parser, catalog scraper, RMP, Simple Syllabus.",
     "type": "module",
     "main": "./src/index.ts",
     "types": "./src/index.ts",
@@ -10,7 +10,6 @@
         ".": "./src/index.ts",
         "./asap": "./src/asap/index.ts",
         "./catalog": "./src/catalog/index.ts",
-        "./bluebook": "./src/bluebook/index.ts",
         "./rmp": "./src/rmp/index.ts",
         "./syllabus": "./src/syllabus/index.ts"
     },

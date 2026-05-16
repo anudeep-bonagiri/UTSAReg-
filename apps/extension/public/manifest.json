@@ -2,14 +2,13 @@
     "manifest_version": 3,
     "name": "UTSA Registration Plus",
     "version": "0.1.0",
-    "description": "Live UTSA course discovery with real-time RateMyProfessor data, grade history, and conflict-aware schedule building.",
-    "permissions": ["scripting", "activeTab", "storage", "alarms"],
+    "description": "UTSA course search with RateMyProfessor ratings, conflict-aware schedule building, and F1 credit-hour tracking.",
+    "permissions": ["storage", "alarms"],
     "host_permissions": [
         "https://asap.utsa.edu/*",
         "https://catalog.utsa.edu/*",
         "https://utsa.simplesyllabus.com/*",
-        "https://www.ratemyprofessors.com/*",
-        "https://bluebook.dev/*"
+        "https://www.ratemyprofessors.com/*"
     ],
     "action": {
         "default_popup": "index.html"
